@@ -710,7 +710,7 @@ export default function Home() {
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-white/60 text-sm">
                 <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
                 <li><a href="mailto:support@moonring.com" className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
