@@ -698,11 +698,11 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="text-white font-semibold mb-4">Research</h4>
+              <h4 className="text-white font-semibold mb-4">Resources</h4>
               <ul className="space-y-2 text-white/60 text-sm">
-                <li><a href="#psychology" className="hover:text-white transition-colors">Behavioral Science</a></li>
-                <li><a href="#psychology" className="hover:text-white transition-colors">Clinical Studies</a></li>
-                <li><a href="#psychology" className="hover:text-white transition-colors">Research Partners</a></li>
+                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/research" className="hover:text-white transition-colors">Research Library</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact & FAQ</Link></li>
               </ul>
             </div>
 
@@ -710,8 +710,8 @@ export default function Home() {
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-white/60 text-sm">
                 <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                <li><a href="mailto:support@moonring.com" className="hover:text-white transition-colors">Contact</a></li>
+                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
