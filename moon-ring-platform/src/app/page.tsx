@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation'
 import EmailCaptureForm from '@/components/forms/EmailCaptureForm'
-import { CheckCircle, Heart, Users, Zap, Shield, TrendingUp, Star, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { CheckCircle, Heart, Users, Zap, Shield, TrendingUp, Star } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -708,9 +709,9 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-white/60 text-sm">
-                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="/blog" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
+                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="mailto:support@moonring.com" className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
           </div>
@@ -718,8 +719,9 @@ export default function Home() {
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
             <p>&copy; 2025 Moon Ring. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="/about" className="hover:text-white transition-colors">About</Link>
             </div>
           </div>
         </div>

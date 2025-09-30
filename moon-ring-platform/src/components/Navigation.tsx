@@ -21,7 +21,8 @@ export default function Navigation() {
     { label: 'How It Works', href: '#demo' },
     { label: 'Success Stories', href: '#stories' },
     { label: 'Research', href: '#psychology' },
-    { label: 'Pricing', href: '#pricing' }
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'About', href: '/about' }
   ]
 
   return (
@@ -46,15 +47,26 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-white/90 hover:text-white font-medium transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isExternal = item.href.startsWith('#')
+              return isExternal ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-white/90 hover:text-white font-medium transition-colors"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-white/90 hover:text-white font-medium transition-colors"
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
           </nav>
 
           {/* Desktop CTAs */}
@@ -85,16 +97,28 @@ export default function Navigation() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-[#1B023A]/95 backdrop-blur-lg border-t border-white/20">
           <div className="px-4 py-6 space-y-4">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="block text-white/90 hover:text-white font-medium py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isExternal = item.href.startsWith('#')
+              return isExternal ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="block text-white/90 hover:text-white font-medium py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="block text-white/90 hover:text-white font-medium py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
             <div className="flex flex-col gap-3 pt-4">
               <button className="w-full px-6 py-3 text-white font-medium border border-white/20 rounded-full hover:bg-white/10 transition-colors">
                 Sign In
