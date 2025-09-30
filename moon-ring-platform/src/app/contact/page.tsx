@@ -1,7 +1,8 @@
 import Navigation from '@/components/Navigation'
 import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
-import { ArrowLeft, Mail, MessageSquare, HelpCircle, Send } from 'lucide-react'
+import ContactForm from '@/components/ContactForm'
+import { ArrowLeft, Mail, MessageSquare, HelpCircle } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -149,80 +150,7 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#FF33BA] focus:border-transparent outline-none transition-all"
-                    placeholder="John Doe"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#FF33BA] focus:border-transparent outline-none transition-all"
-                    placeholder="john@example.com"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#FF33BA] focus:border-transparent outline-none transition-all"
-                  placeholder="How can we help?"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={6}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#FF33BA] focus:border-transparent outline-none transition-all resize-none"
-                  placeholder="Tell us more about your question or feedback..."
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
-              >
-                <Send className="w-5 h-5" />
-                Send Message
-              </button>
-
-              <p className="text-center text-sm text-gray-500">
-                We typically respond within 24 hours. For urgent matters, email us directly at{' '}
-                <a href="mailto:support@moonring.com" className="text-[#FF33BA] hover:underline">
-                  support@moonring.com
-                </a>
-              </p>
-            </form>
+            <ContactForm />
           </div>
         </section>
 
