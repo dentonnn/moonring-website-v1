@@ -1,0 +1,1051 @@
+ COMPLETE FIGMA MAKE PROMPT: MOON RING 
+  WEBSITE
+
+  INITIAL CONTEXT & SETUP
+
+  Act as a senior UX designer specializing in
+  behavioral psychology-driven conversion
+  optimization. You're creating a marketing
+  website for Moon Ring, a social
+  accountability platform that transforms how
+  28 million frustrated wearable device users
+  achieve their health goals through
+  commitment psychology and social
+  accountability.
+
+  CORE PRINCIPLE: Demonstrate behavioral
+  psychology through design, don't explain it.
+   Every element should show commitment
+  formation, social accountability, and
+  psychological ownership in action.
+
+  USE THE PROVIDED CSS STYLE GUIDE with these
+  core variables:
+  - Brand gradient: var(--brand-gradient) for
+  all primary CTAs
+  - Glass morphism: class="glass-card" for all
+   cards
+  - Deep purple background:
+  var(--purple-gradient) for dark sections
+  - Health categories: var(--sleep-gradient),
+  var(--movement-gradient),
+  var(--stress-gradient),
+  var(--recovery-gradient)
+
+  Create a fully responsive, mobile-first
+  website with smooth animations and
+  high-converting layouts.
+
+  ---
+  PAGE 1: LANDING PAGE (HOMEPAGE)
+
+  SECTION 1: NAVIGATION HEADER
+
+  Create a fixed navigation header with glass
+  morphism effect that appears on scroll.
+
+  STRUCTURE:
+  - Position: Fixed top, z-index
+  var(--z-sticky)
+  - Height: 72px
+  - Background: Initially transparent, becomes
+   var(--glass-background) with
+  backdrop-filter after 100px scroll
+  - Container: class="container" for centered
+  content
+
+  CONTENT (left to right):
+  1. Logo (left):
+     - "Moon Ring" text with icon
+  (interconnected circles representing
+  accountability)
+     - Font-size: var(--text-xl), font-weight:
+   var(--font-weight-bold)
+     - Color: white initially,
+  var(--foreground) after scroll
+
+  2. Navigation Menu (center, hidden on
+  mobile):
+     - Items: "How It Works" • "Success
+  Stories" • "Research" • "Pricing"
+     - Font-size: var(--text-base),
+  font-weight: var(--font-weight-medium)
+     - Hover: color changes to
+  var(--brand-pink) with underline animation
+     - Active state: var(--brand-pink) with
+  dot indicator below
+
+  3. CTAs (right):
+     - "Sign In" - class="btn-secondary"
+  (ghost style)
+     - "Start Trial" - class="btn-primary" but
+   smaller (height: 44px, min-width: 120px)
+
+  4. Mobile Menu (right, only <768px):
+     - Hamburger icon: 24x24px, transforms to
+  X when open
+     - Menu overlay: Full screen,
+  var(--glass-background) with vertical menu
+  items
+     - Include all navigation items + CTAs in
+  vertical stack
+
+  INTERACTIONS:
+  - Scroll trigger: Add class "scrolled" after
+   100px for background appearance
+  - Menu items: 200ms hover transitions
+  - Mobile menu: Slide in from right with
+  300ms animation
+
+  SECTION 2: HERO - COMMITMENT PSYCHOLOGY 
+  RECOGNITION
+
+  Create a full-viewport hero section that
+  immediately demonstrates commitment
+  psychology.
+
+  STRUCTURE:
+  - Height: 100vh minimum, responsive to
+  content
+  - Background: var(--purple-gradient) with
+  subtle geometric pattern overlay
+  - Padding: var(--space-6) top/bottom,
+  var(--space-3) sides (mobile),
+  var(--space-6) sides (desktop)
+
+  CONTENT LAYOUT (centered, max-width:
+  1280px):
+
+  1. HEADLINE GROUP (animate-fade-in, 200ms
+  delay):
+     - H1: "Turn your health intentions into
+  unbreakable commitments"
+     - Style: font-size: var(--text-hero),
+  color: white, text-align: center
+     - Max-width: 800px for readability
+
+     - Subheading: "Join 28 million wearable
+  users who've discovered the missing link:
+  social accountability that makes your health
+   goals stick"
+     - Style: font-size: var(--text-lg),
+  color: rgba(255,255,255,0.8), margin-top:
+  var(--space-3)
+     - Max-width: 600px
+
+  2. SOCIAL PROOF CARDS (3 cards, horizontal
+  on desktop, stack on mobile):
+     Create 3 glass-morphism cards with
+  class="glass-card" and animate-slide-up:
+
+     Card 1: Success Rate
+     - Icon: Checkmark in circle
+     - Number: "92%" (large, var(--text-3xl),
+  var(--brand-pink))
+     - Text: "completion rate with
+  accountability partners"
+
+     Card 2: Commitment Streak
+     - Icon: Fire/streak icon
+     - Number: "127 days" (large,
+  var(--text-3xl), var(--brand-orange))
+     - Text: "average commitment streak"
+
+     Card 3: Social Rescue
+     - Icon: Life preserver/helping hands
+     - Number: "89%" (large, var(--text-3xl),
+  var(--brand-pink))
+     - Text: "social rescue success rate"
+
+     Layout: CSS Grid, 3 columns desktop, 1
+  column mobile
+     Animation: Cards appear sequentially with
+   100ms stagger
+
+  3. APP MOCKUP SHOWCASE:
+     - iPhone 15 Pro frame (393x852px scaled
+  to fit)
+     - Background: var(--glass-background)
+  with interface preview
+     - Show commitment creation screen with:
+       * "I commit to 8 hours of sleep for 7
+  days" input
+       * Partner matching interface
+       * Glass morphism UI elements
+     - Position: Center below cards
+     - Animation: Subtle float animation
+  (translateY ±10px, 4s duration)
+
+  4. CTA BUTTONS (side by side desktop,
+  stacked mobile):
+     Primary CTA:
+     - Text: "Start Free Trial"
+     - class="btn-primary"
+     - Icon: Arrow right
+     - Pulse glow animation on load
+
+     Secondary CTA:
+     - Text: "See Psychology in Action"
+     - class="btn-secondary"
+     - Icon: Play circle
+     - Links to demo section with smooth
+  scroll
+
+  5. FLOATING ELEMENTS (desktop only):
+     - Community avatars (6-8 small circular
+  images)
+     - Connected with subtle dotted lines
+  showing accountability pairs
+     - Gentle floating animation (different
+  speeds per avatar)
+     - Opacity: 0.6 to not distract from main
+  content
+
+  6. SCROLL INDICATOR:
+     - Bottom center of viewport
+     - Animated chevron down with bounce
+  animation
+     - Text: "Experience commitment
+  psychology"
+     - Fades out after scroll starts
+
+  SECTION 3: INTERACTIVE COMMITMENT CREATOR 
+  DEMO
+
+  Create an interactive 3-step demonstration
+  of commitment creation process.
+
+  STRUCTURE:
+  - Background: white
+  - Padding: var(--section-spacing) vertical,
+  container horizontal
+  - Min-height: 100vh to give breathing room
+
+  HEADER:
+  - H2: "Try Creating Your First Commitment"
+  - Style: font-size: var(--text-section),
+  color: var(--purple-base), text-align:
+  center
+  - Subtext: "Experience the psychology that
+  makes commitments unbreakable"
+  - Style: font-size: var(--text-lg), color:
+  var(--muted-foreground), margin-top:
+  var(--space-2)
+
+  STEP PROGRESS INDICATOR:
+  - 3 circles connected by progress line
+  - Active step: var(--brand-pink) background,
+   white text
+  - Completed: var(--brand-pink) with
+  checkmark
+  - Upcoming: var(--muted) background
+  - Labels: "Choose Focus" → "Set Commitment"
+  → "Find Partner"
+
+  STEP 1 - CHOOSE YOUR FOCUS:
+  Container: max-width: 800px, margin: 0 auto
+
+  Heading: "Step 1: Choose Your Focus"
+  Subtext: "What area of your health needs
+  accountability?"
+
+  Category Cards Grid (2x2 desktop, 2x2
+  tablet, 1 column mobile):
+  - Use class="health-card
+  health-card-[category]" for each
+  - Responsive grid with gap: var(--space-3)
+
+  Sleep Card:
+  - Background: var(--sleep-gradient)
+  - Icon: Moon icon (24px, white)
+  - Text: "Sleep"
+  - Subtext: "Better rest & recovery"
+  - Hover: Scale 1.05, glow effect
+  - Selected state: Ring with
+  var(--brand-pink), scale 1.1
+
+  Movement Card:
+  - Background: var(--movement-gradient)
+  - Icon: Running figure
+  - Text: "Movement"
+  - Subtext: "Daily activity & exercise"
+
+  Stress Card:
+  - Background: var(--stress-gradient)
+  - Icon: Heart with pulse line
+  - Text: "Stress"
+  - Subtext: "Mental wellness & calm"
+
+  Recovery Card:
+  - Background: var(--recovery-gradient)
+  - Icon: Refresh/cycle arrows
+  - Text: "Recovery"
+  - Subtext: "Rest days & restoration"
+
+  STEP 2 - CREATE YOUR COMMITMENT:
+  Container appears after Step 1 selection
+  with slide animation
+
+  Heading: "Step 2: Set Your Commitment
+  Contract"
+  Subtext: "Make it specific, measurable, and
+  time-bound"
+
+  Commitment Builder Interface:
+  - Main input: class="form-input" with large
+  text (var(--text-xl))
+  - Placeholder: "I commit to..."
+  - Pre-filled based on category: "I commit to
+   8 hours of sleep"
+
+  Duration Slider:
+  - Range: 1-30 days
+  - Default: 7 days
+  - Visual: var(--brand-gradient) for filled
+  portion
+  - Labels: "1 day" to "30 days"
+  - Current value displayed large above slider
+
+  Commitment Preview Card
+  (class="glass-card"):
+  - Header: "Your Commitment Contract"
+  - Dynamic text: Updates as user types
+  - Psychological ownership language:
+    * "I, [Name], commit to [goal] for
+  [duration] days"
+    * "I understand this is a promise to
+  myself and my accountability partner"
+    * "I will check in daily and ask for help
+  when needed"
+  - Signature line with "Sign with conviction"
+   prompt
+
+  Smart Suggestions (3 buttons below):
+  - Based on selected category, show common
+  commitments:
+    * Sleep: "8 hours nightly" • "No screens
+  after 10pm" • "Consistent bedtime"
+    * Movement: "10,000 steps" • "30min
+  exercise" • "Morning yoga"
+    * Stress: "5min meditation" • "Breathing
+  exercises" • "Journaling"
+    * Recovery: "Rest day weekly" •
+  "Stretching routine" • "Massage scheduled"
+
+  STEP 3 - FIND ACCOUNTABILITY:
+  Heading: "Step 3: Experience Social
+  Accountability"
+  Subtext: "Your success rate triples with the
+   right partner"
+
+  Partner Matching Preview
+  (class="glass-card"):
+  - Animation: Loading animation → Partner
+  found
+  - Mock partner profile:
+    * Avatar (anonymized, professional
+  illustration)
+    * Name: "Sarah M."
+    * Match percentage: "94% compatibility"
+    * Similar goals: "Also committed to better
+   sleep"
+    * Success rate: "89% commitment
+  completion"
+    * Mutual interests: 3 badge icons
+
+  Community Support Preview:
+  - Text: "Join 127 others in your area
+  working on sleep this week"
+  - Row of 8-10 small avatar circles
+  - Live counter animation: Number increases
+  subtly
+
+  Accountability Features (3 icon cards):
+  1. Daily Check-ins: Calendar icon, "Simple
+  daily progress updates"
+  2. Social Rescue: Lifesaver icon, "Community
+   support when struggling"
+  3. Partner Chat: Message icon, "Private
+  encouragement channel"
+
+  FINAL CTA SECTION:
+  - Primary button: "Create Your First Real
+  Commitment" (class="btn-primary")
+  - Trust text below: "Join 15,847 people who
+  made commitments this week"
+  - Secondary link: "Learn more about our
+  methodology →"
+
+  Animation: Confetti burst animation when
+  clicking final CTA
+
+  SECTION 4: SUCCESS STORIES & SOCIAL PROOF
+
+  Design a compelling success stories section
+  with real transformation examples.
+
+  STRUCTURE:
+  - Background: var(--background-secondary)
+  (#F8F9FA)
+  - Padding: var(--section-spacing) vertical
+  - Container with max-width: 1280px
+
+  HEADER:
+  - H2: "Real transformations through
+  behavioral psychology"
+  - Subtext: "Not just fitness wins - lasting
+  behavior change through accountability"
+  - Center aligned, margin-bottom:
+  var(--space-6)
+
+  LAYOUT: Split design (responsive)
+  - Desktop: Featured story left (40%),
+  carousel right (60%)
+  - Mobile: Featured story top, carousel below
+
+  FEATURED SUCCESS STORY (Large card,
+  class="glass-card"):
+  Structure:
+  - User photo: 80x80px circular, slight
+  gradient border
+  - Category badge: var(--movement-gradient)
+  pill, "Movement"
+  - Headline: "From abandoned Fitbit to
+  180-day movement streak"
+  - Story quote (with large quotation marks):
+    "My accountability partner helped me
+  understand why I was failing.
+     It wasn't willpower, it was strategy.
+  When I wanted to skip my
+     morning run, Alex would text 'Remember
+  why you started.' That
+     simple message has saved my streak 47
+  times."
+
+  Metrics Grid (2x2):
+  - Heart Rate: "↓ 15% improvement" (green
+  arrow)
+  - Sleep Quality: "↑ 34% better" (green
+  arrow)
+  - Consistency: "180 days straight" (fire
+  icon)
+  - Community: "12 supporters" (people icon)
+
+  Bottom section:
+  - Partner highlight: Small avatar + "with
+  accountability partner Alex"
+  - Supported by: Row of 5 mini avatars + "+7
+  community members"
+  - CTA: "Read full story →"
+  (var(--brand-pink) link)
+
+  SUCCESS CAROUSEL (6-8 story cards):
+  Each card (class="glass-card" with hover
+  lift effect):
+  - Layout: Compact vertical card
+  - User avatar: 48x48px circular
+  - Name: First name + last initial
+  - Category badge: Appropriate gradient
+  - Streak counter: Large number + "days"
+  - Key quote: 2 lines max, focus on
+  psychology
+  - Success metric: One key improvement
+  - View more: Arrow icon on hover
+
+  Filter Pills (above carousel):
+  - "All" (active by default,
+  var(--brand-gradient))
+  - "Sleep" (var(--sleep-gradient) on active)
+  - "Movement" (var(--movement-gradient) on
+  active)
+  - "Stress" (var(--stress-gradient) on
+  active)
+  - "Recovery" (var(--recovery-gradient) on
+  active)
+
+  Carousel Controls:
+  - Desktop: Arrow buttons on sides
+  - Mobile: Swipe gesture with dots indicator
+  - Auto-advance: Every 5 seconds (pause on
+  hover)
+
+  REAL-TIME SOCIAL PROOF BANNER (bottom of
+  section):
+  - Background: var(--brand-gradient)
+  - Height: 80px
+  - Content (animated counters):
+    * "2,847 commitments started this week"
+    * "92% average success rate"
+    * "428 people online now"
+  - Numbers animate up when scrolled into view
+
+  SECTION 5: BEHAVIORAL PSYCHOLOGY CREDIBILITY
+
+  Create a credibility section establishing
+  scientific foundation without being
+  academic.
+
+  STRUCTURE:
+  - Background: var(--purple-gradient) with
+  subtle dot pattern
+  - Padding: var(--section-spacing) vertical
+  - Full-width with container for content
+
+  HEADER:
+  - H2: "Built on proven behavioral
+  psychology, not fitness trends"
+  - Color: white, text-align: center
+  - Subtext: "Three scientific principles that
+   make Moon Ring different"
+  - Color: rgba(255,255,255,0.8)
+
+  MAIN CONTENT: Split layout
+  Desktop: Visual left (40%), content right
+  (60%)
+  Mobile: Stack with visual on top
+
+  LEFT SIDE - INTERACTIVE PRINCIPLE DIAGRAM:
+  Create interconnected diagram with 3 nodes:
+
+  Node 1: Commitment Contract Theory
+  - Icon: Document with signature
+  - Color: var(--brand-pink) gradient sphere
+  - Connecting line to other nodes
+
+  Node 2: Social Accountability Framework
+  - Icon: Connected people
+  - Color: var(--brand-orange) gradient sphere
+  - Center position (hub)
+
+  Node 3: Implementation Intention
+  - Icon: Target with arrow
+  - Color: var(--accent) gradient sphere
+  - Connecting lines showing flow
+
+  Animation: Gentle pulse on nodes, particle
+  effects on connections
+  Interaction: Click node to highlight related
+   content
+
+  RIGHT SIDE - PRINCIPLE EXPLANATIONS:
+  For each principle (tabs or accordion):
+
+  Commitment Contract Theory:
+  - Icon + Title
+  - One-line explanation: "Psychological
+  ownership increases follow-through by 3x"
+  - Real example: "When you sign a commitment,
+   your brain treats it as a promise to
+  yourself"
+  - Research backing: "Stanford Behavioral
+  Lab, 2023"
+
+  Social Accountability Framework:
+  - One-line: "Partner support prevents 89% of
+   goal abandonment"
+  - Real example: "Your partner's gentle nudge
+   activates social motivation circuits"
+  - Research backing: "MIT Psychology
+  Research, 2024"
+
+  Implementation Intention:
+  - One-line: "If-then planning bridges the
+  intention-action gap"
+  - Real example: "If I feel tired, then I'll
+  do just 5 minutes"
+  - Research backing: "Harvard Behavioral
+  Science, 2023"
+
+  EVIDENCE CARDS (3 cards in row,
+  class="glass-card"):
+  Card 1:
+  - Large number: "92%" (var(--brand-pink))
+  - Text: "higher success rate with
+  accountability"
+  - Source: "Peer-reviewed study, n=12,000"
+
+  Card 2:
+  - Large number: "3x" (var(--brand-orange))
+  - Text: "longer commitment streaks"
+  - Source: "Longitudinal behavioral analysis"
+
+  Card 3:
+  - Large number: "65%" (var(--accent))
+  - Text: "reduction in goal abandonment"
+  - Source: "Randomized controlled trial"
+
+  EXPERT VALIDATION SECTION:
+  Container: class="glass-card" with special
+  styling
+
+  Quote Block:
+  - Large quote marks (var(--brand-pink),
+  opacity 0.2)
+  - Quote: "This methodology represents the
+  future of behavior change technology.
+    It's not about willpower - it's about
+  creating systems that support human
+  psychology."
+  - Expert photo: 60x60px circular
+  - Name: "Dr. Sarah Mitchell"
+  - Credentials: "Director of Behavioral
+  Psychology, Stanford"
+  - Institution logo: Small, bottom right
+
+  CTA Section:
+  - Primary: "Experience the science yourself"
+   (class="btn-primary")
+  - Secondary link: "Download full methodology
+   paper →"
+  - Trust indicator: "Validated by 3
+  university research labs"
+
+  SECTION 6: PRICING PREVIEW
+
+  Create a simple pricing teaser that drives
+  to full pricing page.
+
+  STRUCTURE:
+  - Background: white
+  - Padding: var(--section-spacing) vertical
+  - Container centered
+
+  HEADER:
+  - H2: "Simple, transparent pricing"
+  - Subtext: "Start free, upgrade when you see
+   results"
+
+  PRICING CARDS (3 cards, responsive grid):
+  Use class="glass-card" with special pricing
+  styling
+
+  Free Trial Card:
+  - Badge: "Start Here" (var(--success)
+  background)
+  - Title: "14-Day Trial"
+  - Price: "$0"
+  - Features (checkmarks):
+    * Full commitment creation
+    * Partner matching
+    * Community support
+    * All health categories
+  - CTA: "Start Free Trial"
+  (class="btn-primary")
+
+  Individual Card (most popular):
+  - Badge: "Most Popular"
+  (var(--brand-gradient))
+  - Title: "Individual"
+  - Price: "$12/month" (large)
+  - Subtext: "Billed monthly, cancel anytime"
+  - Everything in trial, plus:
+    * Unlimited commitments
+    * Advanced analytics
+    * Priority partner matching
+    * Personal success coach (AI)
+  - CTA: "Start Free Trial"
+  (class="btn-primary")
+
+  Teams Card:
+  - Title: "Teams & Families"
+  - Price: "Custom pricing"
+  - Features:
+    * Everything in Individual
+    * Group challenges
+    * Family accountability
+    * Shared dashboards
+    * Volume discounts
+  - CTA: "Contact Sales"
+  (class="btn-secondary")
+
+  Bottom Section:
+  - Trust badges: "30-day guarantee" • "Cancel
+   anytime" • "No hidden fees"
+  - Link: "View detailed pricing comparison →"
+
+  SECTION 7: FINAL CONVERSION - TRIAL SIGNUP
+
+  Create the ultimate conversion section with
+  maximum trust and urgency.
+
+  STRUCTURE:
+  - Background: var(--purple-gradient)
+  - Min-height: 100vh for importance
+  - Padding: var(--section-spacing) vertical
+
+  LAYOUT: Split design
+  Desktop: Social proof left (50%), form right
+   (50%)
+  Mobile: Stack with form on top (reverse for
+  thumb reach)
+
+  LEFT SIDE - DYNAMIC SOCIAL PROOF:
+
+  Real-time Activity Feed (class="glass-card",
+   auto-scrolling):
+  - "Sarah from NYC just started a sleep
+  commitment"
+  - "Mike's 45-day streak was saved by his
+  partner"
+  - "Jennifer completed her 30-day meditation
+  goal"
+  - Show 5 items, auto-update every 3 seconds
+  - Each item has avatar + timestamp
+
+  Testimonial Carousel (auto-rotating every
+  5s):
+  Create 3 testimonials with photos:
+
+  Testimonial 1:
+  - Photo: Professional headshot
+  - Quote: "Finally, something that makes my
+  goals stick. My Apple Watch
+    data shows the difference - 127 days of
+  consistent sleep."
+  - Name: "Sarah M."
+  - Details: "Product Manager, San Francisco"
+  - Metrics: "127-day streak • 89%
+  consistency"
+
+  Testimonial 2:
+  - Quote: "My accountability partner saved my
+   fitness streak 3 times.
+    This isn't just an app - it's a support
+  system."
+  - Name: "Mike R."
+  - Details: "Software Engineer, Austin"
+  - Metrics: "Lost 15 lbs • 200+ day streak"
+
+  Testimonial 3:
+  - Quote: "I thought I tried everything. The
+  psychology approach
+    finally made it click. I understand why I
+  succeed now."
+  - Name: "Jennifer L."
+  - Details: "Teacher, Seattle"
+  - Metrics: "Stress down 40% • Sleep up 2
+  hrs"
+
+  Trust Indicator Grid (2x3 grid of badges):
+  - "HIPAA Compliant" with lock icon
+  - "4.8/5 Average Rating" with stars
+  - "92% Success Rate" with chart
+  - "Research-Backed" with university icon
+  - "30-Day Guarantee" with shield
+  - "Cancel Anytime" with flexibility icon
+
+  Community Preview:
+  - Text: "Join these accountability partners
+  near you:"
+  - 10-12 avatar circles with subtle animation
+  - "+2,847 more this week" counter
+
+  RIGHT SIDE - OPTIMIZED SIGNUP FORM:
+
+  Container: class="glass-card" with extra
+  padding
+
+  Header:
+  - H2: "Ready to make commitments that
+  stick?"
+  - Subtext: "Join thousands transforming
+  intentions into lasting habits"
+  - Progress bar: "Step 1 of 2" (shows form is
+   quick)
+
+  Form Fields (vertical stack, smooth
+  validation):
+
+  Email Field:
+  - Label: "Your best email"
+  - Input: class="form-input" with email icon
+  - Placeholder: "you@example.com"
+  - Validation: Check mark appears when valid
+
+  Frustration Dropdown:
+  - Label: "What's your biggest challenge?"
+  - Options:
+    * "I start strong but can't stay
+  consistent"
+    * "I lose motivation when life gets busy"
+    * "I don't have anyone to keep me
+  accountable"
+    * "I've tried everything and nothing
+  sticks"
+  - Default: First option selected
+
+  Wearable Selection (optional):
+  - Label: "Which wearable do you use?
+  (optional)"
+  - Checkbox group with logos:
+    * Apple Watch (with icon)
+    * Fitbit (with icon)
+    * Oura Ring (with icon)
+    * Garmin (with icon)
+    * Other wearable
+    * No wearable yet
+  - Multi-select enabled
+
+  Terms Checkbox:
+  - Small text with links to terms and privacy
+  - Pre-checked with explanation of trial
+
+  Submit Button:
+  - Text: "Start My Free 14-Day Trial"
+  - class="btn-primary" full width
+  - Loading state: Spinner + "Creating your
+  account..."
+  - Success state: Checkmark + "Welcome to
+  Moon Ring!"
+
+  Below Form:
+  - Trust text: "✓ No credit card required"
+  - "✓ 14-day free trial"
+  - "✓ Cancel anytime"
+  - "✓ Your data is always private"
+
+  Alternative Options:
+  - Divider with "Or continue with"
+  - Social login buttons: Google, Apple,
+  Facebook
+  - Each with appropriate logo and styling
+
+  FAQ Accordion (below form, subtle):
+  - "How does the free trial work?"
+  - "Can I cancel anytime?"
+  - "Is my wearable data secure?"
+  - "What if I don't have a wearable?"
+
+  Anti-Abandonment Features:
+  - Exit intent popup: "Wait! Get 30% off your
+   first month"
+  - Form field persistence (localStorage)
+  - Validation on blur, not just submit
+  - Clear, helpful error messages
+
+  SECTION 8: FOOTER
+
+  Create a comprehensive footer with all
+  necessary links and info.
+
+  STRUCTURE:
+  - Background: var(--purple-base) darker than
+   hero
+  - Padding: var(--space-8) vertical
+  - Border-top: 1px solid var(--border-light)
+
+  TOP SECTION - Newsletter CTA:
+  - Background: var(--glass-background)
+  - Padding: var(--space-4)
+  - H3: "Get behavioral psychology tips
+  weekly"
+  - Email input + "Subscribe" button inline
+  - Subtext: "Join 50,000+ subscribers. No
+  spam, ever."
+
+  MAIN FOOTER CONTENT:
+  4-column grid (stack to 2 columns tablet, 1
+  column mobile)
+
+  Column 1 - Brand:
+  - Moon Ring logo (larger)
+  - Tagline: "Behavioral psychology for
+  lasting change"
+  - Social icons row: Twitter, Instagram,
+  LinkedIn, YouTube, TikTok
+  - App badges: App Store, Google Play (coming
+   soon overlay)
+
+  Column 2 - Product:
+  - Section title: "Product"
+  - Links:
+    * How It Works
+    * Features
+    * Success Stories
+    * Pricing
+    * Research & Science
+    * Wearable Compatibility
+
+  Column 3 - Resources:
+  - Section title: "Resources"
+  - Links:
+    * Help Center
+    * Getting Started Guide
+    * Community Guidelines
+    * Behavioral Psychology 101
+    * API Documentation
+    * Partner With Us
+
+  Column 4 - Company:
+  - Section title: "Company"
+  - Links:
+    * About Us
+    * Careers (hiring badge)
+    * Press Kit
+    * Blog
+    * Contact
+    * System Status
+
+  BOTTOM SECTION:
+  - Left: "© 2025 Moon Ring. All rights
+  reserved."
+  - Center: "Built with behavioral psychology
+  research"
+  - Right: Links: Privacy Policy • Terms •
+  Cookie Policy
+  - Compliance badges: HIPAA, SOC2, GDPR
+
+  Style all links with hover:color
+  var(--brand-pink) transition
+
+  ---
+  GLOBAL INTERACTIONS & ANIMATIONS
+
+  Apply these interactions throughout the
+  entire website:
+
+  SCROLL ANIMATIONS:
+  - All sections: Fade in with slideUp
+  animation on scroll into view
+  - Use Intersection Observer or
+  scroll-trigger library
+  - Stagger elements within sections by 100ms
+
+  PARALLAX EFFECTS:
+  - Hero background: 0.5 speed parallax
+  - App mockups: Subtle 0.8 speed parallax
+  - Background patterns: 0.3 speed for depth
+
+  HOVER INTERACTIONS:
+  - All buttons: scale(1.05) and glow shadow
+  - All cards: translateY(-4px) and enhanced
+  shadow
+  - All links: color transition to
+  var(--brand-pink)
+  - Category cards: Specific color glow
+  matching gradient
+
+  MICRO-ANIMATIONS:
+  - Number counters: Count up animation when
+  visible
+  - Progress bars: Animate width from 0 to
+  value
+  - Success checkmarks: Scale and rotate in
+  - Loading spinners: Smooth rotation
+  - Avatar groups: Gentle individual float
+  animations
+
+  FORM INTERACTIONS:
+  - Focus: Pink border glow with smooth
+  transition
+  - Validation: Real-time with helpful
+  messages
+  - Success: Checkmark animation
+  - Error: Shake animation with red highlight
+
+  MOBILE GESTURES:
+  - Carousels: Smooth horizontal swipe
+  - Accordion: Tap to expand with height
+  animation
+  - Back to top: Smooth scroll with easing
+
+  ---
+  RESPONSIVE BREAKPOINTS
+
+  Apply these responsive rules:
+
+  MOBILE (320px - 767px):
+  - Single column layouts
+  - Font-size: Use smaller end of clamp()
+  values
+  - Padding: var(--space-3) horizontal
+  - Stack all side-by-side elements
+  - Full-width buttons
+  - Hamburger menu
+  - Touch targets: minimum 48px
+  - Hide decorative elements
+
+  TABLET (768px - 1023px):
+  - 2-column layouts where appropriate
+  - Font-size: Middle of clamp() values
+  - Padding: var(--space-4) horizontal
+  - Some side-by-side elements
+  - Maintain mobile menu
+  - Show some decorative elements
+
+  DESKTOP (1024px+):
+  - Full multi-column layouts
+  - Font-size: Larger end of clamp() values
+  - Padding: var(--space-6) horizontal
+  - All side-by-side layouts
+  - Horizontal navigation
+  - All decorative elements
+  - Hover states active
+  - Advanced animations
+
+  WIDE (1440px+):
+  - Max-width containers: 1280px
+  - Extra padding on sides
+  - Larger spacing between sections
+  - Enhanced animations and parallax
+
+  ---
+  PERFORMANCE & ACCESSIBILITY
+
+  Ensure these standards throughout:
+
+  PERFORMANCE:
+  - Lazy load all images below the fold
+  - Use WebP with PNG fallbacks
+  - Compress all assets
+  - Inline critical CSS
+  - Defer non-critical JavaScript
+  - Target: LCP < 2.5s, FID < 100ms, CLS < 0.1
+
+  ACCESSIBILITY:
+  - All images: Descriptive alt text
+  - All form fields: Associated labels
+  - All buttons: Clear action text
+  - Color contrast: WCAG AA minimum
+  - Keyboard navigation: Full support
+  - Screen readers: ARIA labels where needed
+  - Focus states: Visible and clear
+
+  SEO:
+  - Semantic HTML structure
+  - Meta descriptions on all pages
+  - Schema markup for organization
+  - Open Graph tags for social sharing
+  - Clean URL structure
+
+  ---
+  FINAL INSTRUCTIONS
+
+  1. Create this as a single cohesive landing
+  page
+  2. Use semantic HTML5 elements
+  3. Apply the CSS style guide variables
+  throughout
+  4. Ensure smooth scrolling between sections
+  5. Test all interactions and animations
+  6. Validate responsive behavior at all
+  breakpoints
+  7. Optimize for conversion at every step
+  8. The primary goal is trial signups - every
+   element should support this
+  9. Remember: SHOW behavioral psychology,
+  don't explain it
+  10. Make social accountability visible
+  throughout the experience
+
+  This is Moon Ring - where behavioral
+  psychology meets modern technology to create
+   lasting health behavior change through
+  social accountability.
+
+  This comprehensive prompt gives Figma Make
+  everything needed to generate the complete
+  Moon Ring website with all behavioral
+  psychology principles, conversion
+  optimization, and technical specifications
+  properly implemented!
