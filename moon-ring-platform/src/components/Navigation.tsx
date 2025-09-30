@@ -22,7 +22,9 @@ export default function Navigation() {
     { label: 'Success Stories', href: '#stories' },
     { label: 'Research', href: '#psychology' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'About', href: '/about' }
+    { label: 'Blog', href: '/blog' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
   ]
 
   return (
