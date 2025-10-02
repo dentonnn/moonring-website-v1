@@ -101,13 +101,14 @@ docs/
 
 ## Development Best Practices (Summary)
 
-- Anchor implementation in `docs/moon-ring-project-prd.md`, `docs/front-end-spec.md`, and the assigned `docs/stories/` file; only edit Dev Agent Record sections.
-- Create short-lived feature branches off `dev`, name them after the story, and stay current with rebases before PRs.
-- Configure `.env.local`, work from `moon-ring-platform/`, and keep `npm run dev` plus `npm run lint` in regular rotation.
-- Adhere to the Next.js 15 + Tailwind + Supabase + Stripe stack decisions; commit Supabase schema updates alongside code.
-- Ship tests and accessibility checks with new features and ensure lint/build checks succeed prior to review.
-- Record key decisions, coordinate scope changes with PM/PO partners, and capture validation steps in PR descriptions.
-- Full guidance lives in `docs/development-best-practices.md`.
+- **Working Directory**: All development commands must be run from `moon-ring-platform/` directory
+- Anchor implementation in `docs/moon-ring-project-prd.md`, `docs/front-end-spec.md`, and the assigned `docs/stories/` file; only edit Dev Agent Record sections
+- Create short-lived feature branches off `dev`, name them after the story, and stay current with rebases before PRs
+- Configure `.env.local` in `moon-ring-platform/` directory and keep `npm run dev` plus `npm run lint` in regular rotation
+- Adhere to the Next.js 15 + Tailwind + Supabase + Stripe stack decisions; commit Supabase schema updates alongside code
+- Ship tests and accessibility checks with new features and ensure lint/build checks succeed prior to review
+- Record key decisions, coordinate scope changes with PM/PO partners, and capture validation steps in PR descriptions
+- Full guidance lives in `docs/development-best-practices.md`
 
 ## Architecture Overview
 
@@ -124,8 +125,10 @@ docs/
 - `@stripe/stripe-js` and `stripe` for payment processing and order management
 - `@supabase/ssr` and `@supabase/supabase-js` for server-side rendering and user data
 - `@tailwindcss/forms` and `@tailwindcss/typography` for polished UI
-- `resend` for transactional email
+- `resend` and `@react-email/render` for transactional email
 - `lucide-react` for icons
+- `@vercel/analytics` for performance monitoring
+- `@sentry/nextjs` for error tracking and application monitoring
 - Custom font loading with next/font (Geist Sans/Mono)
 
 ### Source Directory Structure (`moon-ring-platform/src/`)
@@ -167,14 +170,15 @@ src/
 
 **Database Management**:
 - Schema migrations: `moon-ring-platform/supabase/migrations/`
-- Apply migrations using `./apply-migration.sh` script (from moon-ring-platform/)
+- Apply migrations using `./apply-migration.sh` script (from `moon-ring-platform/` directory)
 - When updating schema, create migration files and commit with code changes
+- Migration script connects to Supabase using credentials from `.env.local`
 
 **Asset Management**:
 - Images, fonts, and static files: `moon-ring-platform/public/`
 - See `moon-ring-platform/ASSETS_GUIDE.md` for image optimization guidelines
 
-**Current State**: ~85% complete marketing website with homepage, legal pages (privacy/terms), about page, blog structure, research library, contact form, and cookie consent. Supabase + Stripe integration functional. Ready for Phase 3 (backend feature integration) and asset optimization. The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
+**Current State**: ~95% complete production-ready marketing website with homepage, legal pages (privacy/terms), about page, blog structure with ISR caching, research library, contact form (Resend integration), and cookie consent. Full Supabase + Stripe + Vercel Analytics + Sentry monitoring stack integrated. TypeScript strict mode with zero lint errors. Build passing with optimized bundle sizes (First Load JS ~170KB homepage). Ready for deployment and Phase 4 (asset creation and content). The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
 
 ## Key Architectural Patterns
 
