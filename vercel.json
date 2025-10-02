@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd moon-ring-platform && npm run build",
+  "devCommand": "cd moon-ring-platform && npm run dev",
+  "installCommand": "cd moon-ring-platform && npm install",
+  "outputDirectory": "moon-ring-platform/.next",
+  "framework": "nextjs",
+  "functions": {
+    "moon-ring-platform/src/app/api/**/*.ts": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
+}
