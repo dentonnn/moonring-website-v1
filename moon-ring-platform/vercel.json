@@ -15,7 +15,8 @@
     "RESEND_API_KEY": "@resend_api_key",
     "NEXT_PUBLIC_APP_URL": "@app_url",
     "NEXT_PUBLIC_GA_ID": "@ga_id",
-    "NEXT_PUBLIC_HOTJAR_ID": "@hotjar_id"
+    "NEXT_PUBLIC_HOTJAR_ID": "@hotjar_id",
+    "SENTRY_AUTH_TOKEN": "@sentry_auth_token"
   },
   "headers": [
     {
