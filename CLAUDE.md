@@ -73,6 +73,32 @@ For production deployment to Vercel, see detailed instructions in `moon-ring-pla
 - Health check verification (`/api/health`)
 - Common deployment troubleshooting
 
+## Documentation Structure
+
+The `docs/` directory is organized by purpose:
+
+```
+docs/
+├── roadmaps/              # Execution plans and phase planning
+│   ├── phase-3-plan.md              # Current: Backend integration & production features
+│   └── phase-3-quickstart.md        # Quick reference for Phase 3 tasks
+├── stories/               # Feature stories and implementation tasks
+│   ├── 1.1.*.md                     # Database setup stories
+│   ├── 1.2.*.md                     # Authentication stories
+│   ├── 1.3-1.6.*.md                 # User features, goals, subscriptions
+├── setup/                 # Environment and tooling setup
+│   └── environment-setup-guide.md   # Development environment configuration
+├── strategy/              # High-level vision and project briefs
+│   └── moon_ring_project_brief.md   # Original project brief
+├── front-end-spec.md      # UI/UX specifications and design system
+├── fullstack-architecture.md        # Complete technical architecture
+├── implementation-guide-nextjs-supabase-stripe.md  # Stack setup guide
+├── development-best-practices.md    # Coding standards and workflows
+└── moon-ring-project-prd.md         # Product requirements (reference only)
+```
+
+**Current Work**: Refer to `docs/roadmaps/phase-3-plan.md` for near-term execution priorities (contact form backend, analytics, Sentry, performance optimization).
+
 ## Development Best Practices (Summary)
 
 - Anchor implementation in `docs/moon-ring-project-prd.md`, `docs/front-end-spec.md`, and the assigned `docs/stories/` file; only edit Dev Agent Record sections.
