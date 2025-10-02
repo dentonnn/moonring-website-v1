@@ -550,6 +550,10 @@ Success Story Card:
 
 ## 10. Implementation Roadmap
 
+### Current Execution Context (Q4 2025)
+
+The delivery team is executing the production hardening checklist captured in `PHASE_3_PLAN.md` (contact form backend, analytics, Sentry, optional CMS, performance). Treat that plan as the canonical near-term backlog. The phased roadmap below now serves as the longer-term UX vision once Phase 3 deliverables are complete.
+
 ### Phase 1: MVP Launch (80% of resources)
 
 **Week 1-2: Commitment Psychology Hero Component**

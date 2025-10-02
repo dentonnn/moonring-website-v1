@@ -37,18 +37,22 @@ Based on the current project structure analysis, this is primarily a greenfield 
 
 ---
 
+### Execution Status (Q4 2025)
+
+The deployed marketing site and active codebase run on **Next.js 15.5.3**, aligning with the production-hardening backlog documented in `PHASE_3_PLAN.md`. Treat that plan as the authoritative near-term scope (contact form backend, analytics, Sentry, optional CMS, performance tuning). The remainder of this architecture document captures the longer-horizon expansion path once Phase 3 deliverables are complete.
+
 ## High Level Architecture
 
 ### Technical Summary
 
-The Moon Ring platform employs a hybrid architecture using **Next.js 14 + Supabase + Stripe** for optimal performance, scalability, and future-proofing. This stack seamlessly scales from marketing website to full SaaS platform without architectural rewrites. The frontend utilizes Next.js 14's App Router for hybrid rendering (static for marketing, dynamic for user accounts), while Supabase provides managed PostgreSQL with real-time capabilities and built-in authentication. Stripe handles subscription billing with 14-day trials and customer portal integration. The architecture prioritizes conversion optimization through A/B testing, real-time user experiences, and progressive enhancement from marketing site to complete ecommerce platform supporting account management, subscription billing, and social accountability features.
+The Moon Ring platform employs a hybrid architecture using **Next.js 15 + Supabase + Stripe** for optimal performance, scalability, and future-proofing. This stack seamlessly scales from marketing website to full SaaS platform without architectural rewrites. The frontend utilizes Next.js 15's App Router for hybrid rendering (static for marketing, dynamic for user accounts), while Supabase provides managed PostgreSQL with real-time capabilities and built-in authentication. Stripe handles subscription billing with 14-day trials and customer portal integration. The architecture prioritizes conversion optimization through A/B testing, real-time user experiences, and progressive enhancement from marketing site to complete ecommerce platform supporting account management, subscription billing, and social accountability features.
 
 ### Platform and Infrastructure Choice
 
 After evaluating platform options against the PRD requirements for SEO performance, marketing team autonomy, and integration needs:
 
 **Evaluated Options:**
-1. **Next.js 14 + Supabase + Stripe** ✅ (Selected)
+1. **Next.js 15 + Supabase + Stripe** ✅ (Selected)
    - **Pros**: Hybrid rendering, real-time capabilities, managed auth/database, proven payment infrastructure, scales from marketing to SaaS
    - **Cons**: Supabase vendor dependency, PostgreSQL limitations at extreme scale
    - **Best for**: Rapid development, ecommerce evolution, real-time features
@@ -63,19 +67,19 @@ After evaluating platform options against the PRD requirements for SEO performan
    - **Cons**: Limited by API-only backend, difficult user account management
    - **Best for**: Content-heavy sites without user accounts
 
-**Final Architecture Decision: Next.js 14 + Supabase + Stripe**
+**Final Architecture Decision: Next.js 15 + Supabase + Stripe**
 
 **Platform:** Vercel (Frontend) + Supabase Cloud (Backend) + Stripe (Payments)
-**Key Services:** Next.js 14 App Router, Supabase PostgreSQL + Auth + Real-time, Stripe Subscriptions + Customer Portal
+**Key Services:** Next.js 15 App Router, Supabase PostgreSQL + Auth + Real-time, Stripe Subscriptions + Customer Portal
 **Deployment Strategy:** Vercel edge deployment with Supabase global regions for optimal performance
 
 ### Repository Structure
 
-**Structure:** Single Next.js 14 application with feature-based organization
+**Structure:** Single Next.js 15 application with feature-based organization
 **Package Manager:** npm with workspaces for potential future expansion
 **Organization Strategy:** App Router structure with grouped routes for marketing vs authenticated areas
 
-The application uses Next.js 14's App Router with route groups to separate marketing pages from authenticated user features, enabling progressive enhancement from marketing site to full platform without restructuring.
+The application uses Next.js 15's App Router with route groups to separate marketing pages from authenticated user features, enabling progressive enhancement from marketing site to full platform without restructuring.
 
 ### High Level Architecture Diagram
 
@@ -95,7 +99,7 @@ graph TB
     end
 
     subgraph "Frontend Application"
-        H[Next.js 14 App Router]
+        H[Next.js 15 App Router]
         I[React Server Components]
         J[Static Generation SSG]
         K[Server-Side Rendering SSR]
@@ -176,7 +180,7 @@ graph TB
 
 ### Architectural Patterns
 
-- **Hybrid Rendering Architecture:** Next.js 14 App Router with static generation for marketing pages and server-side rendering for user accounts - _Rationale:_ Optimizes SEO performance while enabling dynamic user experiences and real-time features
+- **Hybrid Rendering Architecture:** Next.js 15 App Router with static generation for marketing pages and server-side rendering for user accounts - _Rationale:_ Optimizes SEO performance while enabling dynamic user experiences and real-time features
 - **Progressive Enhancement:** Scales from marketing website to full SaaS platform without architectural rewrites - _Rationale:_ Enables rapid market validation while preserving ability to add ecommerce features
 - **Real-time Data Layer:** Supabase PostgreSQL with WebSocket subscriptions for live user interactions - _Rationale:_ Supports social accountability features and live goal tracking without complex infrastructure
 - **Secure by Default:** Row Level Security (RLS) policies and built-in authentication - _Rationale:_ Protects user data while simplifying security implementation
@@ -1230,7 +1234,7 @@ CREATE TABLE ab_test_results (
 
 ## Frontend Architecture
 
-The frontend architecture leverages Next.js 14 App Router with React Server Components for optimal SEO performance while maintaining the Moon Ring design system consistency and conversion optimization focus.
+The frontend architecture leverages Next.js 15 App Router with React Server Components for optimal SEO performance while maintaining the Moon Ring design system consistency and conversion optimization focus.
 
 ### Component Architecture
 
@@ -1654,7 +1658,7 @@ export class LeadService {
 
 ## Backend Architecture
 
-The backend architecture uses Next.js 14 App Router with serverless functions for optimal performance, scalability, and integration with the marketing technology stack.
+The backend architecture uses Next.js 15 App Router with serverless functions for optimal performance, scalability, and integration with the marketing technology stack.
 
 ### Service Architecture
 
@@ -3328,7 +3332,7 @@ This comprehensive fullstack architecture document provides the complete technic
 
 ✅ **Marketing & Conversion Focus**: Jamstack architecture with optimized conversion funnels, A/B testing capabilities, and comprehensive analytics integration supporting 8%+ homepage conversion targets
 
-✅ **SEO Optimization**: Next.js 14 with SSG/SSR, automatic Core Web Vitals optimization, and content-first architecture designed to achieve 90+ Lighthouse scores and <2s load times
+✅ **SEO Optimization**: Next.js 15 with SSG/SSR, automatic Core Web Vitals optimization, and content-first architecture designed to achieve 90+ Lighthouse scores and <2s load times
 
 ✅ **Brand Consistency**: Comprehensive Moon Ring design system integration with deep purple gradients, glass-morphism effects, and health category color coding throughout all components
 
