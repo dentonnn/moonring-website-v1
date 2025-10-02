@@ -54,7 +54,8 @@ export default function EmailCaptureForm({
       }
 
       // Insert lead
-      const { error: leadError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: leadError } = await (supabase as any)
         .from('leads')
         .insert({
           email,
@@ -70,7 +71,8 @@ export default function EmailCaptureForm({
       if (leadError) {
         if (leadError.code === '23505') { // Unique violation
           // Email already exists, update the existing lead
-          const { error: updateError } = await supabase
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { error: updateError } = await (supabase as any)
             .from('leads')
             .update({
               name: name || null,
@@ -86,7 +88,8 @@ export default function EmailCaptureForm({
       }
 
       // Also add to email subscriptions
-      const { error: subError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: subError } = await (supabase as any)
         .from('email_subscriptions')
         .insert({
           email,
@@ -100,7 +103,8 @@ export default function EmailCaptureForm({
       }
 
       // Track conversion event
-      await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (supabase as any)
         .from('conversion_events')
         .insert({
           session_id: getSessionId(),

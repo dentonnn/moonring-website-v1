@@ -21,7 +21,7 @@ export async function sendEmail(options: EmailOptions) {
       html: options.html,
       react: options.react,
       text: options.text,
-      reply_to: options.replyTo,
+      replyTo: options.replyTo,
     })
 
     if (error) {
@@ -82,7 +82,7 @@ export const emailTemplates = {
     `
   }),
 
-  orderConfirmation: (orderNumber: string, productDetails: any) => ({
+  orderConfirmation: (orderNumber: string, productDetails: { size: string; color: string; amount: number }) => ({
     subject: `Order Confirmed: ${orderNumber}`,
     html: `
       <!DOCTYPE html>

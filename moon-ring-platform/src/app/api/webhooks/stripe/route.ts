@@ -2,9 +2,10 @@ import { headers } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createServerComponentClient } from '@/lib/supabase/server'
+import type { Database } from '@/types/database'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
+  apiVersion: '2025-08-27.basil',
 })
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
@@ -18,8 +19,9 @@ export async function POST(req: NextRequest) {
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
-  } catch (err: any) {
-    console.error(`Webhook signature verification failed: ${err.message}`)
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
+    console.error(`Webhook signature verification failed: ${errorMessage}`)
     return NextResponse.json(
       { error: 'Invalid signature' },
       { status: 400 }
@@ -41,24 +43,30 @@ export async function POST(req: NextRequest) {
         }
 
         // Create order in database
-        const { error: orderError } = await supabase
+        const shippingAddress = (session as { shipping_cost?: { shipping_rate?: string }; shipping_details?: { address?: Stripe.Address } }).shipping_details?.address || session.customer_details?.address || {}
+
+        const orderData: Database['public']['Tables']['orders']['Insert'] = {
+          customer_email: session.customer_email!,
+          customer_name: session.customer_details?.name || null,
+          stripe_payment_intent_id: session.payment_intent as string,
+          stripe_customer_id: session.customer as string,
+          product_variant: productVariant as Database['public']['Tables']['orders']['Insert']['product_variant'],
+          amount_cents: session.amount_total || 0,
+          currency: session.currency || 'usd',
+          status: 'paid',
+          shipping_address: shippingAddress as Database['public']['Tables']['orders']['Insert']['shipping_address'],
+          billing_address: (session.customer_details?.address as Database['public']['Tables']['orders']['Insert']['billing_address']) || null,
+          metadata: {
+            stripe_session_id: session.id,
+            ...metadata
+          } as Database['public']['Tables']['orders']['Insert']['metadata']
+        }
+
+        // Type assertion to work around Supabase generic type inference issues with webhooks
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error: orderError } = await (supabase as any)
           .from('orders')
-          .insert({
-            customer_email: session.customer_email!,
-            customer_name: session.customer_details?.name || null,
-            stripe_payment_intent_id: session.payment_intent as string,
-            stripe_customer_id: session.customer as string,
-            product_variant: productVariant,
-            amount_cents: session.amount_total || 0,
-            currency: session.currency || 'usd',
-            status: 'paid',
-            shipping_address: session.shipping_details?.address || session.customer_details?.address,
-            billing_address: session.customer_details?.address,
-            metadata: {
-              stripe_session_id: session.id,
-              ...metadata
-            }
-          })
+          .insert(orderData)
 
         if (orderError) {
           console.error('Error creating order:', orderError)
@@ -66,13 +74,15 @@ export async function POST(req: NextRequest) {
         }
 
         // Update lead status if exists
-        await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any)
           .from('leads')
           .update({ conversion_stage: 'customer' })
           .eq('email', session.customer_email!)
 
         // Track conversion event
-        await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any)
           .from('conversion_events')
           .insert({
             session_id: metadata.session_id || 'unknown',
@@ -89,7 +99,8 @@ export async function POST(req: NextRequest) {
 
         // Update inventory
         const sku = `MR-${(metadata.size || 'MD').substr(0, 2).toUpperCase()}-${(metadata.color || 'BLK').substr(0, 3).toUpperCase()}`
-        await supabase.rpc('decrement_inventory', {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any).rpc('decrement_inventory', {
           p_sku: sku,
           p_quantity: 1
         })
@@ -101,7 +112,8 @@ export async function POST(req: NextRequest) {
         const paymentIntent = event.data.object as Stripe.PaymentIntent
 
         // Update order status if exists
-        await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any)
           .from('orders')
           .update({
             status: 'cancelled',
@@ -118,7 +130,8 @@ export async function POST(req: NextRequest) {
         const charge = event.data.object as Stripe.Charge
 
         // Update order status to refunded
-        await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any)
           .from('orders')
           .update({
             status: 'refunded',

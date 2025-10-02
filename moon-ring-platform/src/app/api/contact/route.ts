@@ -123,12 +123,13 @@ export async function POST(request: Request) {
       data: { supportData, confirmData }
     })
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Contact form error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
     return NextResponse.json(
       {
         error: 'Failed to send message. Please try again or email support@moonring.com directly.',
-        details: error.message
+        details: errorMessage
       },
       { status: 500 }
     )

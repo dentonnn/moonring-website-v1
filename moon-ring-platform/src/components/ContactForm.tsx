@@ -40,8 +40,9 @@ export default function ContactForm() {
       // Reset success message after 5 seconds
       setTimeout(() => setSuccess(false), 5000)
 
-    } catch (err: any) {
-      setError(err.message || 'Failed to send message. Please try again.')
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to send message. Please try again.'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
