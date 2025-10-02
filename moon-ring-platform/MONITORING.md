@@ -6,7 +6,8 @@ This document outlines the monitoring, analytics, and observability tools config
 
 The website uses a comprehensive monitoring stack to track performance, errors, and user analytics:
 
-- **Vercel Analytics** - Web vitals and performance metrics
+- **Vercel Analytics** - Privacy-friendly web vitals and performance metrics (no cookies)
+- **Google Analytics 4 (GA4)** - Marketing analytics and conversion tracking (requires cookie consent)
 - **Sentry** - Error tracking and application monitoring
 - **Bundle Analyzer** - Build-time bundle size analysis
 
@@ -48,6 +49,103 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   - Web Vitals breakdown
   - Top Pages by traffic
   - Geographic distribution
+
+## Google Analytics 4 (GA4)
+
+### Setup
+
+GA4 provides marketing-focused analytics including traffic sources, conversion funnels, and user behavior tracking.
+
+### GDPR-Compliant Cookie Consent
+
+GA4 **only loads** if the user accepts cookies via the Cookie Consent banner. This ensures GDPR compliance.
+
+- **Implementation**: `src/components/Analytics.tsx` (consent-aware wrapper)
+- **Consent Logic**: `src/lib/analytics/consent.ts`
+- **Cookie Banner**: `src/components/CookieConsent.tsx`
+
+### Environment Variables
+
+Required in `.env.local` and Vercel production environment:
+
+```bash
+# Google Analytics 4
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+### Creating a GA4 Property
+
+1. Visit [Google Analytics](https://analytics.google.com)
+2. Click "Admin" → "Create Property"
+3. Property name: "Moon Ring Marketing Website"
+4. Select "Web" platform
+5. Website URL: Your production domain
+6. Copy Measurement ID (format: `G-XXXXXXXXXX`)
+7. Add to `.env.local` and Vercel environment variables
+
+### Implementation
+
+Located in: `src/app/layout.tsx` + `src/components/Analytics.tsx`
+
+```typescript
+// src/components/Analytics.tsx
+'use client'
+import { GoogleAnalytics } from '@next/third-parties/google'
+import { hasAnalyticsConsent } from '@/lib/analytics/consent'
+
+export default function AnalyticsWrapper() {
+  const [shouldLoadGA, setShouldLoadGA] = useState(false)
+
+  useEffect(() => {
+    setShouldLoadGA(hasAnalyticsConsent())
+  }, [])
+
+  if (!shouldLoadGA) return null
+  return <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+}
+```
+
+### Features Available
+
+**Traffic Analysis**:
+- Traffic sources (Google Search, social media, direct, referral)
+- Geographic distribution of users
+- Device and browser breakdown
+
+**Conversion Tracking**:
+- Funnel analysis (Homepage → Pricing → Checkout)
+- Goal completions (email signups, contact form submissions)
+- E-commerce tracking (Stripe purchase attribution)
+
+**User Behavior**:
+- Page views and session duration
+- Bounce rate by page
+- User flow (path exploration)
+- Cohort analysis
+
+**Campaign Tracking**:
+- UTM parameter support for campaign attribution
+- Ad performance (if running Google Ads)
+- Remarketing audience building
+
+### Access
+
+- **Dashboard**: [Google Analytics](https://analytics.google.com)
+- **Property**: Moon Ring Marketing Website
+- **Measurement ID**: Available in Admin → Data Streams
+
+### Data Retention
+
+- **Standard Events**: 2 months (configurable up to 14 months)
+- **Custom Events**: Same as standard
+- **Free Tier Limit**: 10 million events/month (very generous)
+
+### Privacy & Compliance
+
+- **Cookie Consent**: GA4 only loads after user accepts cookies
+- **IP Anonymization**: Can be enabled in GA4 settings
+- **Data Deletion**: Supports GDPR data deletion requests
+- **No Remarketing**: Disable remarketing features if privacy-focused
 
 ## Sentry Error Monitoring
 

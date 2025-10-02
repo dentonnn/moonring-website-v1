@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
+import AnalyticsWrapper from '@/components/Analytics';
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
 
@@ -31,7 +32,10 @@ export default function RootLayout({
       >
         {children}
         <CookieConsent />
+        {/* Vercel Analytics - privacy-friendly, no cookies */}
         <Analytics />
+        {/* GA4 - only loads if user accepts cookies */}
+        <AnalyticsWrapper />
       </body>
     </html>
   );

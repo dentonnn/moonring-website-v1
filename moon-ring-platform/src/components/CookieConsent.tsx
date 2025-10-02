@@ -21,6 +21,10 @@ export default function CookieConsent() {
   const handleAccept = () => {
     localStorage.setItem('moonring-cookie-consent', 'accepted')
     handleClose()
+    // Reload to enable analytics
+    if (typeof window !== 'undefined') {
+      window.location.reload()
+    }
   }
 
   const handleDecline = () => {
