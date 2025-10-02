@@ -23,25 +23,6 @@ This repository contains the **marketing website** for Moon Ring, designed to:
 - **Monitoring**: Sentry for error tracking, Vercel Analytics for performance
 - **Deployment**: Vercel (optimized for Next.js)
 
-## 📁 Project Structure
-
-```
-moonring-website-v1/
-├── moon-ring-platform/          # Main Next.js application
-│   ├── src/
-│   │   ├── app/                # Next.js App Router pages
-│   │   ├── components/         # React components
-│   │   └── lib/                # Utilities and configurations
-│   ├── public/                 # Static assets
-│   ├── supabase/               # Database migrations
-│   └── .env.local              # Environment variables (not committed)
-├── docs/                       # Project documentation
-│   ├── roadmaps/              # Execution plans and phases
-│   ├── stories/               # Feature implementation tasks
-│   └── *.md                   # Architecture and guides
-└── README.md                   # This file
-```
-
 ## 🛠️ Development Setup
 
 ### Prerequisites
@@ -88,41 +69,6 @@ moonring-website-v1/
 
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Environment Variables
-
-Required variables in `moon-ring-platform/.env.local`:
-
-```bash
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-
-# Stripe
-STRIPE_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-
-# Email
-RESEND_API_KEY=re_...
-
-# App URL
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-See `moon-ring-platform/.env.example` for the complete list.
-
-## 📜 Available Commands
-
-All commands should be run from the `moon-ring-platform/` directory:
-
-```bash
-npm run dev          # Start development server with Turbopack
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
-
 ## 📚 Documentation
 
 - **[CLAUDE.md](./CLAUDE.md)** - Development guide for Claude Code
@@ -131,14 +77,6 @@ npm run lint         # Run ESLint
 - **[Architecture](./docs/fullstack-architecture.md)** - Technical architecture overview
 - **[Phase 3 Plan](./docs/roadmaps/phase-3-plan.md)** - Current development roadmap
 
-## 🚢 Deployment
-
-The site is optimized for deployment on Vercel. See [moon-ring-platform/DEPLOYMENT.md](./moon-ring-platform/DEPLOYMENT.md) for detailed instructions including:
-
-- Environment variable configuration
-- Stripe webhook setup
-- Custom domain configuration
-- Production checklist
 
 ## 📊 Current Status
 
@@ -167,13 +105,6 @@ The site is optimized for deployment on Vercel. See [moon-ring-platform/DEPLOYME
 - Supabase RLS policies are enforced on all tables
 - Webhook endpoints validate signatures before processing
 
-## 🤝 Contributing
-
-1. Create a feature branch from `dev`: `git checkout -b feature/your-feature-name dev`
-2. Make your changes in the `moon-ring-platform/` directory
-3. Ensure `npm run lint` and `npm run build` pass
-4. Commit following conventional commits style
-5. Open a PR against the `dev` branch
 
 ## 📄 License
 
