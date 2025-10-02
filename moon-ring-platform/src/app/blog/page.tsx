@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: 'Explore articles on commitment psychology, social accountability, and evidence-based behavioral change strategies.',
 }
 
+// Enable ISR - revalidate every hour (3600 seconds)
+export const revalidate = 3600
+
 // Sample blog posts - in production, these would come from a CMS or database
 const blogPosts = [
   {

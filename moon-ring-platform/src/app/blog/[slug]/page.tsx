@@ -3,9 +3,23 @@ import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock, Share2, Twitter, Linkedin, Facebook } from 'lucide-react'
 import type { Metadata } from 'next'
 
+// Enable ISR - revalidate every hour (3600 seconds)
+export const revalidate = 3600
+
 // In production, this would fetch from CMS/database
-const getBlogPost = (slug: string) => {
-  const posts: Record<string, any> = {
+interface BlogPost {
+  title: string
+  excerpt: string
+  category: string
+  author: string
+  authorBio: string
+  date: string
+  readTime: string
+  content: string
+}
+
+const getBlogPost = (slug: string): BlogPost | null => {
+  const posts: Record<string, BlogPost> = {
     'why-wearables-fail-without-accountability': {
       title: 'Why 68% of Wearable Users Fail (And How Accountability Fixes It)',
       excerpt: 'The wearable industry has a dirty secret: most devices end up in drawers within six months. We explore the psychology behind this failure and how social accountability creates lasting change.',
