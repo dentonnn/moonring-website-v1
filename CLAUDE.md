@@ -62,6 +62,16 @@ Before running the development server:
    - **Email**: `RESEND_API_KEY` (for Resend email service)
    - **App URL**: `NEXT_PUBLIC_APP_URL` (defaults to `http://localhost:3000`)
 4. Run `npm install` if `node_modules/` is missing
+5. Apply database migrations if needed: `./apply-migration.sh`
+
+## Deployment
+
+For production deployment to Vercel, see detailed instructions in `moon-ring-platform/DEPLOYMENT.md`, which covers:
+- Vercel deployment steps and environment variable configuration
+- Stripe webhook endpoint setup for production
+- Custom domain configuration
+- Health check verification (`/api/health`)
+- Common deployment troubleshooting
 
 ## Development Best Practices (Summary)
 
@@ -97,22 +107,70 @@ Before running the development server:
 ```
 src/
 ├── app/                    # Next.js 15 App Router pages and layouts
+│   ├── about/             # About page with mission and team
 │   ├── api/               # API routes
-│   │   ├── checkout/     # Stripe checkout endpoints
+│   │   ├── checkout/     # Stripe checkout session creation
+│   │   ├── contact/      # Contact form submission handler
 │   │   ├── health/       # Health check endpoint
-│   │   └── webhooks/     # Webhook handlers (Stripe)
-│   ├── layout.tsx        # Root layout with fonts and metadata
-│   └── page.tsx          # Homepage
-├── components/            # React components
-│   └── forms/            # Form components (EmailCaptureForm, etc.)
-├── lib/                  # Shared utilities and configurations
-│   ├── email/            # Email service utilities (Resend)
-│   └── supabase/         # Supabase client and server utilities
-└── types/                # TypeScript type definitions
-    └── database.ts       # Supabase database types
+│   │   └── webhooks/     # Webhook handlers (Stripe events)
+│   ├── blog/              # Blog listing and individual post pages
+│   ├── contact/           # Contact page with form
+│   ├── privacy/           # Privacy policy (legal)
+│   ├── research/          # Research library page
+│   ├── terms/             # Terms of service (legal)
+│   ├── layout.tsx         # Root layout with fonts and metadata
+│   └── page.tsx           # Homepage with hero, features, pricing
+├── components/             # React components
+│   ├── forms/             # Form components
+│   │   └── EmailCaptureForm.tsx  # Email waitlist capture
+│   ├── ContactForm.tsx    # Contact page form with Resend integration
+│   ├── CookieConsent.tsx  # GDPR cookie banner
+│   ├── FAQAccordion.tsx   # Accordion component for FAQ section
+│   ├── Navigation.tsx     # Main nav with mobile menu
+│   └── OptimizedImage.tsx # Image optimization wrapper
+├── lib/                   # Shared utilities and configurations
+│   ├── email/             # Email service utilities
+│   │   └── resend.ts      # Resend API client
+│   └── supabase/          # Supabase client and server utilities
+│       ├── client.ts      # Browser client
+│       └── server.ts      # Server-side client
+├── middleware.ts          # Session tracking and route protection
+└── types/                 # TypeScript type definitions
+    └── database.ts        # Supabase database types
 ```
 
-**Supabase**: Database schema migrations are stored in `moon-ring-platform/supabase/migrations/`. When updating the database schema, add migration files here and commit them alongside code changes.
+**Database Management**:
+- Schema migrations: `moon-ring-platform/supabase/migrations/`
+- Apply migrations using `./apply-migration.sh` script (from moon-ring-platform/)
+- When updating schema, create migration files and commit with code changes
 
-**Current State**: Next.js project with foundational API routes, Supabase integration, Stripe payment flow, and email capture. Ready for building marketing pages, product showcase, pricing, testimonials, and conversion funnels. The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users.
-- memorize this purpose for the website so you don't confuse overbloated features in future
+**Asset Management**:
+- Images, fonts, and static files: `moon-ring-platform/public/`
+- See `moon-ring-platform/ASSETS_GUIDE.md` for image optimization guidelines
+
+**Current State**: ~85% complete marketing website with homepage, legal pages (privacy/terms), about page, blog structure, research library, contact form, and cookie consent. Supabase + Stripe integration functional. Ready for Phase 3 (backend feature integration) and asset optimization. The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
+
+## Key Architectural Patterns
+
+**Client vs Server Components**:
+- Use Server Components by default (Next.js 15 App Router)
+- Mark Client Components with `'use client'` directive (e.g., forms, interactive UI)
+- Supabase has separate clients: `lib/supabase/client.ts` (browser) and `lib/supabase/server.ts` (server-side)
+
+**API Routes**:
+- Checkout flow: `/api/checkout` creates Stripe sessions
+- Webhooks: `/api/webhooks/stripe` handles payment events (requires webhook secret)
+- Contact: `/api/contact` processes form submissions via Resend
+- Health: `/api/health` checks service connectivity
+
+**Data Flow**:
+1. User submits form (email capture, contact, checkout)
+2. Client-side validation, then API route call
+3. API route interacts with Supabase (data) or Stripe/Resend (services)
+4. Webhook handlers update database based on external events
+
+**Styling Approach**:
+- Tailwind utility classes for all styling
+- Glass-morphism design with brand gradient (#FF33BA → #FF9966)
+- Mobile-first responsive (320px → 1024px+)
+- Custom CSS in `globals.css` only for animations and complex effects
