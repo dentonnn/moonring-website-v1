@@ -1,6 +1,6 @@
 # Phase 3 Quick Start Guide
 
-**Read this first, then dive into [PHASE_3_PLAN.md](PHASE_3_PLAN.md) for details**
+**Read this first, then dive into [Phase 3 Plan](phase-3-plan.md) for details**
 
 ---
 
@@ -8,11 +8,11 @@
 
 Transform your marketing site from static to production-ready:
 
-1. **Working contact form** - Capture leads, not just display forms
-2. **Blog CMS** - Update content without code deploys
-3. **Analytics** - See who visits and what they do
-4. **Error tracking** - Fix bugs before users complain
-5. **Performance optimization** - Load faster, rank higher
+1. **Working contact form** – capture leads, not just display forms
+2. **Analytics telemetry** – see who visits and what they do
+3. **Error monitoring** – fix bugs before users complain
+4. **Performance optimization** – load faster, rank higher
+5. **Optional CMS** – enable no-code blog updates after the blockers ship
 
 ---
 
@@ -27,7 +27,7 @@ You already have `RESEND_API_KEY` configured! Just add the API route:
 # Create the endpoint
 touch src/app/api/contact/route.ts
 
-# Copy code from PHASE_3_PLAN.md → Feature 1
+# Copy code from phase-3-plan.md → Feature 1
 # Update contact form with handleSubmit
 # Test and done!
 ```
@@ -54,19 +54,20 @@ npx @sentry/wizard@latest -i nextjs
 
 ## 🎨 Bigger Lifts (When Ready)
 
-### 4. CMS Integration (4-6 hours)
-**Impact:** Medium | **Effort:** Medium | **Cost:** Free
-
-- Recommended: Contentful
-- Benefit: Non-devs can update blog
-- When: After you have 10+ blog posts to manage
-
-### 5. Performance Optimization (Ongoing)
+### 4. Performance Optimization (Ongoing)
 **Impact:** High | **Effort:** Variable | **Cost:** Free
 
 - Start with bundle analysis
 - Add caching as needed
-- Optimize images (Cloudflare/Cloudinary)
+- Optimize images (`next/image`, CDN rules)
+- Re-run Lighthouse until >90
+
+### 5. CMS Integration (Optional, 4-6 hours)
+**Impact:** Medium | **Effort:** Medium | **Cost:** Free
+
+- Recommended: Contentful
+- Benefit: Non-devs can update blog
+- When: Only after contact form, analytics, Sentry, and performance targets are live
 
 ---
 
@@ -82,7 +83,7 @@ High Impact, Medium Effort (DO NEXT):
 ├── Performance Optimization ⭐⭐
 └── Google Analytics (if needed) ⭐⭐
 
-Medium Impact, Medium Effort (DO LATER):
+Medium Impact, Medium Effort (OPTIONAL AFTER):
 └── CMS Integration ⭐
 ```
 
@@ -90,17 +91,18 @@ Medium Impact, Medium Effort (DO LATER):
 
 ## 🚀 Recommended Order
 
-### Week 1: Core Backend (All high-impact, low-effort)
-1. Monday: Contact form (2 hours)
-2. Tuesday: Sentry (30 min) + Vercel Analytics (5 min)
-3. Wednesday: Test everything
-4. Thursday: Deploy to production
-5. Friday: Monitor and adjust
+### Week 1: Production Blockers
+1. Monday: Contact form backend (Resend) + manual email test
+2. Tuesday: Analytics instrumentation (`@vercel/analytics`, optional GA4) + dashboard check
+3. Wednesday: Sentry wizard, trigger test error, wire alert channel
+4. Thursday: Regression testing + deploy to production
+5. Friday: Monitor dashboards, capture validation notes
 
-### Week 2: Optional Enhancements
-- CMS if you need it
-- Performance tuning
-- Additional analytics
+### Week 2: Performance Hardening
+- Run Lighthouse baseline → implement caching/image/bundle fixes → re-test until >90
+
+### Optional Sprint: CMS Integration
+- Only schedule after telemetry + performance targets stay green for a full release window
 
 ---
 
@@ -176,7 +178,7 @@ Medium Impact, Medium Effort (DO LATER):
 
 ## 📞 Need Help?
 
-1. Check [PHASE_3_PLAN.md](PHASE_3_PLAN.md) for detailed code
+1. Check [Phase 3 Plan](phase-3-plan.md) for detailed code
 2. Review service documentation (links above)
 3. Test in local environment first
 4. Deploy incrementally (one feature at a time)
@@ -193,7 +195,8 @@ You'll know Phase 3 is done when:
 - [ ] Errors appear in Sentry dashboard
 - [ ] Lighthouse score >90
 - [ ] Site loads in <2 seconds
+- [ ] (Optional) Blog content is powered by CMS without deploys
 
 ---
 
-**Next Step:** Start with the contact form! It's the quickest win and uses infrastructure you already have. Follow the code in [PHASE_3_PLAN.md → Feature 1](PHASE_3_PLAN.md#feature-1-contact-form-backend-integration).
+**Next Step:** Start with the contact form! It's the quickest win and uses infrastructure you already have. Follow the code in [Phase 3 Plan → Feature 1](phase-3-plan.md#feature-1-contact-form-backend-integration).

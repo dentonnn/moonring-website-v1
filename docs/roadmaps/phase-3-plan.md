@@ -8,14 +8,26 @@
 
 ## 📋 Feature Overview
 
-### Priority 1: Critical for Launch
-1. **Contact Form Backend** - Capture and route support inquiries
-2. **Error Monitoring (Sentry)** - Track and fix production issues
-3. **Analytics (Vercel/Google)** - Understand user behavior
+### Priority 1: Production Blockers
+1. **Contact Form Backend** – capture and route support inquiries
+2. **Analytics Instrumentation** – understand user behavior from day one
+3. **Error Monitoring (Sentry)** – detect and triage production issues
 
-### Priority 2: Important for Scale
-4. **CMS Integration** - Manage blog content without code deploys
-5. **Performance Optimization** - Cache, CDN, image optimization
+### Priority 2: Stabilization
+4. **Performance Optimization** – cache, CDN, and image tuning for Core Web Vitals
+
+### Optional Next
+5. **CMS Integration** – manage blog content without code deploys (only after 1-4 ship)
+
+---
+
+## 🛠️ Execution Order
+
+1. **Wire the contact form backend** using Resend, validate dual-email delivery, and document environment requirements.
+2. **Enable analytics** (`@vercel/analytics` MVP, GA4 if needed) and verify events in the chosen dashboard.
+3. **Install Sentry** via wizard, set DSN tokens, and confirm a captured test error.
+4. **Run performance hardening** (Lighthouse baseline → fixes → re-test) to meet the >90 score / <2s LCP targets.
+5. **Optional CMS integration** once telemetry and reliability are in place; block scheduling until steps 1-4 are complete.
 
 ---
 
@@ -173,158 +185,16 @@ Options: Formspree, Tally, Typeform
 - **Pros:** No code required
 - **Cons:** Less control, monthly fee, external dependency
 
----
-
-## 📝 Feature 2: CMS Integration for Blog
-
-### Current State
-- ✅ Blog UI complete with 6 sample posts
-- ❌ Content hardcoded in `page.tsx`
-- ❌ No admin interface to add/edit posts
-
-### Implementation Options
-
-#### **Option A: Contentful (Recommended)**
-
-**Pros:**
-- Industry standard headless CMS
-- Great developer experience
-- Free tier: 25K records, 3 users
-- Rich text editor
-- Image hosting included
-- GraphQL API
-
-**Architecture:**
-
-```
-Contentful CMS → GraphQL API → Next.js (ISR) → User
-     ↓
-Blog posts stored
-Images optimized
-```
-
-**Setup Steps:**
-
-1. **Create Contentful account** (free)
-
-2. **Create content model:**
-   - Title (Short text)
-   - Slug (Short text, unique)
-   - Author (Reference to Author model)
-   - Date (Date & time)
-   - Category (Short text)
-   - Excerpt (Long text)
-   - Featured Image (Media)
-   - Content (Rich text)
-   - Read Time (Short text)
-
-3. **Install SDK:**
-```bash
-npm install contentful
-```
-
-4. **Create API client:**
-```typescript
-// src/lib/contentful.ts
-import { createClient } from 'contentful'
-
-export const contentfulClient = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-})
-
-export async function getBlogPosts() {
-  const entries = await contentfulClient.getEntries({
-    content_type: 'blogPost',
-    order: '-fields.date',
-  })
-
-  return entries.items.map((item: any) => ({
-    slug: item.fields.slug,
-    title: item.fields.title,
-    excerpt: item.fields.excerpt,
-    author: item.fields.author?.fields.name,
-    date: item.fields.date,
-    category: item.fields.category,
-    readTime: item.fields.readTime,
-    image: item.fields.featuredImage?.fields.file.url,
-  }))
-}
-
-export async function getBlogPost(slug: string) {
-  const entries = await contentfulClient.getEntries({
-    content_type: 'blogPost',
-    'fields.slug': slug,
-    limit: 1,
-  })
-
-  if (!entries.items.length) return null
-
-  const post = entries.items[0]
-  return {
-    slug: post.fields.slug,
-    title: post.fields.title,
-    content: post.fields.content,
-    author: post.fields.author?.fields,
-    // ... other fields
-  }
-}
-```
-
-5. **Update blog pages:**
-```tsx
-// src/app/blog/page.tsx
-import { getBlogPosts } from '@/lib/contentful'
-
-export default async function BlogPage() {
-  const posts = await getBlogPosts()
-
-  return (
-    // Render posts from CMS instead of hardcoded array
-  )
-}
-```
-
-6. **Enable ISR (Incremental Static Regeneration):**
-```tsx
-// Revalidate every hour
-export const revalidate = 3600
-```
-
-**Time:** 4-6 hours (including content migration)
-**Cost:** Free (25K records)
-
-#### **Option B: Sanity CMS**
-
-**Pros:**
-- Real-time collaboration
-- Powerful customization
-- Free tier: Unlimited documents
-- Hosted studio included
-
-**Cons:**
-- Steeper learning curve
-- More setup required
-
-**Time:** 6-8 hours
-
-#### **Option C: Notion API**
-
-**Pros:**
-- Team already uses Notion
-- Free
-- Familiar interface
-
-**Cons:**
-- Less features than dedicated CMS
-- Slower API
-- Limited content modeling
-
-**Time:** 3-4 hours
+#### Definition of Done
+- Support mailbox receives the submission email with all fields populated.
+- Sender receives confirmation email rendered with submitted message.
+- Frontend shows loading, success, and failure states with validation preventing empty submissions.
+- `.env.local` and deployment secrets list `RESEND_API_KEY` (and support address) requirements.
+- QA notes document the manual test run and expected behavior.
 
 ---
 
-## 📊 Feature 3: Analytics Integration
+## 📊 Feature 2: Analytics Integration
 
 ### Option A: Vercel Analytics (Recommended)
 
@@ -400,9 +270,15 @@ export default function RootLayout({ children }) {
 
 **Time:** 2-3 hours
 
+#### Definition of Done
+- `@vercel/analytics` renders telemetry in the Vercel dashboard for deployed environments.
+- Optional GA4 events appear under the configured property when `NEXT_PUBLIC_GA_ID` is supplied.
+- Analytics code is gated to avoid duplicate events in local development.
+- Documentation or story notes capture dashboard URLs and validation screenshots/IDs.
+
 ---
 
-## 🐛 Feature 4: Error Monitoring (Sentry)
+## 🐛 Feature 3: Error Monitoring (Sentry)
 
 ### Implementation
 
@@ -449,9 +325,16 @@ Sentry.init({
 **Time:** 30 minutes
 **Cost:** Free (5K events/month)
 
+#### Definition of Done
+- `NEXT_PUBLIC_SENTRY_DSN` and `SENTRY_AUTH_TOKEN` configured in local and deployment environments.
+- Wizard-generated config committed; `sentry-example-page` removed or disabled before merge.
+- Intentional error (e.g., `/api/contact` throw) appears in Sentry dashboard with release/environment tags.
+- Alert channel (email/Slack) subscribed to the project.
+- Validation steps captured in story notes or runbook for future regression testing.
+
 ---
 
-## ⚡ Feature 5: Performance Optimization
+## ⚡ Feature 4: Performance Optimization
 
 ### A. Enable Caching
 
@@ -530,27 +413,66 @@ ANALYZE=true npm run build
 - Time to Interactive: <3.8s
 - Total Bundle Size: <500KB (initial)
 
+#### Definition of Done
+- Lighthouse performance score ≥90 on desktop and mobile for core marketing pages.
+- Recorded metrics (FCP, LCP, TTI, CLS) shared in QA log with before/after comparison.
+- `next/image` and caching configuration committed with notes on CDN settings.
+- Bundle analysis report archived (screenshot/link) to track future regressions.
+
+---
+
+## 📝 Feature 5 (Optional): CMS Integration for Blog
+
+> Schedule only after Features 1-4 are deployed and monitored for at least one release.
+
+### Current State
+- ✅ Blog UI complete with 6 sample posts
+- ❌ Content hardcoded in `page.tsx`
+- ❌ No admin interface to add/edit posts
+
+### Recommended Path: Contentful
+1. **Provision space & tokens** – create a free Contentful space, generate Content Delivery & Preview tokens, store as `CONTENTFUL_SPACE_ID`/`CONTENTFUL_ACCESS_TOKEN`/`CONTENTFUL_PREVIEW_TOKEN`.
+2. **Model content** – configure `Blog Post`, `Author`, and `Category` content types matching current UI needs (title, slug, author ref, hero image, excerpt, rich text body, read time).
+3. **Install SDK & client** – `npm install contentful` and create `src/lib/contentful.ts` helper using `createClient()` for delivery and preview clients.
+4. **Swap data layer** – update `src/app/blog/page.tsx` and `[slug]/page.tsx` to fetch from Contentful, replacing hardcoded arrays with server-side fetch + ISR (`export const revalidate = 3600`).
+5. **Add preview + revalidation** – implement `/api/revalidate` webhook handler and preview route so editors can trigger updates without deploys.
+6. **Migrate seed content** – recreate the six sample posts within Contentful and verify rendering matches the existing design system.
+
+**Time:** 4-6 hours (including migration)
+**Cost:** Free tier (25K records, 3 users)
+
+### Alternative Options
+- **Sanity CMS** – real-time collaboration, more setup (~6-8 hrs).
+- **Notion API** – leverages existing workspace, limited modeling (~3-4 hrs).
+
+#### Definition of Done
+- Marketing blog pages render exclusively from the chosen CMS in production.
+- Editors can add/edit posts without code changes and see updates after ISR/preview refresh.
+- On-demand revalidation endpoint secured (secret token) and documented.
+- Fallback content strategy defined for CMS outages (e.g., cached ISR, graceful error state).
+- Authoring guide committed for future contributors.
+
 ---
 
 ## 📅 Implementation Roadmap
 
-### Week 1: Core Backend
-- [x] Day 1-2: Contact form backend (Resend API)
-- [x] Day 3: Error monitoring (Sentry)
-- [x] Day 4: Analytics (Vercel + Google)
-- [x] Day 5: Testing and QA
+### Week 1: Production Blockers
+- [ ] Day 1-2: Contact form backend (Resend API) wired, validated, documented
+- [ ] Day 3: Analytics instrumentation deployed (Vercel, optional GA4) with dashboards verified
+- [ ] Day 4: Sentry wizard + test error + alert channel configured
+- [ ] Day 5: Regression testing, QA notes, and deployment sign-off
 
-### Week 2: Content Management
-- [ ] Day 1-2: CMS setup (Contentful)
-- [ ] Day 3: Blog migration to CMS
-- [ ] Day 4: Testing content updates
-- [ ] Day 5: Documentation
+### Week 2: Performance Hardening
+- [ ] Day 1-2: Caching setup and `next/image` audit
+- [ ] Day 3: Image optimization + CDN rules validated
+- [ ] Day 4: Bundle analysis and reduction tasks completed
+- [ ] Day 5: Lighthouse re-run with metrics logged (>90 score target)
 
-### Week 3: Performance
-- [ ] Day 1-2: Caching implementation
-- [ ] Day 3: Image optimization
-- [ ] Day 4: Bundle analysis and reduction
-- [ ] Day 5: Performance testing and Lighthouse audits
+### Optional Sprint: CMS Integration (Schedule After Telemetry Stabilizes)
+- [ ] Day 1-2: CMS space provisioning + content modeling
+- [ ] Day 3: Data layer swap + ISR/preview wiring
+- [ ] Day 4: Content migration + editor walkthrough
+- [ ] Day 5: Documentation + handoff to marketing
 
 ---
 
@@ -559,7 +481,7 @@ ANALYZE=true npm run build
 | Feature | Service | Reason | Cost |
 |---------|---------|--------|------|
 | Contact Form | Resend | Already configured, simple | Free (100/day) |
-| CMS | Contentful | Industry standard | Free (25K records) |
+| CMS (optional) | Contentful | Industry standard | Free (25K records) |
 | Analytics | Vercel + GA4 | Built-in + Standard | Free |
 | Error Monitoring | Sentry | Best in class | Free (5K events) |
 | CDN | Vercel Edge | Automatic with hosting | Free |
@@ -582,12 +504,15 @@ STRIPE_WEBHOOK_SECRET=
 RESEND_API_KEY=
 NEXT_PUBLIC_APP_URL=
 
-# New for Phase 3:
-CONTENTFUL_SPACE_ID=
-CONTENTFUL_ACCESS_TOKEN=
+# New for Phase 3 (production blockers):
 NEXT_PUBLIC_GA_ID=
 NEXT_PUBLIC_SENTRY_DSN=
 SENTRY_AUTH_TOKEN=
+
+# Optional (CMS sprint):
+CONTENTFUL_SPACE_ID=
+CONTENTFUL_ACCESS_TOKEN=
+CONTENTFUL_PREVIEW_TOKEN=
 ```
 
 ---
@@ -600,13 +525,6 @@ SENTRY_AUTH_TOKEN=
 - [ ] Support team receives inquiry
 - [ ] Error handling works
 - [ ] Loading states display
-
-### CMS
-- [ ] Blog posts load from Contentful
-- [ ] New posts appear without code deploy
-- [ ] Images optimize correctly
-- [ ] ISR revalidation works
-- [ ] Admin can edit content
 
 ### Analytics
 - [ ] Vercel Analytics tracking pageviews
@@ -626,12 +544,19 @@ SENTRY_AUTH_TOKEN=
 - [ ] Bundle size <500KB initial
 - [ ] All images optimized
 
+### CMS (Optional)
+- [ ] Blog posts load from Contentful
+- [ ] New posts appear without code deploy
+- [ ] Images optimize correctly
+- [ ] ISR revalidation works
+- [ ] Admin can edit content
+
 ---
 
 ## 🚀 Deployment Checklist
 
 - [ ] All environment variables set in production
-- [ ] Domain verified (Resend, Contentful)
+- [ ] Domain verified for Resend (Contentful once CMS enabled)
 - [ ] Sentry source maps uploaded
 - [ ] Analytics tracking verified
 - [ ] Error monitoring tested
@@ -653,4 +578,4 @@ SENTRY_AUTH_TOKEN=
 
 ---
 
-**Next Step:** Review this plan and prioritize features. Start with Contact Form (easiest, immediate value), then Analytics/Sentry (critical for production), then CMS (nice to have), then Performance (ongoing).
+**Next Step:** Review this plan and prioritize features. Start with Contact Form (easiest, immediate value), then Analytics and Sentry (critical for production), follow with Performance hardening, and only then consider CMS as an optional sprint.

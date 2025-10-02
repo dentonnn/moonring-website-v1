@@ -24,7 +24,7 @@
 
 ### 1.1 Project Brief Reference & Strategic Foundation
 
-This Product Requirements Document builds upon the comprehensive [Moon Ring Project Brief](../MOON_RING_PROJECT_BRIEF.md) that established our strategic pivot from hardware-first to software-first social accountability platform. The brief identified a critical market opportunity: **28 million frustrated wearable users** who own devices but struggle with sustained behavioral change due to lack of accountability frameworks.
+This Product Requirements Document builds upon the comprehensive [Moon Ring Project Brief](strategy/moon_ring_project_brief.md) that established our strategic pivot from hardware-first to software-first social accountability platform. The brief identified a critical market opportunity: **28 million frustrated wearable users** who own devices but struggle with sustained behavioral change due to lack of accountability frameworks.
 
 **Key Strategic Insights from Project Brief:**
 - **Market Size**: $27B wearable market with 68% abandonment rate within 6 months

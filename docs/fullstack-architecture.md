@@ -39,7 +39,7 @@ Based on the current project structure analysis, this is primarily a greenfield 
 
 ### Execution Status (Q4 2025)
 
-The deployed marketing site and active codebase run on **Next.js 15.5.3**, aligning with the production-hardening backlog documented in `PHASE_3_PLAN.md`. Treat that plan as the authoritative near-term scope (contact form backend, analytics, Sentry, optional CMS, performance tuning). The remainder of this architecture document captures the longer-horizon expansion path once Phase 3 deliverables are complete.
+The deployed marketing site and active codebase run on **Next.js 15.5.3**, aligning with the production-hardening backlog documented in `roadmaps/phase-3-plan.md`. Treat that plan as the authoritative near-term scope (contact form backend, analytics, Sentry, optional CMS, performance tuning). The remainder of this architecture document captures the longer-horizon expansion path once Phase 3 deliverables are complete.
 
 ## High Level Architecture
 

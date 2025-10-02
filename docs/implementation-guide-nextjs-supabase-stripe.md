@@ -14,7 +14,7 @@ This implementation guide covers the complete setup for Moon Ring's platform usi
 
 ### Execution Status (Q4 2025)
 
-The current codebase already runs on Next.js 15.5.3, and near-term engineering work follows the production readiness checklist in `PHASE_3_PLAN.md` (contact form backend, analytics, Sentry, optional CMS, performance). Use this guide when expanding beyond that checklist or onboarding new environments.
+The current codebase already runs on Next.js 15.5.3, and near-term engineering work follows the production readiness checklist in `roadmaps/phase-3-plan.md` (contact form backend, analytics, Sentry, optional CMS, performance). Use this guide when expanding beyond that checklist or onboarding new environments.
 
 ### Core Technology Stack
 
