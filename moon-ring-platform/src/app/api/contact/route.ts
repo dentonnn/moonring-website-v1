@@ -1,7 +1,5 @@
-import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/email/resend'
 
 export async function POST(request: Request) {
   try {
@@ -25,6 +23,8 @@ export async function POST(request: Request) {
     }
 
     // Send email to support team
+    const resend = getResendClient()
+
     const { data: supportData, error: supportError } = await resend.emails.send({
       from: 'Moon Ring Support <support@moonring.com>',
       to: ['support@moonring.com'],

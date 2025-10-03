@@ -1,6 +1,20 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let resendClient: Resend | undefined
+
+export const getResendClient = () => {
+  if (resendClient) return resendClient
+
+  const apiKey = process.env.RESEND_API_KEY
+
+  if (!apiKey) {
+    throw new Error('Resend API key is not configured. Set RESEND_API_KEY in the environment.')
+  }
+
+  resendClient = new Resend(apiKey)
+
+  return resendClient
+}
 
 export interface EmailOptions {
   to: string | string[]
@@ -14,6 +28,7 @@ export interface EmailOptions {
 
 export async function sendEmail(options: EmailOptions) {
   try {
+    const resend = getResendClient()
     const { data, error } = await resend.emails.send({
       from: options.from || 'Moon Ring <noreply@moonring.com>',
       to: options.to,

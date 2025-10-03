@@ -13,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sentry/nextjs": "^10.17.0",
     "bmad-method": "^4.43.1"
   }
 }

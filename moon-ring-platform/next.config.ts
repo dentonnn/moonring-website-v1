@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { withSentryConfig } from "@sentry/nextjs";
+// import { withSentryConfig } from "@sentry/nextjs";
 import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withBundleAnalyzer = bundleAnalyzer({
@@ -19,38 +19,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(withSentryConfig(nextConfig, {
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options
+// TODO: Re-enable Sentry once DSN and auth token are configured
+// See .env.example for required environment variables:
+// - NEXT_PUBLIC_SENTRY_DSN
+// - SENTRY_AUTH_TOKEN
+//
+// Once configured, uncomment the import above and use:
+// export default withBundleAnalyzer(withSentryConfig(nextConfig, { /* sentry options */ }));
 
-  org: "moon-ring",
-  project: "moon-ring-marketing",
-
-  // Only print logs for uploading source maps in CI
-  silent: !process.env.CI,
-
-  // For all available options, see:
-  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-  // Upload a larger set of source maps for prettier stack traces (increases build time)
-  widenClientFileUpload: true,
-
-  // Automatically annotate React components to show their full name in breadcrumbs and session replay
-  reactComponentAnnotation: {
-    enabled: true,
-  },
-
-  // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-  // This can increase your server load as well as your hosting bill.
-  // Note: Check that the Sentry DSN is available to the client side.
-  tunnelRoute: "/monitoring",
-
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
-
-  // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-  // See the following for more information:
-  // https://docs.sentry.io/product/crons/
-  // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: true,
-}));
+export default withBundleAnalyzer(nextConfig);
