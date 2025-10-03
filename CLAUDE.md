@@ -66,12 +66,48 @@ Before running the development server:
 
 ## Deployment
 
-For production deployment to Vercel, see detailed instructions in `moon-ring-platform/DEPLOYMENT.md`, which covers:
+**⚠️ CRITICAL: MANDATORY PRE-DEPLOYMENT CHECK**
+
+**BEFORE deploying to Vercel (preview, production, or any environment), you MUST:**
+
+1. **Read and follow** [`DEPLOYMENT_SOP.md`](DEPLOYMENT_SOP.md) - Comprehensive Standard Operating Procedure
+2. **Complete the Pre-Deployment Checklist** in Phase 1 of the SOP
+3. **Verify** no stray framework config files exist at repository root
+4. **Confirm** Framework Preset is explicitly set to "Next.js" in Vercel dashboard
+5. **Ensure** all environment variables are configured before first deployment
+
+**Why this matters**: The deployment SOP was created from a 45-minute debugging session that resolved 404 errors caused by:
+- Stray `next.config.js` at repo root confusing framework detection
+- Implicit framework detection failing in monorepo structure
+- Deploying from wrong directory context
+- Missing environment variables causing build failures
+
+Following the SOP prevents these issues and reduces deployment time from 45 minutes to 5 minutes.
+
+**Quick deployment reference** (detailed steps in `DEPLOYMENT_SOP.md`):
+```bash
+# 1. Pre-flight check (from repo root)
+find . -maxdepth 1 -name "*.config.*" -type f  # Should be empty
+
+# 2. Verify settings
+cat .vercel/project.json | jq '.settings.framework'  # Should be "nextjs"
+
+# 3. Deploy from repo root (NOT subdirectory)
+cd /path/to/moonring-website-v1
+vercel --prod
+```
+
+For additional deployment documentation, see:
+- **[`DEPLOYMENT_SOP.md`](DEPLOYMENT_SOP.md)** - **PRIMARY REFERENCE** - Complete deployment workflow and troubleshooting
+- `moon-ring-platform/DEPLOYMENT.md` - Legacy deployment instructions
+- `moon-ring-platform/VERCEL_DEPLOYMENT.md` - Vercel-specific deployment guide
+
+These cover:
 - Vercel deployment steps and environment variable configuration
 - Stripe webhook endpoint setup for production
 - Custom domain configuration
 - Health check verification (`/api/health`)
-- Common deployment troubleshooting
+- Comprehensive troubleshooting decision trees
 
 ## Documentation Structure
 
