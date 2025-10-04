@@ -27,7 +27,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     image: '/placeholder-blog-1.jpg',
     featured: true,
-    content: '' // Content defined in blog/[slug]/page.tsx for this article
+    content: 'PUBLISHED' // Full content is defined in blog/[slug]/page.tsx - this marker ensures the post shows in listings
   },
   {
     slug: 'loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself',

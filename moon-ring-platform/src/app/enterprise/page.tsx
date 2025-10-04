@@ -123,7 +123,14 @@ export default function EnterprisePage() {
                       min="10"
                       max="60"
                       value={currentEngagement}
-                      onChange={(e) => setCurrentEngagement(parseInt(e.target.value))}
+                      onChange={(e) => {
+                        const newCurrent = parseInt(e.target.value)
+                        setCurrentEngagement(newCurrent)
+                        // If new current > target, bump target up to maintain constraint
+                        if (newCurrent > targetEngagement) {
+                          setTargetEngagement(newCurrent)
+                        }
+                      }}
                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#FF33BA]"
                     />
                     <div className="mt-2 text-center">
@@ -144,7 +151,12 @@ export default function EnterprisePage() {
                       min="50"
                       max="95"
                       value={targetEngagement}
-                      onChange={(e) => setTargetEngagement(parseInt(e.target.value))}
+                      onChange={(e) => {
+                        const rawValue = parseInt(e.target.value)
+                        // Clamp target to be at least current engagement rate
+                        // This ensures displayed and calculated values stay aligned
+                        setTargetEngagement(Math.max(rawValue, currentEngagement))
+                      }}
                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#52ACFF]"
                     />
                     <div className="mt-2 text-center">
