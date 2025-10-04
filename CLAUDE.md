@@ -14,7 +14,7 @@ This is the **marketing and conversion website** for Moon Ring - a social accoun
 **IMPORTANT SCOPE CLARIFICATION:**
 - This repository builds **ONLY the marketing website** (the storefront/conversion funnel)
 - We are NOT building the Moon Ring platform itself (mobile apps, wearable integrations, social features)
-- The PRD (`docs/moon-ring-project-prd.md`) is **reference material** explaining the product we're marketing
+- The PRD (`docs/02-requirements/platform-prd.md`) is **reference material** explaining the product we're marketing
 - Think: We're building Apple.com, not iOS - the website that sells the product, not the product itself
 
 ## Project Structure

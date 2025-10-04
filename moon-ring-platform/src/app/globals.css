@@ -24,3 +24,174 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Blog Article Styling - Substack-Inspired with Sans-Serif */
+.article-content {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Substack-style section breaks with subtle line */
+.article-content h2 {
+  padding-top: 1.5rem;
+  margin-top: 3rem;
+  border-top: 1px solid #E5E7EB;
+}
+
+.article-content h2:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* Highlighted Callout - Substack style left-border emphasis */
+.article-content .callout {
+  background: #F9FAFB;
+  border-left: 4px solid #FF33BA;
+  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.article-content .callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* Key insight box - for important takeaways */
+.article-content .insight-box {
+  background: linear-gradient(135deg, #FFF5FA 0%, #FFF9F0 100%);
+  border-left: 4px solid #FF33BA;
+  padding: 1.5rem;
+  margin: 2.5rem 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.insight-box-title {
+  font-weight: 700;
+  color: #FF33BA;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+/* Stats Highlight - Substack pattern for numbers */
+.article-content .stat-highlight {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFF5FA, #FFF9F0);
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #FF33BA;
+  border: 1px solid #FFE4F1;
+}
+
+/* Pull Quote - centered emphasis */
+.article-content .pull-quote {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 3rem auto;
+  padding: 2rem 0;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.pull-quote::before,
+.pull-quote::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #FF33BA, #FF9966);
+}
+
+.pull-quote::before {
+  top: 0;
+}
+
+.pull-quote::after {
+  bottom: 0;
+}
+
+/* Research Citation Box - gray background for studies */
+.article-content .research-box {
+  background: #F3F4F6;
+  border-left: 3px solid #9CA3AF;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 0.9375rem;
+  color: #4B5563;
+  font-style: italic;
+}
+
+/* Section Divider - minimal Substack style */
+.article-content .section-divider {
+  text-align: center;
+  margin: 3.5rem 0;
+  color: #D1D5DB;
+  font-size: 1.25rem;
+  letter-spacing: 0.5rem;
+}
+
+/* Example Box */
+.article-content .example-box {
+  background: #F8F9FA;
+  border: 2px dashed #D1D5DB;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+}
+
+.example-box-title {
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+/* Comparison Table */
+.article-content .comparison-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+.comparison-column {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid;
+}
+
+.comparison-column.bad {
+  border-color: #FCA5A5;
+  background: #FEF2F2;
+}
+
+.comparison-column.good {
+  border-color: #86EFAC;
+  background: #F0FDF4;
+}
+
+.comparison-column-title {
+  font-weight: bold;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.comparison-column.bad .comparison-column-title {
+  color: #DC2626;
+}
+
+.comparison-column.good .comparison-column-title {
+  color: #16A34A;
+}

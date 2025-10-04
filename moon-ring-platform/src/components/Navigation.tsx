@@ -18,9 +18,9 @@ export default function Navigation() {
   }, [])
 
   const navItems = [
-    { label: 'How It Works', href: '#demo' },
-    { label: 'Success Stories', href: '#stories' },
-    { label: 'Research', href: '#psychology' },
+    { label: 'How It Works', href: '/how-it-works' },
+    { label: 'Try Demo', href: '/demo' },
+    { label: 'For Companies', href: '/enterprise' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'Blog', href: '/blog' },
     { label: 'About', href: '/about' },

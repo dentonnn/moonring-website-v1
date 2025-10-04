@@ -14,6 +14,28 @@ export const revalidate = 3600
 // Sample blog posts - in production, these would come from a CMS or database
 const blogPosts = [
   {
+    slug: 'the-planning-fallacy-why-your-monday-motivation-dies-by-wednesday',
+    title: 'The Planning Fallacy: Why Your Monday Motivation Dies by Wednesday',
+    excerpt: 'You set ambitious goals every Sunday night. By Wednesday, they are forgotten. This is not a willpower problem—it is a cognitive bias called the Planning Fallacy. Here is how to hack it.',
+    category: 'Behavioral Psychology',
+    author: 'Dr. Sarah Mitchell',
+    date: 'January 15, 2025',
+    readTime: '8 min read',
+    image: '/placeholder-blog-1.jpg',
+    featured: true
+  },
+  {
+    slug: 'loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself',
+    title: 'Loss Aversion: Why Breaking Promises to Others Hurts More',
+    excerpt: 'You break promises to yourself all the time. But breaking a promise to a friend? That feels terrible. This is loss aversion—and it is the secret weapon of behavioral change.',
+    category: 'Behavioral Psychology',
+    author: 'Alex Chen',
+    date: 'January 12, 2025',
+    readTime: '6 min read',
+    image: '/placeholder-blog-2.jpg',
+    featured: true
+  },
+  {
     slug: 'why-wearables-fail-without-accountability',
     title: 'Why 68% of Wearable Users Fail (And How Accountability Fixes It)',
     excerpt: 'The wearable industry has a dirty secret: most devices end up in drawers within six months. We explore the psychology behind this failure and how social accountability creates lasting change.',
@@ -21,19 +43,41 @@ const blogPosts = [
     author: 'Dr. Sarah Mitchell',
     date: 'January 10, 2025',
     readTime: '7 min read',
-    image: '/placeholder-blog-1.jpg',
-    featured: true
+    image: '/placeholder-blog-3.jpg',
+    featured: false
   },
   {
-    slug: 'commitment-contracts-explained',
-    title: 'The Science of Commitment Contracts: Why Public Promises Work',
-    excerpt: 'Research shows public commitments increase goal achievement by 65%. Learn how commitment contract theory can transform your health journey.',
-    category: 'Research',
-    author: 'Alex Chen',
+    slug: 'the-fresh-start-effect-why-january-1st-feels-different-and-how-to-use-it',
+    title: 'The Fresh Start Effect: Why January 1st Feels Different',
+    excerpt: 'New Year resolutions fail 92% of the time. But the Fresh Start Effect—the psychology behind "new beginnings"—is real. Here is how to harness it year-round.',
+    category: 'Behavioral Psychology',
+    author: 'Dr. Sarah Mitchell',
     date: 'January 8, 2025',
+    readTime: '7 min read',
+    image: '/placeholder-blog-4.jpg',
+    featured: false
+  },
+  {
+    slug: 'temptation-bundling-how-to-make-healthy-habits-actually-enjoyable',
+    title: 'Temptation Bundling: Make Healthy Habits Actually Enjoyable',
+    excerpt: 'Hate running? Pair it with your favorite podcast. Dread meal prep? Do it while catching up on Netflix. This is temptation bundling—and it works.',
+    category: 'Behavioral Psychology',
+    author: 'Jordan Rivera',
+    date: 'January 5, 2025',
     readTime: '5 min read',
-    image: '/placeholder-blog-2.jpg',
-    featured: true
+    image: '/placeholder-blog-5.jpg',
+    featured: false
+  },
+  {
+    slug: 'implementation-intentions-the-if-then-planning-method-that-actually-works',
+    title: 'Implementation Intentions: The If-Then Planning That Works',
+    excerpt: 'Saying "I will exercise more" is not a plan. Saying "If it is Tuesday at 6 AM, then I will put on gym clothes" is. This simple shift increases success rates by 70%.',
+    category: 'Behavioral Psychology',
+    author: 'Dr. Sarah Mitchell',
+    date: 'January 3, 2025',
+    readTime: '6 min read',
+    image: '/placeholder-blog-6.jpg',
+    featured: false
   },
   {
     slug: 'accountability-partner-success-stories',

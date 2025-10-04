@@ -671,6 +671,268 @@ The delivery team is executing the production hardening checklist captured in `r
 
 ---
 
+## 10. Blog Article Design System
+
+### Overview
+
+The Moon Ring blog serves as a primary content marketing channel, educating users on behavioral psychology while building brand authority. Articles follow a standardized visual design system that maximizes scannability, engagement, and social sharing while maintaining brand consistency.
+
+**Design Philosophy**: Each article should feel like an interactive experience, not a text document. Visual elements break up content, highlight key insights, and create "aha moments" that reinforce Moon Ring's psychology-first approach.
+
+### Visual Element Library
+
+#### 1. Stats Boxes (Impact Numbers)
+
+**Purpose**: Highlight shocking statistics, research findings, or key metrics that demand attention.
+
+**Component Structure**:
+```html
+<div class="stats-box bg-gradient-to-br from-[theme]-50 to-[theme]-50 border-2 border-[theme]-300 rounded-2xl p-8 my-8 text-center">
+  <p class="text-sm font-semibold text-[theme]-900 uppercase tracking-wide mb-2">[Icon] [Label]</p>
+  <p class="text-6xl font-bold text-[theme]-600 mb-2">[NUMBER]</p>
+  <p class="text-lg text-gray-800 font-medium">[Description]</p>
+</div>
+```
+
+**Color Themes by Context**:
+- **Warning/Problem**: Red gradient (`from-red-50 to-orange-50`, `border-red-300`, `text-red-600`)
+- **Research**: Blue/Purple (`from-blue-50 to-purple-50`, `border-blue-300`, `text-blue-600`)
+- **Success**: Green/Blue (`from-green-50 to-blue-50`, `border-green-300`, `text-green-600`)
+- **Insight**: Purple/Pink (`from-purple-50 to-pink-50`, `border-purple-300`, `text-purple-600`)
+
+**Icon Library**: 📊 📈 ⚠️ 🧠 📚 🎯 💡
+
+#### 2. Callout Boxes (Key Insights)
+
+**Purpose**: Emphasize key takeaways, insights, or important concepts that readers should remember.
+
+**Component Structure**:
+```html
+<div class="callout-box bg-gradient-to-r from-pink-50 to-orange-50 border-l-4 border-[#FF33BA] p-6 my-8 rounded-r-lg">
+  <p class="text-lg font-semibold text-gray-900 mb-2">[Icon] [Title]</p>
+  <p class="text-gray-800 mb-0">[1-2 sentences]</p>
+</div>
+```
+
+**Variants**:
+- **Key Insight**: 💡 + Brand pink border
+- **Key Takeaway**: 🎯 + Brand pink border
+- **The Problem**: ⚠️ + Yellow border (`border-yellow-500`, yellow-to-red gradient)
+- **Research Finding**: 🔬 + Blue border
+
+#### 3. Comparison Tables
+
+**Purpose**: Visually contrast concepts (bad vs. good, before vs. after, traditional vs. Moon Ring).
+
+**Standard Two-Column**:
+```html
+<div class="comparison-table my-8 overflow-hidden rounded-xl border border-gray-200">
+  <table class="w-full">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200">[Column 1]</th>
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">[Column 2]</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-gray-200">
+        <td class="px-6 py-3 text-sm text-gray-700 border-r border-gray-200">[Content]</td>
+        <td class="px-6 py-3 text-sm text-gray-700">[Content]</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+**Good vs. Bad Variant** (colored rows):
+- Headers: `bg-gradient-to-r from-red-100 to-green-100`
+- Bad rows: `bg-red-50` with red accent text
+- Good rows: `bg-green-50` with green accent text
+- Emojis: ❌ for bad, ✅ for good
+
+**Metrics Comparison** (branded header):
+- Header: `bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white`
+- Numeric cells: Red for baseline, green for improvements
+
+#### 4. Pull Quotes
+
+**Purpose**: Create memorable, tweet-worthy moments that emphasize key insights.
+
+**Component Structure**:
+```html
+<blockquote class="pull-quote border-l-4 border-[#FF33BA] pl-6 my-8 text-xl italic text-gray-700">
+  "[Memorable insight - max 2 sentences]"
+</blockquote>
+```
+
+**Best Practices**:
+- Extract from existing content (don't add new info)
+- Keep to 1-2 sentences maximum
+- Choose insights that stand alone without context
+- Place after key sections to reinforce main points
+
+#### 5. Multi-Metric Stats Displays
+
+**Purpose**: Show multiple related statistics or research findings in one organized block.
+
+**Component Structure**:
+```html
+<div class="stats-box bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-300 rounded-2xl p-8 my-8">
+  <p class="text-sm font-semibold text-green-900 uppercase tracking-wide mb-6">📚 [Section Title]</p>
+  <div class="space-y-4">
+    <div class="bg-white rounded-lg p-4 shadow-sm">
+      <p class="text-3xl font-bold text-green-600 mb-1">[Metric]</p>
+      <p class="text-sm text-gray-700">[Description]</p>
+      <p class="text-xs text-gray-500 mt-1">[Source]</p>
+    </div>
+  </div>
+</div>
+```
+
+#### 6. Section Dividers
+
+**Component**: `<hr class="my-12 border-t-2 border-gray-200" />`
+
+**Usage**: Before action plans, between major conceptual shifts.
+
+### Article Structure Template
+
+Every blog post follows this proven structure:
+
+1. **Opening Hook** (3 paragraphs)
+   - Relatable scenario
+   - Problem statement
+   - Key insight callout box
+
+2. **Main Concept** (3-5 paragraphs)
+   - Definition
+   - Research foundation with stats box
+   - Why it matters
+
+3. **Comparison Section**
+   - Comparison table
+   - Pull quote
+
+4. **Real-World Example** (4-6 paragraphs)
+   - Specific narrative with timeline
+   - Results with metrics
+
+5. **Research Deep Dive**
+   - Multi-metric stats box
+   - Key takeaway callout
+
+6. **Practical Strategies** (3-5 subsections)
+   - Numbered strategies with examples
+   - Concrete implementation steps
+
+7. **Common Mistakes** (table format)
+   - Bad vs. Good comparison table
+
+8. **Moon Ring Integration** (3 layers)
+   - How features address the psychology
+   - Pull quote
+
+9. **Section Divider**
+
+10. **Action Plan** (4-5 steps)
+    - Numbered, specific actions
+    - CTA footer with Moon Ring link
+
+### Content Guidelines
+
+**Article Metrics**:
+- Word count: 1,800-2,500 words
+- Reading time: 6-8 minutes
+- Visual elements: 8-12 total
+- Sections: 8-12 major headings
+
+**Visual Element Distribution**:
+- Stats boxes: 2-3 per article
+- Callout boxes: 2-4 per article
+- Comparison tables: 1-2 per article
+- Pull quotes: 2-3 per article
+- Section dividers: 1-2 per article
+
+**Typography Hierarchy**:
+- H2: Main sections (## in markdown)
+- H3: Subsections (### in markdown)
+- Bold: Strategy names, key concepts
+- Italic: Pull quotes only
+- Strong emphasis: Research findings, key numbers
+
+### Mobile Responsiveness
+
+All visual elements are mobile-first designed:
+
+**Stats Boxes**:
+- Mobile: Stacked layout, smaller text (text-4xl)
+- Desktop: Full width with text-6xl numbers
+
+**Tables**:
+- Mobile: Horizontal scroll container
+- Desktop: Full width with comfortable padding
+
+**Callout Boxes**:
+- Mobile: Full-width with reduced padding
+- Desktop: Standard padding with max-width
+
+### Accessibility Standards
+
+- **Color contrast**: All text meets WCAG AA (4.5:1 minimum)
+- **Table semantics**: Proper `<thead>`, `<tbody>`, `<th>` usage
+- **Screen reader support**: Alt text for visual elements
+- **Keyboard navigation**: All interactive elements focusable
+
+### Performance Optimization
+
+- **No external dependencies**: All styling uses Tailwind utilities
+- **Lazy image loading**: If images added to blog posts
+- **Minimal JavaScript**: Static HTML rendering only
+- **ISR caching**: 1-hour revalidation (3600 seconds)
+
+### SEO Optimization
+
+**Metadata Structure**:
+```typescript
+{
+  title: '[Article Title] | Moon Ring Blog',
+  excerpt: '[2-3 sentences with keyword integration]',
+  category: 'Behavioral Psychology' | 'Research' | 'Success Stories' | 'Platform Features' | 'Corporate Wellness',
+  author: '[Name]',
+  authorBio: '[Credential - 1 sentence]',
+  date: '[Month DD, YYYY]',
+  readTime: '[X] min read'
+}
+```
+
+**Category Strategy**:
+- **Behavioral Psychology**: Core content pillar (60% of articles)
+- **Research**: Deep dives and academic content (20%)
+- **Success Stories**: Social proof and testimonials (10%)
+- **Platform Features**: Product education (5%)
+- **Corporate Wellness**: B2B content (5%)
+
+### Implementation Reference
+
+Complete template and examples: [`/moon-ring-platform/BLOG_ARTICLE_TEMPLATE.md`](../moon-ring-platform/BLOG_ARTICLE_TEMPLATE.md)
+
+**Existing Examples**:
+- The Planning Fallacy (full visual treatment)
+- Why Wearables Fail (metrics comparison)
+- Loss Aversion (behavioral contrast tables)
+- Fresh Start Effect (timeline + stats)
+- Temptation Bundling (bad vs. good examples)
+- Implementation Intentions (research meta-analysis)
+
+### Design System Maintenance
+
+**Version Control**: All visual components defined in this spec
+**Updates**: Major changes require spec revision
+**Testing**: Validate in Chrome, Safari, Firefox, mobile browsers
+**Quality Checks**: Use article checklist in template before publishing
+
+---
+
 ## Conclusion
 
 This front-end specification provides Moon Ring with a comprehensive blueprint for creating a world-class website that authentically represents behavioral psychology principles while achieving industry-leading technical performance. The commitment-anchored approach ensures every design decision reinforces the core value proposition of transforming intentions into unbreakable commitments through social accountability.

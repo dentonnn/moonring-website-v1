@@ -1,11 +1,36 @@
 import Navigation from '@/components/Navigation'
 import EmailCaptureForm from '@/components/forms/EmailCaptureForm'
+import TestimonialsSection from '@/components/TestimonialsSection'
+import FAQSection from '@/components/FAQSection'
 import Link from 'next/link'
 import { CheckCircle, Heart, Users, Zap, Shield, TrendingUp, Star } from 'lucide-react'
+import { generateProductSchema, generateFAQSchema, defaultMetadata } from '@/lib/metadata'
+import { getFAQData } from '@/lib/faqData'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  ...defaultMetadata,
+  title: 'Moon Ring - Turn Health Intentions into Unbreakable Commitments',
+  description: 'Transform your wearable data into lasting behavior change through evidence-based commitment psychology and social accountability. Join 28M+ users achieving 67% success rates.',
+}
 
 export default function Home() {
+  // Generate structured data for SEO
+  const productSchema = generateProductSchema()
+  const faqSchema = generateFAQSchema(getFAQData())
+
   return (
     <>
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <Navigation />
       <div className="min-h-screen bg-gradient-to-b from-[#1B023A] via-[#2D1B69] to-[#1B023A]">
       {/* Hero Section */}
@@ -73,12 +98,12 @@ export default function Home() {
                 >
                   Start Free Trial
                 </a>
-                <a
-                  href="#demo"
+                <Link
+                  href="/how-it-works"
                   className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold text-lg hover:bg-white/20 transition-colors"
                 >
                   See How It Works
-                </a>
+                </Link>
               </div>
 
               {/* Trust Indicators */}
@@ -655,8 +680,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
+      {/* FAQ Section */}
+      <FAQSection />
+
       {/* Email Capture/CTA Section */}
-      <section id="waitlist" className="relative py-20 px-4">
+      <section id="waitlist" className="relative py-20 px-4 bg-gradient-to-b from-[#1B023A] via-[#2D1B69] to-[#1B023A]">
         <div className="max-w-3xl mx-auto">
           <div className="rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8 sm:p-12 text-center shadow-xl">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
