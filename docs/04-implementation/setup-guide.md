@@ -12,7 +12,7 @@ This guide will help you set up the complete development environment for the Moo
 - Supabase account (free tier works)
 - Stripe account (test mode initially)
 - Vercel account (for deployment)
-- Resend account (for email, or alternative service)
+- Brevo account (for email - 9,000 emails/month free tier)
 
 ## Step 1: Clone and Install Dependencies
 
@@ -62,8 +62,8 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 # Application
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-# Email Service (Resend)
-RESEND_API_KEY=re_xxxxxxxxxxxx
+# Email Service (Brevo)
+BREVO_API_KEY=xkeysib-xxxxxxxxxxxx
 
 # Stripe (added in Step 3)
 STRIPE_SECRET_KEY=sk_test_...
@@ -124,14 +124,14 @@ npm run stripe:setup
      - `checkout.session.completed`
 3. Copy the signing secret → `STRIPE_WEBHOOK_SECRET`
 
-## Step 4: Email Service Setup (Resend)
+## Step 4: Email Service Setup (Brevo)
 
-### 4.1 Create Resend Account
+### 4.1 Create Brevo Account
 
-1. Sign up at [resend.com](https://resend.com)
-2. Verify your domain (or use their subdomain for testing)
-3. Get API key from Dashboard → API Keys
-4. Add to `.env.local` as `RESEND_API_KEY`
+1. Sign up at [brevo.com](https://www.brevo.com) (free tier: 9,000 emails/month)
+2. Verify your email address
+3. Get API key from Settings → API Keys → Create new API key
+4. Add to `.env.local` as `BREVO_API_KEY`
 
 ### 4.2 Configure Email Templates
 
@@ -225,7 +225,7 @@ npx @sentry/wizard -i nextjs
 **Solution**: Ensure webhook endpoint matches your deployment URL
 
 ### Issue: Emails not sending
-**Solution**: Verify domain in Resend, check API key, test with Resend playground
+**Solution**: Verify email address in Brevo, check API key is correct (starts with `xkeysib-`), test with Brevo transactional email logs
 
 ### Issue: Build errors on Vercel
 **Solution**: Ensure all env vars are set, check build logs for missing dependencies

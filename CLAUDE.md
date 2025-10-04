@@ -59,7 +59,7 @@ Before running the development server:
 3. Configure required environment variables in `.env.local`:
    - **Supabase**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
    - **Stripe**: `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`
-   - **Email**: `RESEND_API_KEY` (for Resend email service)
+   - **Email**: `BREVO_API_KEY` (for Brevo email service - get from https://app.brevo.com/settings/keys/api)
    - **App URL**: `NEXT_PUBLIC_APP_URL` (defaults to `http://localhost:3000`)
 4. Run `npm install` if `node_modules/` is missing
 5. Apply database migrations if needed: `./apply-migration.sh`
@@ -161,7 +161,7 @@ docs/
 - `@stripe/stripe-js` and `stripe` for payment processing and order management
 - `@supabase/ssr` and `@supabase/supabase-js` for server-side rendering and user data
 - `@tailwindcss/forms` and `@tailwindcss/typography` for polished UI
-- `resend` and `@react-email/render` for transactional email
+- `@getbrevo/brevo` for transactional and marketing emails (9,000 emails/month free tier)
 - `lucide-react` for icons
 - `@vercel/analytics` for performance monitoring
 - `@sentry/nextjs` for error tracking and application monitoring
@@ -188,14 +188,14 @@ src/
 ├── components/             # React components
 │   ├── forms/             # Form components
 │   │   └── EmailCaptureForm.tsx  # Email waitlist capture
-│   ├── ContactForm.tsx    # Contact page form with Resend integration
+│   ├── ContactForm.tsx    # Contact page form with Brevo integration
 │   ├── CookieConsent.tsx  # GDPR cookie banner
 │   ├── FAQAccordion.tsx   # Accordion component for FAQ section
 │   ├── Navigation.tsx     # Main nav with mobile menu
 │   └── OptimizedImage.tsx # Image optimization wrapper
 ├── lib/                   # Shared utilities and configurations
 │   ├── email/             # Email service utilities
-│   │   └── resend.ts      # Resend API client
+│   │   └── brevo.ts       # Brevo API client and email templates
 │   └── supabase/          # Supabase client and server utilities
 │       ├── client.ts      # Browser client
 │       └── server.ts      # Server-side client
@@ -214,7 +214,7 @@ src/
 - Images, fonts, and static files: `moon-ring-platform/public/`
 - See `moon-ring-platform/ASSETS_GUIDE.md` for image optimization guidelines
 
-**Current State**: ~95% complete production-ready marketing website with homepage, legal pages (privacy/terms), about page, blog structure with ISR caching, research library, contact form (Resend integration), and cookie consent. Full Supabase + Stripe + Vercel Analytics + Sentry monitoring stack integrated. TypeScript strict mode with zero lint errors. Build passing with optimized bundle sizes (First Load JS ~170KB homepage). Ready for deployment and Phase 4 (asset creation and content). The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
+**Current State**: ~95% complete production-ready marketing website with homepage, legal pages (privacy/terms), about page, blog structure with ISR caching, research library, contact form (Brevo integration with welcome emails), and cookie consent. Full Supabase + Stripe + Vercel Analytics + Sentry monitoring stack integrated. Newsletter signup sends personalized welcome emails via Brevo (9,000 emails/month capacity). TypeScript strict mode with zero lint errors. Build passing with optimized bundle sizes (First Load JS ~170KB homepage). Ready for deployment and Phase 4 (asset creation and content). The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
 
 ## Key Architectural Patterns
 
@@ -226,13 +226,14 @@ src/
 **API Routes**:
 - Checkout flow: `/api/checkout` creates Stripe sessions
 - Webhooks: `/api/webhooks/stripe` handles payment events (requires webhook secret)
-- Contact: `/api/contact` processes form submissions via Resend
+- Contact: `/api/contact` processes form submissions via Brevo
+- Newsletter: `/api/newsletter/subscribe` handles newsletter signups with welcome emails
 - Health: `/api/health` checks service connectivity
 
 **Data Flow**:
 1. User submits form (email capture, contact, checkout)
 2. Client-side validation, then API route call
-3. API route interacts with Supabase (data) or Stripe/Resend (services)
+3. API route interacts with Supabase (data) or Stripe/Brevo (services)
 4. Webhook handlers update database based on external events
 
 **Styling Approach**:

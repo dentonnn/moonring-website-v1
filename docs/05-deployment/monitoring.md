@@ -298,7 +298,7 @@ curl https://your-domain.com/api/health
 - `healthy` / `unhealthy` - Overall service health
 - `database` - Supabase connection status
 - `stripe` - Stripe API key configured
-- `email` - Resend API key configured
+- `email` - Brevo API key configured
 
 ## Monitoring Best Practices
 

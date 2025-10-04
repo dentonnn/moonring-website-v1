@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 
 interface EmailCaptureFormProps {
-  source?: 'hero' | 'footer' | 'popup' | 'sidebar'
+  source?: 'hero' | 'footer' | 'popup'
   showGDPR?: boolean
   onSuccess?: () => void
   className?: string
@@ -22,8 +21,6 @@ export default function EmailCaptureForm({
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
-
-  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,76 +43,36 @@ export default function EmailCaptureForm({
       // Get UTM parameters from URL
       const urlParams = new URLSearchParams(window.location.search)
       const utmParams = {
-        utm_source: urlParams.get('utm_source'),
-        utm_medium: urlParams.get('utm_medium'),
-        utm_campaign: urlParams.get('utm_campaign'),
-        utm_term: urlParams.get('utm_term'),
-        utm_content: urlParams.get('utm_content'),
+        utm_source: urlParams.get('utm_source') || undefined,
+        utm_medium: urlParams.get('utm_medium') || undefined,
+        utm_campaign: urlParams.get('utm_campaign') || undefined,
+        utm_term: urlParams.get('utm_term') || undefined,
+        utm_content: urlParams.get('utm_content') || undefined,
       }
 
-      // Insert lead
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error: leadError } = await (supabase as any)
-        .from('leads')
-        .insert({
+      // Call newsletter subscription API
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Session-Id': getSessionId(),
+        },
+        body: JSON.stringify({
           email,
-          name: name || null,
-          source: source === 'hero' ? 'organic' : 'direct',
-          ...utmParams,
-          referrer_url: document.referrer || null,
-          landing_page: window.location.pathname,
-          gdpr_consent: gdprConsent,
-          gdpr_consent_date: gdprConsent ? new Date().toISOString() : null,
-        })
+          name: name || undefined,
+          gdprConsent,
+          source,
+          utmParams,
+          referrer: document.referrer || undefined,
+          landingPage: window.location.href,
+        }),
+      })
 
-      if (leadError) {
-        if (leadError.code === '23505') { // Unique violation
-          // Email already exists, update the existing lead
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const { error: updateError } = await (supabase as any)
-            .from('leads')
-            .update({
-              name: name || null,
-              conversion_stage: 'lead',
-              updated_at: new Date().toISOString()
-            })
-            .eq('email', email)
+      const data = await response.json()
 
-          if (updateError) throw updateError
-        } else {
-          throw leadError
-        }
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Failed to subscribe')
       }
-
-      // Also add to email subscriptions
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error: subError } = await (supabase as any)
-        .from('email_subscriptions')
-        .insert({
-          email,
-          subscription_types: ['newsletter'],
-          status: 'active'
-        })
-
-      // Ignore duplicate subscription errors
-      if (subError && subError.code !== '23505') {
-        console.error('Subscription error:', subError)
-      }
-
-      // Track conversion event
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (supabase as any)
-        .from('conversion_events')
-        .insert({
-          session_id: getSessionId(),
-          visitor_id: getVisitorId(),
-          event_type: 'email_signup',
-          event_category: 'conversion',
-          event_properties: { source, form_location: source },
-          page_url: window.location.href,
-          referrer_url: document.referrer || null,
-          user_agent: navigator.userAgent
-        })
 
       setSuccess(true)
       setEmail('')
@@ -130,8 +87,8 @@ export default function EmailCaptureForm({
       setTimeout(() => setSuccess(false), 5000)
 
     } catch (err) {
-      console.error('Error capturing lead:', err)
-      setError('Something went wrong. Please try again.')
+      console.error('Error subscribing to newsletter:', err)
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -220,21 +177,14 @@ export default function EmailCaptureForm({
   )
 }
 
-// Helper functions for tracking
+// Helper function for session tracking
 function getSessionId(): string {
+  if (typeof window === 'undefined') return 'ssr'
+
   let sessionId = sessionStorage.getItem('moon_ring_session_id')
   if (!sessionId) {
     sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     sessionStorage.setItem('moon_ring_session_id', sessionId)
   }
   return sessionId
-}
-
-function getVisitorId(): string {
-  let visitorId = localStorage.getItem('moon_ring_visitor_id')
-  if (!visitorId) {
-    visitorId = `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    localStorage.setItem('moon_ring_visitor_id', visitorId)
-  }
-  return visitorId
 }

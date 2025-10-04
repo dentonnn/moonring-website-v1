@@ -181,6 +181,20 @@ export interface Database {
           last_email_sent_at: string | null
           created_at: string
           updated_at: string
+          // Newsletter extensions (migration 002)
+          name: string | null
+          gdpr_consent: boolean
+          gdpr_consent_date: string | null
+          gdpr_consent_ip: string | null
+          utm_source: string | null
+          utm_medium: string | null
+          utm_campaign: string | null
+          utm_term: string | null
+          utm_content: string | null
+          referrer_url: string | null
+          landing_page: string | null
+          signup_source: string | null
+          metadata: Json
         }
         Insert: {
           id?: string
@@ -194,6 +208,20 @@ export interface Database {
           last_email_sent_at?: string | null
           created_at?: string
           updated_at?: string
+          // Newsletter extensions (migration 002)
+          name?: string | null
+          gdpr_consent?: boolean
+          gdpr_consent_date?: string | null
+          gdpr_consent_ip?: string | null
+          utm_source?: string | null
+          utm_medium?: string | null
+          utm_campaign?: string | null
+          utm_term?: string | null
+          utm_content?: string | null
+          referrer_url?: string | null
+          landing_page?: string | null
+          signup_source?: string | null
+          metadata?: Json
         }
         Update: {
           id?: string
@@ -207,6 +235,20 @@ export interface Database {
           last_email_sent_at?: string | null
           created_at?: string
           updated_at?: string
+          // Newsletter extensions (migration 002)
+          name?: string | null
+          gdpr_consent?: boolean
+          gdpr_consent_date?: string | null
+          gdpr_consent_ip?: string | null
+          utm_source?: string | null
+          utm_medium?: string | null
+          utm_campaign?: string | null
+          utm_term?: string | null
+          utm_content?: string | null
+          referrer_url?: string | null
+          landing_page?: string | null
+          signup_source?: string | null
+          metadata?: Json
         }
       }
       conversion_events: {

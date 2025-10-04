@@ -25,7 +25,7 @@ const serverSchema = z.object({
   STRIPE_WEBHOOK_SECRET: z.string().min(1, 'Stripe webhook secret is required'),
 
   // Email Service (REQUIRED for contact/notification features)
-  RESEND_API_KEY: z.string().min(1, 'Resend API key is required for email'),
+  BREVO_API_KEY: z.string().min(1, 'Brevo API key is required for email'),
 
   // Monitoring (OPTIONAL)
   SENTRY_AUTH_TOKEN: z.string().optional(),
@@ -85,7 +85,7 @@ const optionalServiceSchemas = {
     SENTRY_AUTH_TOKEN: z.string().min(1),
   }),
   email: z.object({
-    RESEND_API_KEY: z.string().min(1),
+    BREVO_API_KEY: z.string().min(1),
   }),
   payments: z.object({
     STRIPE_SECRET_KEY: z.string().min(1),

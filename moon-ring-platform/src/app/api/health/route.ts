@@ -18,8 +18,8 @@ export async function GET() {
     // Test Stripe configuration
     const stripeConfigured = !!process.env.STRIPE_SECRET_KEY
 
-    // Test Resend configuration
-    const resendConfigured = !!process.env.RESEND_API_KEY
+    // Test Brevo configuration
+    const brevoConfigured = !!process.env.BREVO_API_KEY
 
     return NextResponse.json({
       status: 'healthy',
@@ -27,7 +27,7 @@ export async function GET() {
       services: {
         database: error ? 'degraded' : 'operational',
         stripe: stripeConfigured ? 'configured' : 'not configured',
-        email: resendConfigured ? 'configured' : 'not configured',
+        email: brevoConfigured ? 'configured' : 'not configured',
       },
       environment: process.env.NODE_ENV,
     })

@@ -5,7 +5,7 @@ This guide ensures successful deployment of the Moon Ring marketing website to V
 ## Prerequisites
 
 - ✅ Vercel account with access to the project
-- ✅ All required API credentials (Supabase, Stripe, Resend)
+- ✅ All required API credentials (Supabase, Stripe, Brevo)
 - ✅ Repository pushed to GitHub/GitLab/Bitbucket
 
 ---
@@ -88,9 +88,9 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxx
 STRIPE_WEBHOOK_SECRET=whsec_xxxxx  # Generate from Stripe dashboard
 ```
 
-#### Resend (Email)
+#### Brevo (Email)
 ```bash
-RESEND_API_KEY=re_xxxxx
+BREVO_API_KEY=xkeysib-xxxxx
 ```
 
 #### Application

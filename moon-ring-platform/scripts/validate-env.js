@@ -53,11 +53,11 @@ const REQUIRED_VARS = [
     example: 'whsec_xxxxx',
   },
 
-  // Resend (Email) - REQUIRED for contact form and notifications
+  // Brevo (Email) - REQUIRED for contact form and notifications
   {
-    name: 'RESEND_API_KEY',
-    description: 'Resend API key for sending emails',
-    example: 're_xxxxx',
+    name: 'BREVO_API_KEY',
+    description: 'Brevo API key for sending emails',
+    example: 'xkeysib-xxxxx',
   },
 ]
 

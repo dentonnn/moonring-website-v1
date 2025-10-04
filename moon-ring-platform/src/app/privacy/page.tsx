@@ -144,7 +144,7 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc list-inside text-white/80 space-y-2 ml-4">
                   <li>Cloud hosting and infrastructure (AWS, Vercel)</li>
                   <li>Payment processing (Stripe)</li>
-                  <li>Email delivery (Resend)</li>
+                  <li>Email delivery (Brevo)</li>
                   <li>Analytics and performance monitoring</li>
                   <li>Customer support tools</li>
                 </ul>
