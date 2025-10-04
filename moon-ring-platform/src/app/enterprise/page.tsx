@@ -10,16 +10,24 @@ export default function EnterprisePage() {
   const [currentEngagement, setCurrentEngagement] = useState(32)
   const [targetEngagement, setTargetEngagement] = useState(80)
 
-  // ROI Calculations
-  const annualHealthcareCost = employees * 12000 // $12K per employee average
-  const engagementImprovement = targetEngagement - currentEngagement
-  const productivityGain = (engagementImprovement / 100) * employees * 50000 // $50K avg productivity
+  // ROI Calculations with safety guards
+  const safeEmployees = Math.max(employees || 0, 10) // Minimum 10 employees for meaningful calculations
+  const safeCurrentEngagement = Math.max(Math.min(currentEngagement, 95), 10) // Clamp 10-95%
+  const safeTargetEngagement = Math.max(Math.min(targetEngagement, 95), safeCurrentEngagement) // Target must be >= current
+
+  const annualHealthcareCost = safeEmployees * 12000 // $12K per employee average
+  const engagementImprovement = safeTargetEngagement - safeCurrentEngagement
+  const productivityGain = (engagementImprovement / 100) * safeEmployees * 50000 // $50K avg productivity
   const healthcareReduction = (engagementImprovement / 100) * annualHealthcareCost * 0.15
-  const absenteeismReduction = employees * 2.5 * (engagementImprovement / 100) * 200 // 2.5 days/year, $200/day
+  const absenteeismReduction = safeEmployees * 2.5 * (engagementImprovement / 100) * 200 // 2.5 days/year, $200/day
   const totalAnnualSavings = productivityGain + healthcareReduction + absenteeismReduction
-  const programCost = employees * 19 * 12 // $19/mo per employee
+  const programCost = safeEmployees * 19 * 12 // $19/mo per employee
   const netROI = totalAnnualSavings - programCost
-  const roiMultiplier = (totalAnnualSavings / programCost).toFixed(1)
+
+  // Safe ROI multiplier calculation - prevent division by zero
+  const roiMultiplier = programCost > 0
+    ? (totalAnnualSavings / programCost).toFixed(1)
+    : '0.0'
 
   return (
     <>
@@ -98,7 +106,7 @@ export default function EnterprisePage() {
                   <input
                     type="number"
                     value={employees}
-                    onChange={(e) => setEmployees(parseInt(e.target.value) || 0)}
+                    onChange={(e) => setEmployees(Math.max(parseInt(e.target.value) || 10, 10))}
                     className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#FF33BA] focus:outline-none text-[#1B023A] font-semibold text-lg"
                     min="10"
                     max="100000"

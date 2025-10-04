@@ -1540,11 +1540,22 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   const result: string[] = []
                   let inHtmlBlock = false
                   let htmlBlockLines: string[] = []
+                  let inList = false
+                  let listItems: string[] = []
+
+                  const flushList = () => {
+                    if (inList && listItems.length > 0) {
+                      result.push('<ul>' + listItems.join('') + '</ul>')
+                      listItems = []
+                      inList = false
+                    }
+                  }
 
                   for (const line of lines) {
                     // Detect start of HTML block (div, table, blockquote, hr)
                     if (line.trim().startsWith('<div') || line.trim().startsWith('<table') ||
                         line.trim().startsWith('<blockquote') || line.trim().startsWith('<hr')) {
+                      flushList() // Close any open list
                       inHtmlBlock = true
                       htmlBlockLines = [line]
                       continue
@@ -1565,20 +1576,31 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
                     // Process markdown lines
                     if (line.startsWith('## ')) {
+                      flushList()
                       result.push(`<h2>${line.replace('## ', '')}</h2>`)
                     } else if (line.startsWith('### ')) {
+                      flushList()
                       result.push(`<h3>${line.replace('### ', '')}</h3>`)
                     } else if (line.startsWith('- ')) {
-                      result.push(`<li>${line.replace('- ', '')}</li>`)
+                      // List item - collect for proper ul wrapping
+                      if (!inList) {
+                        inList = true
+                      }
+                      listItems.push(`<li>${line.replace('- ', '')}</li>`)
                     } else if (line.trim().startsWith('*') && line.trim().endsWith('*')) {
+                      flushList()
                       result.push(`<p class="italic text-gray-600">${line.replace(/^\*/, '').replace(/\*$/, '')}</p>`)
                     } else if (line.includes('**')) {
+                      flushList()
                       result.push(`<p>${line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>`)
                     } else if (line.trim() === '') {
+                      flushList()
                       result.push('')
                     } else if (line.trim() === '---') {
+                      flushList()
                       result.push('<hr class="my-8 border-gray-300" />')
                     } else if (line.includes('[') && line.includes('](')) {
+                      flushList()
                       const linkMatch = line.match(/\[(.*?)\]\((.*?)\)/)
                       if (linkMatch) {
                         result.push(`<p>${line.replace(/\[(.*?)\]\((.*?)\)/, '<a href="$2">$1</a>')}</p>`)
@@ -1586,9 +1608,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                         result.push(`<p>${line}</p>`)
                       }
                     } else {
+                      flushList()
                       result.push(`<p>${line}</p>`)
                     }
                   }
+
+                  // Flush any remaining list at end of content
+                  flushList()
 
                   return result.join('')
                 })() }}

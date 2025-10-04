@@ -72,10 +72,11 @@ This repository contains the **marketing website** for Moon Ring, designed to:
 ## 📚 Documentation
 
 - **[CLAUDE.md](./CLAUDE.md)** - Development guide for Claude Code
-- **[Development Best Practices](./docs/development-best-practices.md)** - Coding standards and workflows
-- **[Deployment Guide](./moon-ring-platform/DEPLOYMENT.md)** - Vercel deployment instructions
-- **[Architecture](./docs/fullstack-architecture.md)** - Technical architecture overview
-- **[Phase 3 Plan](./docs/roadmaps/phase-3-plan.md)** - Current development roadmap
+- **[Development Workflow](./docs/04-implementation/development-workflow.md)** - Coding standards and best practices
+- **[Deployment SOP](./docs/05-deployment/deployment-sop.md)** - **MANDATORY** Vercel deployment procedure
+- **[Architecture](./docs/03-architecture/fullstack-architecture.md)** - Technical architecture overview
+- **[Marketing Website PRD](./docs/02-requirements/marketing-website-prd.md)** - Product requirements
+- **[Documentation Index](./docs/00-INDEX.md)** - Complete documentation map
 
 
 ## 📊 Current Status

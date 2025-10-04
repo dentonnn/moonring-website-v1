@@ -2,6 +2,7 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
+import { blogPosts } from '@/lib/blogData'
 
 export const metadata: Metadata = {
   title: 'Blog | Moon Ring - Commitment Psychology & Behavioral Science',
@@ -11,125 +12,13 @@ export const metadata: Metadata = {
 // Enable ISR - revalidate every hour (3600 seconds)
 export const revalidate = 3600
 
-// Sample blog posts - in production, these would come from a CMS or database
-const blogPosts = [
-  {
-    slug: 'the-planning-fallacy-why-your-monday-motivation-dies-by-wednesday',
-    title: 'The Planning Fallacy: Why Your Monday Motivation Dies by Wednesday',
-    excerpt: 'You set ambitious goals every Sunday night. By Wednesday, they are forgotten. This is not a willpower problem—it is a cognitive bias called the Planning Fallacy. Here is how to hack it.',
-    category: 'Behavioral Psychology',
-    author: 'Dr. Sarah Mitchell',
-    date: 'January 15, 2025',
-    readTime: '8 min read',
-    image: '/placeholder-blog-1.jpg',
-    featured: true
-  },
-  {
-    slug: 'loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself',
-    title: 'Loss Aversion: Why Breaking Promises to Others Hurts More',
-    excerpt: 'You break promises to yourself all the time. But breaking a promise to a friend? That feels terrible. This is loss aversion—and it is the secret weapon of behavioral change.',
-    category: 'Behavioral Psychology',
-    author: 'Alex Chen',
-    date: 'January 12, 2025',
-    readTime: '6 min read',
-    image: '/placeholder-blog-2.jpg',
-    featured: true
-  },
-  {
-    slug: 'why-wearables-fail-without-accountability',
-    title: 'Why 68% of Wearable Users Fail (And How Accountability Fixes It)',
-    excerpt: 'The wearable industry has a dirty secret: most devices end up in drawers within six months. We explore the psychology behind this failure and how social accountability creates lasting change.',
-    category: 'Behavioral Psychology',
-    author: 'Dr. Sarah Mitchell',
-    date: 'January 10, 2025',
-    readTime: '7 min read',
-    image: '/placeholder-blog-3.jpg',
-    featured: false
-  },
-  {
-    slug: 'the-fresh-start-effect-why-january-1st-feels-different-and-how-to-use-it',
-    title: 'The Fresh Start Effect: Why January 1st Feels Different',
-    excerpt: 'New Year resolutions fail 92% of the time. But the Fresh Start Effect—the psychology behind "new beginnings"—is real. Here is how to harness it year-round.',
-    category: 'Behavioral Psychology',
-    author: 'Dr. Sarah Mitchell',
-    date: 'January 8, 2025',
-    readTime: '7 min read',
-    image: '/placeholder-blog-4.jpg',
-    featured: false
-  },
-  {
-    slug: 'temptation-bundling-how-to-make-healthy-habits-actually-enjoyable',
-    title: 'Temptation Bundling: Make Healthy Habits Actually Enjoyable',
-    excerpt: 'Hate running? Pair it with your favorite podcast. Dread meal prep? Do it while catching up on Netflix. This is temptation bundling—and it works.',
-    category: 'Behavioral Psychology',
-    author: 'Jordan Rivera',
-    date: 'January 5, 2025',
-    readTime: '5 min read',
-    image: '/placeholder-blog-5.jpg',
-    featured: false
-  },
-  {
-    slug: 'implementation-intentions-the-if-then-planning-method-that-actually-works',
-    title: 'Implementation Intentions: The If-Then Planning That Works',
-    excerpt: 'Saying "I will exercise more" is not a plan. Saying "If it is Tuesday at 6 AM, then I will put on gym clothes" is. This simple shift increases success rates by 70%.',
-    category: 'Behavioral Psychology',
-    author: 'Dr. Sarah Mitchell',
-    date: 'January 3, 2025',
-    readTime: '6 min read',
-    image: '/placeholder-blog-6.jpg',
-    featured: false
-  },
-  {
-    slug: 'accountability-partner-success-stories',
-    title: '5 Stories of Accountability Partners Who Changed Everything',
-    excerpt: 'Real stories from Moon Ring users who found success through mutual accountability. Discover how partnership transforms isolated efforts into lasting habits.',
-    category: 'Success Stories',
-    author: 'Jordan Rivera',
-    date: 'January 5, 2025',
-    readTime: '6 min read',
-    image: '/placeholder-blog-3.jpg',
-    featured: false
-  },
-  {
-    slug: 'behavioral-economics-habit-formation',
-    title: 'Behavioral Economics and Habit Formation: A Deep Dive',
-    excerpt: 'Loss aversion, commitment escalation, and implementation intentions—how behavioral economics principles power lasting behavior change.',
-    category: 'Behavioral Psychology',
-    author: 'Dr. Sarah Mitchell',
-    date: 'December 28, 2024',
-    readTime: '8 min read',
-    image: '/placeholder-blog-4.jpg',
-    featured: false
-  },
-  {
-    slug: 'social-rescue-system-explained',
-    title: "How Moon Ring's Social Rescue System Saves Failing Commitments",
-    excerpt: 'When motivation fails, community steps in. Learn how our social rescue feature turns individual struggles into collective support.',
-    category: 'Platform Features',
-    author: 'Jordan Rivera',
-    date: 'December 20, 2024',
-    readTime: '4 min read',
-    image: '/placeholder-blog-5.jpg',
-    featured: false
-  },
-  {
-    slug: 'corporate-wellness-accountability',
-    title: 'Why Corporate Wellness Programs Need Accountability (Not Just Perks)',
-    excerpt: "Most employee wellness programs see 32% engagement. Companies using accountability-based approaches achieve 80%+ participation. Here's why.",
-    category: 'Corporate Wellness',
-    author: 'Alex Chen',
-    date: 'December 15, 2024',
-    readTime: '6 min read',
-    image: '/placeholder-blog-6.jpg',
-    featured: false
-  },
-]
-
-const categories = ['All', 'Behavioral Psychology', 'Research', 'Success Stories', 'Platform Features', 'Corporate Wellness']
+// Use centralized blog data as single source of truth
+// Filter to only show posts with actual content (prevents 404s)
+const publishedPosts = blogPosts.filter(post => post.content && post.content.trim() !== '')
 
 export default function BlogPage() {
-  const featuredPosts = blogPosts.filter(post => post.featured)
-  const regularPosts = blogPosts.filter(post => !post.featured)
+  const featuredPosts = publishedPosts.filter(post => post.featured)
+  const regularPosts = publishedPosts.filter(post => !post.featured)
 
   return (
     <>
@@ -157,213 +46,120 @@ export default function BlogPage() {
                 </span>
               </h1>
               <p className="text-xl text-white/80 leading-relaxed">
-                Evidence-based behavioral science, real success stories, and the latest research
-                on social accountability for lasting health change.
+                Evidence-based strategies for turning intentions into lasting behavior change
               </p>
             </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                    category === 'All'
-                      ? 'bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white'
-                      : 'bg-white/10 text-white/80 hover:bg-white/20'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
           </div>
         </section>
 
-        {/* Featured Posts */}
-        <section className="relative py-12 px-4">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966]"></span>
-              Featured Articles
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {featuredPosts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 overflow-hidden hover:bg-white/15 transition-all"
-                >
-                  {/* Image Placeholder */}
-                  <div className="aspect-video bg-gradient-to-br from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
-                    <div className="text-white/60 text-sm">Featured Image</div>
-                  </div>
-
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white">
-                        {post.category}
-                      </span>
-                      <span className="text-white/60 text-sm flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {post.readTime}
-                      </span>
+        {/* Featured Articles */}
+        {featuredPosts.length > 0 && (
+          <section className="relative py-12 px-4">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold text-white mb-8">Featured Articles</h2>
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                {featuredPosts.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blog/${post.slug}`}
+                    className="group rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 overflow-hidden hover:bg-white/15 transition-all hover:scale-102"
+                  >
+                    <div className="aspect-video bg-gradient-to-br from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
+                      <span className="text-6xl">📝</span>
                     </div>
-
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#FF33BA] transition-colors">
-                      {post.title}
-                    </h3>
-
-                    <p className="text-white/70 mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-
-                    <div className="flex items-center justify-between text-sm text-white/60">
-                      <div className="flex items-center gap-3">
-                        <span>{post.author}</span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
+                    <div className="p-8">
+                      <div className="flex items-center gap-4 text-white/60 text-sm mb-4">
+                        <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
-                          {post.date}
-                        </span>
+                          <span>{post.date}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4" />
+                          <span>{post.readTime}</span>
+                        </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-[#FF33BA] group-hover:translate-x-1 transition-transform" />
+                      <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#FF33BA] transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-white/80 mb-4 leading-relaxed">{post.excerpt}</p>
+                      <div className="flex items-center gap-4">
+                        <span className="px-3 py-1 rounded-full bg-[#FF33BA]/20 text-[#FF33BA] text-sm font-medium">
+                          {post.category}
+                        </span>
+                        <span className="text-white/60 text-sm">{post.author}</span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* Regular Posts */}
-        <section className="relative py-12 px-4">
+        {/* All Articles */}
+        <section className="relative py-12 px-4 bg-white/5">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#52ACFF] to-[#725CFA]"></span>
-              Latest Articles
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-6">
+            <h2 className="text-2xl font-bold text-white mb-8">All Articles</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularPosts.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
                   className="group rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 overflow-hidden hover:bg-white/15 transition-all"
                 >
-                  {/* Image Placeholder */}
-                  <div className="aspect-video bg-gradient-to-br from-[#52ACFF]/20 to-[#725CFA]/20 flex items-center justify-center">
-                    <div className="text-white/60 text-xs">Article Image</div>
+                  <div className="aspect-video bg-gradient-to-br from-[#FF33BA]/10 to-[#FF9966]/10 flex items-center justify-center">
+                    <span className="text-4xl">📄</span>
                   </div>
-
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-white/10 text-white/80">
-                        {post.category}
-                      </span>
-                      <span className="text-white/60 text-xs flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {post.readTime}
-                      </span>
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 text-white/60 text-sm mb-3">
+                      <span>{post.date}</span>
+                      <span>•</span>
+                      <span>{post.readTime}</span>
                     </div>
-
-                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#FF33BA] transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#FF33BA] transition-colors line-clamp-2">
                       {post.title}
                     </h3>
-
-                    <p className="text-white/70 text-sm mb-4 line-clamp-2">
-                      {post.excerpt}
-                    </p>
-
-                    <div className="flex items-center justify-between text-xs text-white/60">
-                      <span>{post.author}</span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {post.date}
-                      </span>
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm line-clamp-3">{post.excerpt}</p>
+                    <div className="flex flex-col gap-2">
+                      <span className="text-[#FF33BA] text-sm font-medium">{post.category}</span>
+                      <span className="text-white/60 text-sm">{post.author}</span>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
+
+            {publishedPosts.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-white/60 text-lg">No published articles yet. Check back soon!</p>
+              </div>
+            )}
           </div>
         </section>
 
-        {/* Newsletter CTA */}
+        {/* CTA */}
         <section className="relative py-20 px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="rounded-3xl bg-gradient-to-r from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 p-8 sm:p-12 text-center">
-              <h2 className="text-3xl font-bold text-white mb-4">
-                Stay Updated on Commitment Psychology
-              </h2>
-              <p className="text-white/80 mb-6">
-                Get weekly insights on behavioral science, accountability strategies, and success stories
-                delivered to your inbox.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#FF33BA]"
-                />
-                <button className="px-6 py-3 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold hover:opacity-90 transition-opacity">
-                  Subscribe
-                </button>
-              </div>
-              <p className="text-white/60 text-xs mt-4">
-                No spam. Unsubscribe anytime. Read our <Link href="/privacy" className="underline">Privacy Policy</Link>.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Ready to Turn Knowledge into Action?
+            </h2>
+            <p className="text-white/80 text-lg mb-8">
+              Join thousands using commitment psychology and social accountability to achieve lasting behavior change
+            </p>
+            <Link
+              href="/#waitlist"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
+            >
+              Start Free Trial
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </div>
         </section>
 
         {/* Footer */}
         <footer className="relative border-t border-white/10 py-12 px-4">
           <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8 mb-8">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#FF33BA]"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#FF9966] opacity-70"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#FF33BA] opacity-50"></div>
-                  </div>
-                  <span className="text-lg font-bold text-white">Moon Ring</span>
-                </div>
-                <p className="text-white/60 text-sm">
-                  Transforming wearable data into lasting behavior change through social accountability.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-white font-semibold mb-4">Product</h4>
-                <ul className="space-y-2 text-white/60 text-sm">
-                  <li><Link href="/#demo" className="hover:text-white transition-colors">How It Works</Link></li>
-                  <li><Link href="/#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                  <li><Link href="/#stories" className="hover:text-white transition-colors">Success Stories</Link></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-semibold mb-4">Company</h4>
-                <ul className="space-y-2 text-white/60 text-sm">
-                  <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                  <li><Link href="/blog" className="text-white font-semibold">Blog</Link></li>
-                  <li><a href="mailto:support@moonring.com" className="hover:text-white transition-colors">Contact</a></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-semibold mb-4">Legal</h4>
-                <ul className="space-y-2 text-white/60 text-sm">
-                  <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
+            <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
               <p>&copy; 2025 Moon Ring. All rights reserved.</p>
               <div className="flex gap-6">
                 <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
