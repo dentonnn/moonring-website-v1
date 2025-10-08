@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait illustration for David Park</title>
+  <desc id="desc">Stylized portrait with deep purple and cyan gradients.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6B4DFF" />
+      <stop offset="100%" stop-color="#2CE6FF" />
+    </linearGradient>
+    <linearGradient id="face" x1="30%" y1="15%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#F0F4FF" />
+      <stop offset="100%" stop-color="#DBE7FF" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="28" fill="url(#bg)" />
+  <circle cx="100" cy="95" r="46" fill="url(#face)" />
+  <path d="M60 172c10-36 34-60 40-60s30 24 40 60" fill="#F5F8FF" opacity="0.6" />
+  <rect x="46" y="152" width="108" height="34" rx="17" fill="rgba(255,255,255,0.25)" />
+  <path d="M85 110c4 4 9 6 15 6s11-2 15-6" stroke="#4D8DFF" stroke-width="6" stroke-linecap="round" />
+  <circle cx="80" cy="92" r="6" fill="#1B023A" opacity="0.85" />
+  <circle cx="120" cy="92" r="6" fill="#1B023A" opacity="0.85" />
+</svg>

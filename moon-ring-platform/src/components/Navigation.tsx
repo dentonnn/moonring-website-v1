@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -38,12 +39,17 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FF33BA]"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FF9966] opacity-70"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FF33BA] opacity-50"></div>
-            </div>
+          <Link
+            href="/"
+            className="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <Image
+              src="/images/logos/moonring-logo-white.png"
+              alt="Moon Ring"
+              width={40}
+              height={40}
+              className="w-10 h-10"
+            />
             <span className="text-xl font-bold text-white">Moon Ring</span>
           </Link>
 
@@ -55,7 +61,7 @@ export default function Navigation() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-white/90 hover:text-white font-medium transition-colors"
+                  className="text-white/90 hover:text-white font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </a>
@@ -63,7 +69,7 @@ export default function Navigation() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-white/90 hover:text-white font-medium transition-colors"
+                  className="text-white/90 hover:text-white font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </Link>
@@ -73,12 +79,12 @@ export default function Navigation() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="px-6 py-2.5 text-white font-medium hover:bg-white/10 rounded-full transition-colors">
+            <button className="px-6 py-2.5 text-white font-medium hover:bg-white/10 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
               Sign In
             </button>
             <a
               href="#waitlist"
-              className="px-6 py-2.5 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold rounded-full hover:opacity-90 transition-opacity"
+              className="px-6 py-2.5 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold rounded-full hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Start Trial
             </a>
@@ -86,9 +92,11 @@ export default function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-white"
+            className="md:hidden p-2 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -97,7 +105,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-[#1B023A]/95 backdrop-blur-lg border-t border-white/20">
+        <div id="mobile-navigation" className="md:hidden bg-[#1B023A]/95 backdrop-blur-lg border-t border-white/20">
           <div className="px-4 py-6 space-y-4">
             {navItems.map((item) => {
               const isExternal = item.href.startsWith('#')
@@ -105,7 +113,7 @@ export default function Navigation() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="block text-white/90 hover:text-white font-medium py-2"
+                  className="block text-white/90 hover:text-white font-medium py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
@@ -114,7 +122,7 @@ export default function Navigation() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="block text-white/90 hover:text-white font-medium py-2"
+                  className="block text-white/90 hover:text-white font-medium py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
@@ -122,12 +130,12 @@ export default function Navigation() {
               )
             })}
             <div className="flex flex-col gap-3 pt-4">
-              <button className="w-full px-6 py-3 text-white font-medium border border-white/20 rounded-full hover:bg-white/10 transition-colors">
+              <button className="w-full px-6 py-3 text-white font-medium border border-white/20 rounded-full hover:bg-white/10 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                 Sign In
               </button>
               <a
                 href="#waitlist"
-                className="block text-center w-full px-6 py-3 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold rounded-full"
+                className="block text-center w-full px-6 py-3 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Start Trial

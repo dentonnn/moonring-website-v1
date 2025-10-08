@@ -2,8 +2,10 @@ import Navigation from '@/components/Navigation'
 import EmailCaptureForm from '@/components/forms/EmailCaptureForm'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import FAQSection from '@/components/FAQSection'
+import HeroVideo from '@/components/HeroVideo'
 import Link from 'next/link'
-import { CheckCircle, Heart, Users, Zap, Shield, TrendingUp, Star } from 'lucide-react'
+import Image from 'next/image'
+import { CheckCircle, Heart, Users, Shield, TrendingUp, Star } from 'lucide-react'
 import { generateProductSchema, generateFAQSchema, defaultMetadata } from '@/lib/metadata'
 import { getFAQData } from '@/lib/faqData'
 import type { Metadata } from 'next'
@@ -133,58 +135,92 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column: Visual/App Screenshot Placeholder */}
+            {/* Right Column: Premium Product Photography */}
             <div className="mt-12 lg:mt-0">
-              <div className="relative">
-                {/* Glass morphism card */}
-                <div className="relative rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8 shadow-2xl">
-                  <div className="space-y-6">
-                    {/* Placeholder for app screenshot */}
-                    <div className="aspect-[9/16] max-w-[300px] mx-auto rounded-2xl bg-gradient-to-br from-white/20 to-white/5 border border-white/30 flex items-center justify-center">
-                      <div className="text-center space-y-2 p-6">
-                        <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] flex items-center justify-center">
-                          <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <p className="text-white/60 text-sm">App Screenshot</p>
-                        <p className="text-white/40 text-xs">Coming Soon</p>
-                      </div>
-                    </div>
+              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/5 to-pink-500/10 border border-white/20 p-12 lg:p-16 shadow-2xl backdrop-blur-sm">
+                <div className="relative aspect-square">
+                  <Image
+                    src="/images/hero/hero-main.webp"
+                    alt="Moon Ring smart ring resting on illuminated charging stand"
+                    fill
+                    className="object-contain drop-shadow-2xl"
+                    priority
+                    sizes="(max-width: 1024px) 75vw, 480px"
+                  />
 
-                    {/* Feature highlights */}
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-white/80">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] flex items-center justify-center flex-shrink-0">
-                          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <span className="text-sm font-medium">Commitment-based goal setting</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-white/80">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] flex items-center justify-center flex-shrink-0">
-                          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <span className="text-sm font-medium">AI-powered accountability partners</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-white/80">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] flex items-center justify-center flex-shrink-0">
-                          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <span className="text-sm font-medium">Works with any wearable device</span>
-                      </div>
-                    </div>
+                  {/* Subtle Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF33BA]/10 via-transparent to-[#FF9966]/10 rounded-3xl" />
+
+                  {/* Product Badge */}
+                  <div className="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-pink-200/50 shadow-lg">
+                    <span className="text-xs font-semibold bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
+                      Premium Edition
+                    </span>
                   </div>
                 </div>
 
-                {/* Decorative gradient blur */}
-                <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-gradient-to-br from-[#FF33BA] to-[#FF9966] rounded-full blur-3xl opacity-20 -z-10" />
+                {/* Decorative Elements */}
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-[#FF33BA]/20 to-[#FF9966]/20 rounded-full blur-3xl" />
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl" />
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section - Dedicated Full Width */}
+      <section className="relative py-16 lg:py-20 bg-gradient-to-b from-[#1B023A] to-[#2D1B69]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Section Header */}
+          <div className="text-center mb-12 space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-semibold">
+              <span className="w-2 h-2 bg-[#FF33BA] rounded-full motion-safe:animate-pulse"></span>
+              <span className="text-[#FF33BA]">See It In Action</span>
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white">
+              Experience Moon Ring
+            </h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Watch how social accountability transforms daily intentions into lasting commitments
+            </p>
+          </div>
+
+          {/* Video Container */}
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            <HeroVideo />
+          </div>
+
+          {/* Feature callouts below video */}
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            <div className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
+                <svg className="w-6 h-6 text-[#FF33BA]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-white mb-2">Evidence-Based</h3>
+              <p className="text-sm text-white/70">Built on proven commitment psychology and behavioral science</p>
+            </div>
+
+            <div className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
+                <svg className="w-6 h-6 text-[#FF33BA]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-white mb-2">Social First</h3>
+              <p className="text-sm text-white/70">Accountability works best with people you already know and trust</p>
+            </div>
+
+            <div className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
+                <svg className="w-6 h-6 text-[#FF33BA]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-white mb-2">Instant Setup</h3>
+              <p className="text-sm text-white/70">Connect your wearable and start your first commitment in under 2 minutes</p>
             </div>
           </div>
         </div>
@@ -257,8 +293,13 @@ export default function Home() {
                   Complete Solution
                 </div>
 
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF33BA] to-[#FF9966] flex items-center justify-center mb-6 mx-auto mt-4">
-                  <Zap className="w-8 h-8 text-white" />
+                <div className="relative w-32 h-32 mx-auto mb-6 mt-4">
+                  <Image
+                    src="/images/product/ring-render-01.png"
+                    alt="Moon Ring Device"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
 
                 <div className="text-center mb-6">

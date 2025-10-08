@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait illustration for Marcus Williams</title>
+  <desc id="desc">Stylized illustration using cool gradients representing Marcus Williams.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#52ACFF" />
+      <stop offset="100%" stop-color="#725CFA" />
+    </linearGradient>
+    <linearGradient id="face" x1="30%" y1="20%" x2="80%" y2="85%">
+      <stop offset="0%" stop-color="#E5F1FF" />
+      <stop offset="100%" stop-color="#D0E0FF" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="28" fill="url(#bg)" />
+  <circle cx="100" cy="92" r="44" fill="url(#face)" />
+  <path d="M60 170c10-32 34-52 40-52s30 20 40 52" fill="#F1F7FF" opacity="0.6" />
+  <rect x="45" y="152" width="110" height="34" rx="17" fill="rgba(255,255,255,0.18)" />
+  <path d="M84 108c4 4 9 6 16 6s12-2 16-6" stroke="#3F7BF5" stroke-width="6" stroke-linecap="round" />
+  <circle cx="80" cy="90" r="6" fill="#1B023A" opacity="0.8" />
+  <circle cx="120" cy="90" r="6" fill="#1B023A" opacity="0.8" />
+</svg>

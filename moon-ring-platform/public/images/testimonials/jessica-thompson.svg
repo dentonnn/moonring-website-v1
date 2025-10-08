@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait illustration for Jessica Thompson</title>
+  <desc id="desc">Stylized illustration with calming teal gradients.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2BC0E4" />
+      <stop offset="100%" stop-color="#EAECC6" />
+    </linearGradient>
+    <linearGradient id="face" x1="35%" y1="20%" x2="80%" y2="82%">
+      <stop offset="0%" stop-color="#FFF7F0" />
+      <stop offset="100%" stop-color="#FFE0D7" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="28" fill="url(#bg)" />
+  <circle cx="100" cy="95" r="44" fill="url(#face)" />
+  <path d="M58 170c10-34 32-54 42-54s32 20 42 54" fill="#F9FFFE" opacity="0.65" />
+  <rect x="44" y="150" width="112" height="34" rx="17" fill="rgba(255,255,255,0.18)" />
+  <path d="M84 108c4 4 9 6 16 6s12-2 16-6" stroke="#2C9EE1" stroke-width="6" stroke-linecap="round" />
+  <circle cx="80" cy="90" r="6" fill="#1B023A" opacity="0.85" />
+  <circle cx="120" cy="90" r="6" fill="#1B023A" opacity="0.85" />
+</svg>

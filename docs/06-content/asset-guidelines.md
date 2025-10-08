@@ -7,8 +7,11 @@ public/
 ├── images/
 │   ├── brand/          # Logos, brand assets
 │   ├── blog/           # Blog post featured images
+│   ├── hero/           # Above-the-fold hero renders
 │   ├── team/           # Team member photos
 │   ├── app/            # App screenshots, mockups
+│   ├── product/        # Hardware renders and packaging shots
+│   ├── testimonials/   # Stylised customer illustrations
 │   └── research/       # Research-related imagery
 ├── favicon.ico         # Browser favicon
 ├── apple-touch-icon.png
@@ -65,7 +68,19 @@ public/
 - Dr. Sarah Mitchell (Head of Behavioral Science)
 - Jordan Rivera (Head of Engineering)
 
-### 4. App Screenshots
+### 4. Hero & Product Imagery
+
+**Hero Section** (`images/hero/`)
+- `hero-main.webp` – Optimised (1920px) hero render used on homepage (priority image)
+- `hero-main.avif` – High-efficiency variant (served automatically by Next.js when supported)
+- Source PNG retained in `images/product/` (`ring-product-hero.png`) for future edits
+
+**Usage Notes**
+- Always load through `next/image`
+- Include descriptive alt text (e.g., “Moon Ring smart ring resting on illuminated charging stand”)
+- Use `sizes="(max-width: 1024px) 75vw, 480px"` to keep responsive
+
+### 5. App Screenshots
 
 **Hero Section** (`images/app/`)
 - `hero-mockup.png` - Main app screenshot (750x1334, iPhone aspect)
@@ -78,7 +93,15 @@ public/
 - Desktop: 2880x1800 (MacBook Pro Retina)
 - Format: PNG with transparency for mockups
 
-### 5. Research & Illustrations
+### 6. Testimonials & Illustrations
+
+**Testimonial Portraits** (`images/testimonials/`)
+- SVG illustrations in Moon Ring palette (e.g., `sarah-chen.svg`)
+- Accessible `title` and `desc` metadata embedded for screen readers
+- Use with `next/image` `fill` mode inside rounded container (48px or 64px)
+- Update/expand set as new testimonials are published
+
+### 7. Research & Illustrations
 
 **Research Library** (`images/research/`)
 - Abstract scientific imagery

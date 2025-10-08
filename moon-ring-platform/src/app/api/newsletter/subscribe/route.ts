@@ -5,6 +5,7 @@ import type { Database } from '@/types/database'
 
 type EmailSubscriptionInsert = Database['public']['Tables']['email_subscriptions']['Insert']
 type EmailSubscriptionUpdate = Database['public']['Tables']['email_subscriptions']['Update']
+type ConversionEventInsert = Database['public']['Tables']['conversion_events']['Insert']
 
 /**
  * Newsletter Subscription API
@@ -211,7 +212,7 @@ export async function POST(request: Request) {
     const sessionId = request.headers.get('x-session-id') || 'unknown'
     const userAgent = request.headers.get('user-agent') || 'unknown'
 
-    await supabase.from('conversion_events').insert({
+    const conversionEvent: ConversionEventInsert = {
       session_id: sessionId,
       event_type: 'newsletter_signup',
       event_category: 'conversion',
@@ -225,7 +226,11 @@ export async function POST(request: Request) {
       referrer_url: referrer || null,
       user_agent: userAgent,
       ip_address: clientIp,
-    })
+    }
+
+    await supabase
+      .from('conversion_events')
+      .insert(conversionEvent as never)
 
     // ========================================================================
     // SUCCESS RESPONSE

@@ -1,10 +1,11 @@
+import Image from 'next/image'
 import { Star, Quote } from 'lucide-react'
 
 interface Testimonial {
   name: string
   role: string
   company?: string
-  avatar: string
+  image: string
   rating: number
   quote: string
   result: string
@@ -16,7 +17,7 @@ const testimonials: Testimonial[] = [
     name: 'Sarah Chen',
     role: 'Software Engineer',
     company: 'Google',
-    avatar: 'SC',
+    image: '/images/testimonials/sarah-chen.svg',
     rating: 5,
     quote: 'I tried every fitness app out there. They all felt like games I eventually got bored of. Moon Ring is different—having someone actually counting on me changed everything.',
     result: '127-day sleep consistency streak',
@@ -26,7 +27,7 @@ const testimonials: Testimonial[] = [
     name: 'Marcus Williams',
     role: 'Product Manager',
     company: 'Salesforce',
-    avatar: 'MW',
+    image: '/images/testimonials/marcus-williams.svg',
     rating: 5,
     quote: 'My Fitbit collected dust for 9 months. Moon Ring gave me a reason to actually use it. My accountability partner and I have been going strong for 4 months now.',
     result: '10K steps daily for 112 days',
@@ -35,7 +36,7 @@ const testimonials: Testimonial[] = [
   {
     name: 'Emily Rodriguez',
     role: 'Marketing Director',
-    avatar: 'ER',
+    image: '/images/testimonials/emily-rodriguez.svg',
     rating: 5,
     quote: 'The psychology behind this actually works. I\'m not motivated by badges or points—I\'m motivated by not letting down someone who\'s counting on me. Game changer.',
     result: 'Meditation habit: 89 days strong',
@@ -44,7 +45,7 @@ const testimonials: Testimonial[] = [
   {
     name: 'David Park',
     role: 'Entrepreneur',
-    avatar: 'DP',
+    image: '/images/testimonials/david-park.svg',
     rating: 5,
     quote: 'I\'ve tried accountability coaches ($200/month), habit apps (free), and sheer willpower (failed). Moon Ring costs less than a coffee subscription and actually works.',
     result: 'Lost 23 lbs with movement goal',
@@ -53,7 +54,7 @@ const testimonials: Testimonial[] = [
   {
     name: 'Jessica Thompson',
     role: 'Nurse',
-    avatar: 'JT',
+    image: '/images/testimonials/jessica-thompson.svg',
     rating: 5,
     quote: 'As a healthcare worker with irregular shifts, consistency was impossible. My accountability partner has the same schedule type—having someone who gets it makes all the difference.',
     result: 'Sleep quality improved 42%',
@@ -62,7 +63,7 @@ const testimonials: Testimonial[] = [
   {
     name: 'Alex Kumar',
     role: 'Data Scientist',
-    avatar: 'AK',
+    image: '/images/testimonials/alex-kumar.svg',
     rating: 5,
     quote: 'I analyzed my own fitness data for years. Tracking alone doesn\'t create change—accountability does. Moon Ring is the missing piece I didn\'t know I needed.',
     result: 'HRV recovery: 3-month streak',
@@ -115,8 +116,15 @@ export default function TestimonialsSection() {
 
               {/* Author */}
               <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] flex items-center justify-center text-white font-bold">
-                  {testimonial.avatar}
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/60 shadow-sm">
+                  <Image
+                    src={testimonial.image}
+                    alt={`${testimonial.name} avatar illustration`}
+                    fill
+                    sizes="48px"
+                    className="object-cover"
+                    priority={idx < 3}
+                  />
                 </div>
                 <div>
                   <div className="font-semibold text-[#1B023A]">{testimonial.name}</div>

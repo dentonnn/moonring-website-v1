@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, Heart, Users, Zap, Target, Globe, Award } from 'lucide-react'
 import type { Metadata } from 'next'
 
@@ -67,6 +68,16 @@ export default function AboutPage() {
               </div>
 
               <div className="rounded-3xl bg-gradient-to-br from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 p-8">
+                {/* Ecosystem Diagram */}
+                <div className="relative aspect-video rounded-2xl overflow-hidden mb-6">
+                  <Image
+                    src="/images/hero/ecosystem-diagram.png"
+                    alt="Moon Ring Ecosystem - How Social Accountability Works"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FF33BA] to-[#FF9966] flex items-center justify-center flex-shrink-0">

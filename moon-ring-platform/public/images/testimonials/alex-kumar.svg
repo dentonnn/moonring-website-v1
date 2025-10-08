@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait illustration for Alex Kumar</title>
+  <desc id="desc">Stylized illustration using Moon Ring brand purples and pinks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9C27B0" />
+      <stop offset="100%" stop-color="#FF4081" />
+    </linearGradient>
+    <linearGradient id="face" x1="35%" y1="15%" x2="80%" y2="85%">
+      <stop offset="0%" stop-color="#FBEAFF" />
+      <stop offset="100%" stop-color="#FFD4F3" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="28" fill="url(#bg)" />
+  <circle cx="100" cy="95" r="44" fill="url(#face)" />
+  <path d="M60 172c10-32 30-52 40-52s30 20 40 52" fill="#FDE9FF" opacity="0.6" />
+  <rect x="46" y="152" width="108" height="34" rx="17" fill="rgba(255,255,255,0.22)" />
+  <path d="M84 110c3 5 9 7 16 7s12-2 16-7" stroke="#D165FF" stroke-width="6" stroke-linecap="round" />
+  <circle cx="82" cy="92" r="6" fill="#1B023A" opacity="0.85" />
+  <circle cx="118" cy="92" r="6" fill="#1B023A" opacity="0.85" />
+</svg>
