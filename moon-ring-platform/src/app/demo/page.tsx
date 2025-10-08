@@ -167,6 +167,8 @@ export default function DemoPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                   <Link
                     href="/#waitlist"
+                    data-analytics-event="start_trial"
+                    data-analytics-params={JSON.stringify({ location: 'demo_success_cta' })}
                     className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
                   >
                     Start Free Trial

@@ -96,6 +96,8 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <a
                   href="#waitlist"
+                  data-analytics-event="start_trial"
+                  data-analytics-params={JSON.stringify({ location: 'home_hero' })}
                   className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
                 >
                   Start Free Trial
@@ -374,6 +376,8 @@ export default function Home() {
 
                 <a
                   href="#waitlist"
+                  data-analytics-event="start_trial"
+                  data-analytics-params={JSON.stringify({ location: 'home_pricing_paths_free' })}
                   className="block w-full text-center py-3 rounded-full bg-gradient-to-r from-[#F7941D] to-[#FFF200] text-white font-semibold hover:opacity-90 transition-opacity"
                 >
                   Try Free Now
@@ -707,6 +711,8 @@ export default function Home() {
                 </ul>
                 <a
                   href="#waitlist"
+                  data-analytics-event="start_trial"
+                  data-analytics-params={JSON.stringify({ location: 'home_pricing_comparison', plan: plan.name })}
                   className={`block text-center w-full py-4 rounded-full font-semibold transition-all ${
                     plan.highlight
                       ? 'bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white hover:opacity-90 shadow-lg shadow-pink-500/25'

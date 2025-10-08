@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackConversion } from '@/lib/analytics/events'
 import { Send } from 'lucide-react'
 
 export default function ContactForm() {
@@ -36,6 +37,11 @@ export default function ContactForm() {
 
       setSuccess(true)
       e.currentTarget.reset()
+
+      trackConversion('contact', {
+        method: 'contact_form',
+        location: window.location.pathname,
+      })
 
       // Reset success message after 5 seconds
       setTimeout(() => setSuccess(false), 5000)

@@ -20,11 +20,12 @@ export default function Navigation() {
 
   const navItems = [
     { label: 'How It Works', href: '/how-it-works' },
-    { label: 'Try Demo', href: '/demo' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Success Stories', href: '/success-stories' },
+    { label: 'Resources', href: '/blog' },
     { label: 'For Companies', href: '/enterprise' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'About', href: '/about' },
+    { label: 'Support', href: '/support' },
+    { label: 'Try Demo', href: '/demo' },
     { label: 'Contact', href: '/contact' }
   ]
 
@@ -84,6 +85,8 @@ export default function Navigation() {
             </button>
             <a
               href="#waitlist"
+              data-analytics-event="start_trial"
+              data-analytics-params={JSON.stringify({ location: 'nav_desktop' })}
               className="px-6 py-2.5 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold rounded-full hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Start Trial
@@ -135,6 +138,8 @@ export default function Navigation() {
               </button>
               <a
                 href="#waitlist"
+                data-analytics-event="start_trial"
+                data-analytics-params={JSON.stringify({ location: 'nav_mobile' })}
                 className="block text-center w-full px-6 py-3 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

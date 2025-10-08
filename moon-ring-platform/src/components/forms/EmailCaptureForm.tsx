@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackConversion } from '@/lib/analytics/events'
 
 interface EmailCaptureFormProps {
   source?: 'hero' | 'footer' | 'popup'
@@ -78,6 +79,11 @@ export default function EmailCaptureForm({
       setEmail('')
       setName('')
       setGdprConsent(false)
+
+      trackConversion('generate_lead', {
+        method: `email_capture_${source}`,
+        location: window.location.pathname,
+      })
 
       if (onSuccess) {
         onSuccess()

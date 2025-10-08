@@ -430,12 +430,16 @@ export default function EnterprisePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Link
                 href="/contact"
+                data-analytics-event="request_quote"
+                data-analytics-params={JSON.stringify({ location: 'enterprise_cta', method: 'demo_request' })}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
               >
                 Schedule a Demo
               </Link>
               <a
                 href="mailto:enterprise@moonring.com"
+                data-analytics-event="contact"
+                data-analytics-params={JSON.stringify({ location: 'enterprise_cta', method: 'email_link' })}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white border-2 border-gray-300 text-[#1B023A] font-semibold text-lg hover:border-[#FF33BA] transition-colors"
               >
                 Email Sales Team
