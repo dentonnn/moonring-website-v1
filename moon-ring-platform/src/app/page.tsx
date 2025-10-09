@@ -49,9 +49,13 @@ export default function Home() {
             <div className="space-y-8">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                <span className="text-[#FF33BA] font-semibold text-sm">Behavioral Psychology</span>
+                <Link href="/blog" className="text-[#FF33BA] font-semibold text-sm hover:text-[#FF9966] transition-colors">
+                  Behavioral Psychology
+                </Link>
                 <span className="text-white/60 text-sm">·</span>
-                <span className="text-white/80 text-sm">Social Accountability</span>
+                <Link href="/research" className="text-white/80 text-sm hover:text-white transition-colors">
+                  Social Accountability
+                </Link>
               </div>
 
               {/* Main Headline */}
@@ -69,7 +73,7 @@ export default function Home() {
               {/* Subheadline */}
               <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-2xl">
                 Moon Ring transforms your wearable data into lasting behavior change through
-                evidence-based commitment psychology and social accountability.
+                evidence-based <Link href="/blog/loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">commitment psychology</Link> and <Link href="/research" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">social accountability</Link>.
               </p>
 
               {/* Stats with source tooltips */}
@@ -200,15 +204,15 @@ export default function Home() {
 
           {/* Feature callouts below video */}
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
+            <Link href="/research" className="block text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all group">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg className="w-6 h-6 text-[#FF33BA]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-white mb-2">Evidence-Based</h3>
+              <h3 className="font-semibold text-white mb-2 group-hover:text-[#FF33BA] transition-colors">Evidence-Based</h3>
               <p className="text-sm text-white/70">Built on proven commitment psychology and behavioral science</p>
-            </div>
+            </Link>
 
             <div className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
               <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF33BA]/20 to-[#FF9966]/20 flex items-center justify-center">
@@ -418,38 +422,37 @@ export default function Home() {
               Backed by Science
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our approach is grounded in peer-reviewed behavioral psychology research
+              Our approach is grounded in <Link href="/research" className="text-[#1B023A] hover:text-[#FF33BA] underline decoration-gray-300 hover:decoration-[#FF33BA] transition-colors font-semibold">peer-reviewed behavioral psychology research</Link>
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <div className="rounded-3xl bg-gradient-to-br from-[#52ACFF]/10 to-[#725CFA]/10 border border-[#52ACFF]/20 p-8">
-              <h3 className="text-2xl font-bold text-[#1B023A] mb-4">
+            <Link href="/research" className="block rounded-3xl bg-gradient-to-br from-[#52ACFF]/10 to-[#725CFA]/10 border border-[#52ACFF]/20 p-8 hover:from-[#52ACFF]/15 hover:to-[#725CFA]/15 transition-all group">
+              <h3 className="text-2xl font-bold text-[#1B023A] mb-4 group-hover:text-[#52ACFF] transition-colors">
                 Commitment Devices
               </h3>
               <p className="text-gray-600 mb-6">
-                Research shows that public commitments increase goal achievement by 65%. Social accountability
+                <span className="font-semibold text-[#1B023A]">Research shows that public commitments increase goal achievement by 65%.</span> Social accountability
                 transforms abstract intentions into concrete obligations.
               </p>
               <div className="flex items-center gap-2 text-[#52ACFF] font-semibold">
                 <Star className="w-5 h-5" />
-                <span>Published in Journal of Behavioral Medicine</span>
+                <span>Published in Journal of Behavioral Medicine →</span>
               </div>
-            </div>
+            </Link>
 
-            <div className="rounded-3xl bg-gradient-to-br from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 p-8">
-              <h3 className="text-2xl font-bold text-[#1B023A] mb-4">
+            <Link href="/blog/loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself" className="block rounded-3xl bg-gradient-to-br from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 p-8 hover:from-[#FF33BA]/15 hover:to-[#FF9966]/15 transition-all group">
+              <h3 className="text-2xl font-bold text-[#1B023A] mb-4 group-hover:text-[#FF33BA] transition-colors">
                 Social Accountability
               </h3>
               <p className="text-gray-600 mb-6">
-                Studies demonstrate that having an accountability partner increases success rates by up to 95%
-                compared to pursuing goals alone.
+                <span className="font-semibold text-[#1B023A]">Studies demonstrate that having an accountability partner increases success rates by up to 95%</span> compared to pursuing goals alone.
               </p>
               <div className="flex items-center gap-2 text-[#FF33BA] font-semibold">
                 <Star className="w-5 h-5" />
-                <span>American Society of Training and Development</span>
+                <span>American Society of Training and Development →</span>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="rounded-3xl bg-gray-50 p-12 text-center">

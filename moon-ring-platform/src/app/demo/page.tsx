@@ -143,7 +143,9 @@ export default function DemoPage() {
               </h1>
               <p className="text-xl text-white/80 leading-relaxed">
                 See how Moon Ring turns intentions into unbreakable commitments through
-                social accountability. Try creating your first commitment below.
+                <Link href="/blog/loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors mx-1">
+                  social accountability
+                </Link>. Try creating your first commitment below.
               </p>
             </div>
           </div>
@@ -544,7 +546,7 @@ export default function DemoPage() {
                   Why Commitment Contracts Work
                 </h2>
                 <p className="text-gray-600 max-w-2xl mx-auto">
-                  The psychology behind turning intentions into lasting behavior change
+                  The <Link href="/research" className="text-[#1B023A] hover:text-[#FF33BA] underline decoration-gray-300 hover:decoration-[#FF33BA] transition-colors font-semibold">psychology</Link> behind turning intentions into lasting behavior change
                 </p>
               </div>
 
