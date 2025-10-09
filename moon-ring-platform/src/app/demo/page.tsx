@@ -198,7 +198,7 @@ export default function DemoPage() {
                 <div className="flex items-center justify-between mb-4">
                   {[1, 2, 3].map((step) => (
                     <div key={step} className="flex items-center flex-1">
-                      <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
+                      <div className={`flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border-2 ${
                         currentStep >= step
                           ? 'bg-gradient-to-r from-[#FF33BA] to-[#FF9966] border-[#FF33BA] text-white'
                           : 'border-white/30 text-white/50'
@@ -235,7 +235,7 @@ export default function DemoPage() {
                       <button
                         key={category.id}
                         onClick={() => handleCategorySelect(category.id)}
-                        className={`group relative rounded-2xl p-6 text-left transition-all ${
+                        className={`group relative rounded-2xl p-6 min-h-[120px] text-left transition-all ${
                           selectedCategory === category.id
                             ? `bg-gradient-to-br ${category.color} shadow-lg scale-105`
                             : 'bg-white/5 hover:bg-white/10'
@@ -269,7 +269,7 @@ export default function DemoPage() {
                     <button
                       onClick={handleNextStep}
                       disabled={!canProceed()}
-                      className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold transition-all ${
+                      className={`inline-flex items-center gap-2 px-8 py-4 min-h-[48px] rounded-full font-semibold transition-all ${
                         canProceed()
                           ? 'bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white hover:opacity-90 shadow-lg shadow-pink-500/25'
                           : 'bg-white/10 text-white/40 cursor-not-allowed'
@@ -292,13 +292,64 @@ export default function DemoPage() {
                     Research shows 30-day commitments have the highest success rates
                   </p>
 
-                  {/* App Screenshot Placeholder */}
-                  <div className="mb-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/10 border border-white/20 p-6 text-center">
-                    <div className="text-white/60 text-sm mb-2">Preview: How this looks in the app</div>
-                    <div className="aspect-[9/16] max-w-[280px] mx-auto rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/30 flex items-center justify-center">
-                      <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${selectedCategoryData.color} flex items-center justify-center text-3xl`}>
+                  {/* App Screenshot Enhanced Preview */}
+                  <div className="mb-8">
+                    {/* Context label */}
+                    <div className="text-white/80 text-sm mb-3 text-center font-medium flex items-center justify-center gap-2">
+                      <svg className="w-4 h-4 text-[#FF33BA]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                      <span>Your commitment will appear in the app like this:</span>
+                    </div>
+
+                    {/* Enhanced preview */}
+                    <div className="aspect-[9/16] max-w-[280px] mx-auto rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/30 p-6 flex flex-col items-center justify-center gap-4 shadow-2xl backdrop-blur-sm">
+                      {/* Category icon - larger and more prominent */}
+                      <div className={`w-20 h-20 rounded-full bg-gradient-to-r ${selectedCategoryData.color} flex items-center justify-center text-4xl shadow-xl ring-4 ring-white/10 motion-safe:animate-pulse`}>
                         {selectedCategoryData.icon}
                       </div>
+
+                      {/* Commitment details */}
+                      <div className="text-center space-y-2">
+                        <div className="text-white font-bold text-lg">
+                          {commitmentDays}-Day {selectedCategoryData.name}
+                        </div>
+                        <div className="text-white/70 text-sm">
+                          Starting {new Date(Date.now() + 86400000).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Partner indicator */}
+                      <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20">
+                        <Users className="w-4 h-4 text-[#FF33BA]" />
+                        <span className="text-white/90 text-sm font-medium">+ 1 Accountability Partner</span>
+                      </div>
+
+                      {/* Success rate badge */}
+                      <div className="text-xs text-white/60 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-400/30">
+                        <span className="text-green-300 font-semibold">67% success rate</span> for this duration
+                      </div>
+
+                      {/* App UI hint - decorative elements */}
+                      <div className="w-full pt-4 border-t border-white/10">
+                        <div className="flex justify-between items-center px-2">
+                          <div className="flex gap-1">
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#FF33BA]"></div>
+                          </div>
+                          <span className="text-white/50 text-xs">Commitment Created</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Disclaimer */}
+                    <div className="text-white/50 text-xs mt-3 text-center italic">
+                      * Full app interface shown after signup
                     </div>
                   </div>
 
@@ -392,7 +443,7 @@ export default function DemoPage() {
                       <button
                         key={idx}
                         onClick={() => setSelectedPartner(idx)}
-                        className={`w-full group relative rounded-2xl p-6 text-left transition-all ${
+                        className={`w-full group relative rounded-2xl p-6 min-h-[140px] text-left transition-all ${
                           selectedPartner === idx
                             ? 'bg-gradient-to-r from-[#FF33BA] to-[#FF9966] shadow-lg scale-102'
                             : 'bg-white/5 hover:bg-white/10'
@@ -460,7 +511,7 @@ export default function DemoPage() {
                   <div className="flex justify-between">
                     <button
                       onClick={handlePrevStep}
-                      className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors"
+                      className="inline-flex items-center gap-2 px-8 py-4 min-h-[48px] rounded-full bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors"
                     >
                       <ArrowLeft className="w-5 h-5" />
                       Back
@@ -468,7 +519,7 @@ export default function DemoPage() {
                     <button
                       onClick={handleNextStep}
                       disabled={!canProceed()}
-                      className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold transition-all ${
+                      className={`inline-flex items-center gap-2 px-8 py-4 min-h-[48px] rounded-full font-semibold transition-all ${
                         canProceed()
                           ? 'bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white hover:opacity-90 shadow-lg shadow-pink-500/25'
                           : 'bg-white/10 text-white/40 cursor-not-allowed'

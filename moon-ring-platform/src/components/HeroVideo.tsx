@@ -6,6 +6,7 @@ export default function HeroVideo() {
   const [isMuted, setIsMuted] = useState(true)
   const [isPlaying, setIsPlaying] = useState(true)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -28,6 +29,15 @@ export default function HeroVideo() {
 
     mediaQuery.addListener(updateMotionPreference)
     return () => mediaQuery.removeListener(updateMotionPreference)
+  }, [])
+
+  // Detect mobile viewport to adjust autoplay and video behavior
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
   useEffect(() => {
@@ -74,11 +84,12 @@ export default function HeroVideo() {
     <div className="relative group">
       {/* Video container - fills most of hero section height */}
       <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-        {/* 16:9 aspect ratio matching original video, taller container */}
-        <div className="relative h-[600px] lg:h-[700px]">
+        {/* 16:9 aspect ratio with responsive heights */}
+        <div className="relative h-[400px] sm:h-[500px] lg:h-[600px]">
           {/* Brand video - autoplay, loop, muted by default */}
           <video
-            autoPlay={!prefersReducedMotion}
+            poster="/images/video-poster.webp"
+            autoPlay={!prefersReducedMotion && !isMobile}
             loop
             muted
             playsInline
@@ -95,13 +106,25 @@ export default function HeroVideo() {
           {/* Additional gradient overlay for depth */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#1B023A]/50 via-transparent to-transparent pointer-events-none" />
 
-          {/* Hover control buttons */}
-          <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Accessible control buttons (visible, hover/focus amplifies) */}
+          <div className="absolute bottom-4 right-4 flex gap-2 opacity-60 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300">
+            {/* Screen reader hint */}
+            <div className="sr-only">
+              Video controls: Tab to focus play/pause and mute buttons. Space or Enter to activate.
+            </div>
             {/* Play/Pause button */}
             <button
               onClick={togglePlay}
-              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                  e.preventDefault()
+                  togglePlay()
+                }
+              }}
+              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               aria-label={isPlaying ? 'Pause video' : 'Play video'}
+              aria-pressed={isPlaying}
             >
               {isPlaying ? (
                 // Pause icon
@@ -120,8 +143,16 @@ export default function HeroVideo() {
             {/* Audio control button */}
             <button
               onClick={toggleMute}
-              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                  e.preventDefault()
+                  toggleMute()
+                }
+              }}
+              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+              aria-pressed={!isMuted}
             >
               {isMuted ? (
                 // Muted icon

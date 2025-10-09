@@ -19,14 +19,10 @@ export default function Navigation() {
   }, [])
 
   const navItems = [
-    { label: 'How It Works', href: '/how-it-works' },
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'Success Stories', href: '/success-stories' },
-    { label: 'Resources', href: '/blog' },
-    { label: 'For Companies', href: '/enterprise' },
-    { label: 'Support', href: '/support' },
-    { label: 'Try Demo', href: '/demo' },
-    { label: 'Contact', href: '/contact' }
+    { label: 'How It Works', href: '/#demo' },
+    { label: 'Pricing', href: '/#pricing' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'For Companies', href: '/enterprise' }
   ]
 
   return (
@@ -80,9 +76,6 @@ export default function Navigation() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="px-6 py-2.5 text-white font-medium hover:bg-white/10 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-              Sign In
-            </button>
             <a
               href="#waitlist"
               data-analytics-event="start_trial"
@@ -133,9 +126,6 @@ export default function Navigation() {
               )
             })}
             <div className="flex flex-col gap-3 pt-4">
-              <button className="w-full px-6 py-3 text-white font-medium border border-white/20 rounded-full hover:bg-white/10 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                Sign In
-              </button>
               <a
                 href="#waitlist"
                 data-analytics-event="start_trial"
