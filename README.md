@@ -19,7 +19,8 @@ This repository contains the **marketing website** for Moon Ring, designed to:
 - **Frontend**: React 19, TypeScript 5, Tailwind CSS 4
 - **Payments**: Stripe integration for product ordering
 - **Backend**: Supabase (database, auth, storage)
-- **Email**: Resend for transactional emails
+- **Email**: Brevo for transactional and marketing emails
+- **Animations**: Framer Motion patterns for polished interactions
 - **Monitoring**: Sentry for error tracking, Vercel Analytics for performance
 - **Deployment**: Vercel (optimized for Next.js)
 
@@ -31,7 +32,7 @@ This repository contains the **marketing website** for Moon Ring, designed to:
 - Git
 - Supabase account (for database)
 - Stripe account (for payments, test mode OK)
-- Resend account (for emails)
+- Brevo account (for emails - 9,000 emails/month free tier)
 
 ### Quick Start
 
@@ -81,23 +82,41 @@ This repository contains the **marketing website** for Moon Ring, designed to:
 
 ## 📊 Current Status
 
-**~95% complete** - Production-ready marketing website with:
+**~98% complete** - Production-ready marketing website with:
 
-- ✅ Homepage with hero, features, pricing
+### Core Pages & Features
+- ✅ Homepage with hero video, features, pricing
+- ✅ Interactive demo page with commitment builder
 - ✅ Legal pages (Privacy Policy, Terms of Service)
 - ✅ About page with mission and team
-- ✅ Blog structure with ISR caching
+- ✅ Blog structure with ISR caching and internal linking
 - ✅ Research library page
-- ✅ Contact form with Resend integration
+- ✅ Contact form with Brevo integration
 - ✅ Cookie consent (GDPR-compliant)
-- ✅ Stripe checkout integration
-- ✅ Supabase database with migrations
+
+### Technical Implementation
+- ✅ Stripe checkout integration (test mode)
+- ✅ Supabase database with migrations and RLS policies
+- ✅ Brevo email service (transactional + marketing)
 - ✅ Sentry error monitoring
 - ✅ Google Analytics 4 integration
 - ✅ Zero TypeScript/lint errors
 - ✅ Optimized bundle sizes (~170KB First Load JS)
 
-**Next Phase**: Asset creation and content (Phase 4)
+### UX & Accessibility
+- ✅ **UX Improvements Phase 1 complete** (all 12 tasks)
+  - Simplified 4-item navigation (Hick's Law optimization)
+  - Responsive video heights (400/500/600px)
+  - Accessible video controls (WCAG 2.1 AA)
+  - StatWithTooltip component with source attribution
+  - Interactive path selection with progressive disclosure
+  - 48x48px touch targets (WCAG AAA)
+  - Optimized CTA copy ("Build Your First Commitment")
+  - Video poster images for mobile (99% data savings)
+- ✅ Animation system with Framer Motion patterns
+- ✅ WCAG 2.1 AA compliant
+
+**Next Phase**: Production deployment and asset refinement
 
 ## 🔒 Security Notes
 

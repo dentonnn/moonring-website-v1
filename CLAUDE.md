@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🎯 Critical Context
+
+**MONOREPO STRUCTURE**: This repository has a specific layout that affects all development and deployment:
+- **Repository root** (`moonring-website-v1/`) contains meta-project tooling, documentation, and deployment config
+- **Next.js application** lives in `moon-ring-platform/` subdirectory
+- **All development commands** must be run from `moon-ring-platform/` directory
+- **Deployment** must be triggered from repository root (see Deployment section)
+
+**DO NOT**:
+- Run `npm` commands from repository root (except bmad-method tools)
+- Deploy from `moon-ring-platform/` subdirectory when Root Directory is configured in Vercel
+- Create or edit files outside `moon-ring-platform/` unless working on documentation or deployment config
+
 ## Project Purpose
 
 This is the **marketing and conversion website** for Moon Ring - a social accountability platform for wearable device users. The website's primary goals are:
@@ -19,7 +32,7 @@ This is the **marketing and conversion website** for Moon Ring - a social accoun
 
 ## Project Structure
 
-- **Root Level**: Meta-project with bmad-method tooling and project documentation
+- **Root Level**: Meta-project with bmad-method tooling, project documentation, and Vercel config
 - **`moon-ring-platform/`**: Main Next.js 15 marketing website
   - Uses React 19, TypeScript 5, and Tailwind CSS 4
   - App Router structure in `src/app/` with layout.tsx and page.tsx
@@ -34,21 +47,34 @@ Navigate to `moon-ring-platform/` directory first, then run:
 
 ```bash
 cd moon-ring-platform
-npm install          # Install dependencies (if node_modules missing)
-npm run dev          # Start development server with Turbopack
-npm run build        # Build for production with Turbopack
-npm run start        # Start production server
-npm run lint         # Run ESLint
+npm install              # Install dependencies (if node_modules missing)
+npm run dev              # Start development server with Turbopack
+npm run build            # Build for production with Turbopack
+npm run build:validate   # Validate environment variables then build
+npm run start            # Start production server
+npm run lint             # Run ESLint
 ```
 
-**Note**: No test runner is currently configured in this project.
+**Additional Commands**:
+```bash
+ANALYZE=true npm run build  # Analyze bundle size with @next/bundle-analyzer
+```
 
-### Root Level Tools
+**Note**: No test runner is currently configured in this project. When adding tests, prefer:
+- Unit tests (Vitest/Jest) for lib/utils
+- E2E tests (Playwright) for critical flows (home, checkout, contact form)
+- Colocated test files (e.g., `src/lib/foo.test.ts`)
+
+### Root Level Tools (bmad-method)
+The root level contains bmad-method tooling for agent orchestration:
+
 ```bash
 npm run bmad:refresh     # Refresh bmad-method tooling
 npm run bmad:list        # List available agents
 npm run bmad:validate    # Validate bmad configuration
 ```
+
+**What is bmad-method?** A meta-framework for orchestrating development agents and workflows. You generally won't need to interact with it directly - focus on the Next.js app in `moon-ring-platform/`.
 
 ## Environment Setup
 
@@ -61,8 +87,11 @@ Before running the development server:
    - **Stripe**: `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`
    - **Email**: `BREVO_API_KEY` (for Brevo email service - get from https://app.brevo.com/settings/keys/api)
    - **App URL**: `NEXT_PUBLIC_APP_URL` (defaults to `http://localhost:3000`)
+   - **Analytics** (optional): `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_HOTJAR_ID`
 4. Run `npm install` if `node_modules/` is missing
-5. Apply database migrations if needed: `./apply-migration.sh`
+5. Apply database migrations if needed: `./apply-migration.sh` (see Database Management section)
+
+**Important**: Never commit `.env.local` or any files containing API keys. The `.env.example` file is the source of truth for required variables.
 
 ## Deployment
 
@@ -70,7 +99,7 @@ Before running the development server:
 
 **BEFORE deploying to Vercel (preview, production, or any environment), you MUST:**
 
-1. **Read and follow** [`DEPLOYMENT_SOP.md`](DEPLOYMENT_SOP.md) - Comprehensive Standard Operating Procedure
+1. **Read and follow** [`docs/05-deployment/deployment-sop.md`](docs/05-deployment/deployment-sop.md) - Comprehensive Standard Operating Procedure
 2. **Complete the Pre-Deployment Checklist** in Phase 1 of the SOP
 3. **Verify** no stray framework config files exist at repository root
 4. **Confirm** Framework Preset is explicitly set to "Next.js" in Vercel dashboard
@@ -84,7 +113,7 @@ Before running the development server:
 
 Following the SOP prevents these issues and reduces deployment time from 45 minutes to 5 minutes.
 
-**Quick deployment reference** (detailed steps in `DEPLOYMENT_SOP.md`):
+**Quick deployment reference** (detailed steps in `docs/05-deployment/deployment-sop.md`):
 ```bash
 # 1. Pre-flight check (from repo root)
 find . -maxdepth 1 -name "*.config.*" -type f  # Should be empty
@@ -98,7 +127,7 @@ vercel --prod
 ```
 
 For additional deployment documentation, see:
-- **[`DEPLOYMENT_SOP.md`](DEPLOYMENT_SOP.md)** - **PRIMARY REFERENCE** - Complete deployment workflow and troubleshooting
+- **[`docs/05-deployment/deployment-sop.md`](docs/05-deployment/deployment-sop.md)** - **PRIMARY REFERENCE** - Complete deployment workflow and troubleshooting
 - `moon-ring-platform/DEPLOYMENT.md` - Legacy deployment instructions
 - `moon-ring-platform/VERCEL_DEPLOYMENT.md` - Vercel-specific deployment guide
 
@@ -111,40 +140,50 @@ These cover:
 
 ## Documentation Structure
 
-The `docs/` directory is organized by purpose:
+The `docs/` directory is organized by purpose. **Start here**: [`docs/00-INDEX.md`](docs/00-INDEX.md) for a complete documentation map.
+
+Quick reference by category:
 
 ```
 docs/
-├── roadmaps/              # Execution plans and phase planning
-│   ├── phase-3-plan.md              # Current: Backend integration & production features
-│   └── phase-3-quickstart.md        # Quick reference for Phase 3 tasks
-├── stories/               # Feature stories and implementation tasks
-│   ├── 1.1.*.md                     # Database setup stories
-│   ├── 1.2.*.md                     # Authentication stories
-│   ├── 1.3-1.6.*.md                 # User features, goals, subscriptions
-├── setup/                 # Environment and tooling setup
-│   └── environment-setup-guide.md   # Development environment configuration
-├── strategy/              # High-level vision and project briefs
-│   └── moon_ring_project_brief.md   # Original project brief
-├── front-end-spec.md      # UI/UX specifications and design system
-├── fullstack-architecture.md        # Complete technical architecture
-├── implementation-guide-nextjs-supabase-stripe.md  # Stack setup guide
-├── development-best-practices.md    # Coding standards and workflows
-└── moon-ring-project-prd.md         # Product requirements (reference only)
+├── 00-INDEX.md            # 📍 START HERE - Complete documentation navigation guide
+├── 01-strategy/           # High-level vision and project briefs
+│   └── project-brief.md
+├── 02-requirements/       # Product requirements and specifications
+│   ├── marketing-website-prd.md    # THIS project's scope
+│   └── platform-prd.md              # Reference only (product we're marketing)
+├── 03-architecture/       # Technical architecture and design
+│   ├── fullstack-architecture.md
+│   └── frontend-spec.md
+├── 04-implementation/     # Development guides and workflows
+│   ├── setup-guide.md
+│   ├── development-workflow.md
+│   └── stack-guide.md
+├── 05-deployment/         # Deployment and operations
+│   ├── deployment-sop.md          # ⚠️ MANDATORY before deploying
+│   ├── vercel-setup.md
+│   └── troubleshooting.md
+├── 06-content/            # Content creation and guidelines
+│   ├── blog-article-template.md
+│   └── asset-guidelines.md
+└── 07-archive/            # Completed work and historical reference
 ```
 
-**Current Work**: Refer to `docs/roadmaps/phase-3-plan.md` for near-term execution priorities (contact form backend, analytics, Sentry, performance optimization).
+**Current Work**: Refer to `docs/00-INDEX.md` to find the most relevant documentation for your task.
 
 ## Development Best Practices (Summary)
 
 - **Working Directory**: All development commands must be run from `moon-ring-platform/` directory
-- Anchor implementation in `docs/moon-ring-project-prd.md`, `docs/front-end-spec.md`, and the assigned `docs/stories/` file; only edit Dev Agent Record sections
-- Create short-lived feature branches off `dev`, name them after the story, and stay current with rebases before PRs
-- Configure `.env.local` in `moon-ring-platform/` directory and keep `npm run dev` plus `npm run lint` in regular rotation
-- Adhere to the Next.js 15 + Tailwind + Supabase + Stripe stack decisions; commit Supabase schema updates alongside code
-- Ship tests and accessibility checks with new features and ensure lint/build checks succeed prior to review
-- Record key decisions, coordinate scope changes with PM/PO partners, and capture validation steps in PR descriptions
-- Full guidance lives in `docs/development-best-practices.md`
+- **Source of Truth**: Anchor implementation in `docs/02-requirements/marketing-website-prd.md`, `docs/03-architecture/frontend-spec.md`, and `docs/04-implementation/development-workflow.md`
+- **Branching**: Create short-lived feature branches off `dev`, name them `feature/`, `fix/`, or `chore/` prefixes
+- **Commits**: Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`)
+- **Environment**: Configure `.env.local` in `moon-ring-platform/` directory and validate with `npm run build:validate`
+- **Code Quality**: Run `npm run lint` before every commit; fix violations rather than ignoring them
+- **Tech Stack**: Next.js 15 + React 19 + TypeScript 5 + Tailwind CSS 4 + Supabase + Stripe + Brevo
+- **Formatting**: Prettier with `prettier-plugin-tailwindcss`, 2-space indent
+- **Components**: PascalCase files in `src/components/` (e.g., `TestimonialsSection.tsx`)
+- **PRs**: Include clear summary, screenshots for UI changes, notes on env/config changes
+- Full guidance lives in `docs/04-implementation/development-workflow.md`
 
 ## Architecture Overview
 
@@ -153,18 +192,21 @@ docs/
 - **UI Components**: Lucide React icons, conversion-focused components
 - **Payments**: Stripe.js integration for seamless product ordering
 - **Backend**: Supabase for user management, waitlists, and analytics
+- **Email**: Brevo for transactional and marketing emails (9,000 emails/month free tier)
 - **TypeScript**: Strict mode with path aliases (`@/*` → `./src/*`)
 - **Performance**: Turbopack bundling, optimized for conversion metrics
 - **Code Quality**: ESLint (Next.js config) + Prettier with Tailwind plugin
+- **Monitoring**: Vercel Analytics for performance, Sentry for error tracking (optional)
+- **Analytics**: Google Analytics 4 and Hotjar (optional)
 
 **Key Dependencies**:
 - `@stripe/stripe-js` and `stripe` for payment processing and order management
 - `@supabase/ssr` and `@supabase/supabase-js` for server-side rendering and user data
 - `@tailwindcss/forms` and `@tailwindcss/typography` for polished UI
-- `@getbrevo/brevo` for transactional and marketing emails (9,000 emails/month free tier)
+- `@getbrevo/brevo` for transactional and marketing emails
 - `lucide-react` for icons
 - `@vercel/analytics` for performance monitoring
-- `@sentry/nextjs` for error tracking and application monitoring
+- `@sentry/nextjs` for error tracking (currently commented out in next.config.ts)
 - Custom font loading with next/font (Geist Sans/Mono)
 
 ### Source Directory Structure (`moon-ring-platform/src/`)
@@ -177,6 +219,7 @@ src/
 │   │   ├── checkout/     # Stripe checkout session creation
 │   │   ├── contact/      # Contact form submission handler
 │   │   ├── health/       # Health check endpoint
+│   │   ├── newsletter/   # Newsletter subscription with Brevo
 │   │   └── webhooks/     # Webhook handlers (Stripe events)
 │   ├── blog/              # Blog listing and individual post pages
 │   ├── contact/           # Contact page with form
@@ -186,13 +229,23 @@ src/
 │   ├── layout.tsx         # Root layout with fonts and metadata
 │   └── page.tsx           # Homepage with hero, features, pricing
 ├── components/             # React components
+│   ├── animations/        # Animation components (Framer Motion patterns)
+│   │   ├── AnimatedSection.tsx      # Fade-in on scroll animations
+│   │   ├── AnimatedStats.tsx        # Animated statistics grid
+│   │   ├── FloatingElement.tsx      # Floating/hovering animations
+│   │   └── StaggerChildren.tsx      # Staggered child animations
 │   ├── forms/             # Form components
 │   │   └── EmailCaptureForm.tsx  # Email waitlist capture
+│   ├── ChooseYourPathInteractive.tsx  # Interactive path selection with state
 │   ├── ContactForm.tsx    # Contact page form with Brevo integration
 │   ├── CookieConsent.tsx  # GDPR cookie banner
 │   ├── FAQAccordion.tsx   # Accordion component for FAQ section
-│   ├── Navigation.tsx     # Main nav with mobile menu
-│   └── OptimizedImage.tsx # Image optimization wrapper
+│   ├── FAQSection.tsx     # FAQ section wrapper component
+│   ├── HeroVideo.tsx      # Hero video component with controls
+│   ├── Navigation.tsx     # Main nav with mobile menu (4 items)
+│   ├── OptimizedImage.tsx # Image optimization wrapper
+│   ├── StatWithTooltip.tsx  # Stat display with source attribution tooltips
+│   └── TestimonialsSection.tsx  # Testimonials grid component
 ├── lib/                   # Shared utilities and configurations
 │   ├── email/             # Email service utilities
 │   │   └── brevo.ts       # Brevo API client and email templates
@@ -206,15 +259,20 @@ src/
 
 **Database Management**:
 - Schema migrations: `moon-ring-platform/supabase/migrations/`
-- Apply migrations using `./apply-migration.sh` script (from `moon-ring-platform/` directory)
+- **Migration Script**: `./apply-migration.sh` (from `moon-ring-platform/` directory)
+  - **Note**: This script is a **helper/guide**, not an automatic migrator
+  - It opens migration SQL files and provides instructions for manual application via Supabase Dashboard
+  - **Why manual?** Supabase CLI requires database password which we don't store in the repo
+  - **Process**: Copy SQL from migration files → Paste into Supabase SQL Editor → Run
+  - **Order matters**: Run migrations in sequence (001 → 002) to avoid failures
 - When updating schema, create migration files and commit with code changes
-- Migration script connects to Supabase using credentials from `.env.local`
+- Verify migrations with: `SELECT column_name FROM information_schema.columns WHERE table_name = 'your_table';`
 
 **Asset Management**:
 - Images, fonts, and static files: `moon-ring-platform/public/`
-- See `moon-ring-platform/ASSETS_GUIDE.md` for image optimization guidelines
+- See `docs/06-content/asset-guidelines.md` for image optimization guidelines
 
-**Current State**: ~95% complete production-ready marketing website with homepage, legal pages (privacy/terms), about page, blog structure with ISR caching, research library, contact form (Brevo integration with welcome emails), and cookie consent. Full Supabase + Stripe + Vercel Analytics + Sentry monitoring stack integrated. Newsletter signup sends personalized welcome emails via Brevo (9,000 emails/month capacity). TypeScript strict mode with zero lint errors. Build passing with optimized bundle sizes (First Load JS ~170KB homepage). Ready for deployment and Phase 4 (asset creation and content). The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
+**Current State**: ~98% complete production-ready marketing website with full feature parity. **UX Improvements Phase 1 completed** (all 12 tasks: simplified 4-item navigation, responsive video heights, accessible video controls, enhanced demo previews, stat tooltips with sources, improved pricing badges, proper touch targets, path selection hierarchy, deduplicated footer, optimized CTA copy, video poster images). Includes homepage with hero video, legal pages (privacy/terms), about page, blog structure with ISR caching, research library, contact form (Brevo integration with welcome emails), interactive demo page, cookie consent, and testimonials. Full Supabase + Stripe + Vercel Analytics + Sentry monitoring stack integrated. Newsletter signup sends personalized welcome emails via Brevo (9,000 emails/month capacity). Animation system built with Framer Motion patterns for polished interactions. StatWithTooltip component adds data credibility with source attribution. ChooseYourPathInteractive provides guided user segmentation. TypeScript strict mode with zero lint errors. Build passing with optimized bundle sizes (First Load JS ~170KB homepage). WCAG 2.1 AA compliant. Ready for production deployment. The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
 
 ## Key Architectural Patterns
 
@@ -241,3 +299,13 @@ src/
 - Glass-morphism design with brand gradient (#FF33BA → #FF9966)
 - Mobile-first responsive (320px → 1024px+)
 - Custom CSS in `globals.css` only for animations and complex effects
+- Prettier with `prettier-plugin-tailwindcss` maintains class order consistency
+
+## Related Configuration Files
+
+- **AGENTS.md** - Additional guidelines for AI development agents (coding style, testing, commits)
+- **README.md** - Project overview and quick start guide
+- **vercel.json** - Vercel deployment configuration (at repository root)
+- **moon-ring-platform/next.config.ts** - Next.js configuration with bundle analyzer and Sentry setup
+- **moon-ring-platform/.env.example** - Environment variables template (source of truth)
+- **docs/00-INDEX.md** - Complete documentation index and navigation guide

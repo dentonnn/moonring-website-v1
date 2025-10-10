@@ -110,8 +110,9 @@ Content creation templates, guidelines, and SEO strategy.
 
 Completed work, deprecated documentation, and historical reference.
 
+- [Completed Phases](07-archive/completed-phases/) - Major development phases (UX Phase 1, etc.)
+  - [UX Improvements Phase 1](07-archive/completed-phases/ux-improvements-phase-1.md) - ✅ 100% Complete (Oct 2025)
 - [Completed Stories](07-archive/completed-stories/) - Finished development stories
-- [Completed Phases](07-archive/completed-phases/) - Phase 3 roadmap (DONE)
 - [Old PRD Versions](07-archive/old-prd-versions/) - Previous PRD iterations
 
 ---
@@ -169,10 +170,11 @@ Completed work, deprecated documentation, and historical reference.
 |---------|--------------|---------|
 | Strategy | Oct 2025 | ✅ Current |
 | Requirements | Oct 2025 | ✅ Current |
-| Architecture | Oct 2025 | ✅ Current (Blog system added) |
+| Architecture | Oct 2025 | ✅ Current (Animation system added) |
 | Implementation | Oct 2025 | ✅ Current |
 | Deployment | Oct 2025 | ✅ Current (SOP mandatory) |
 | Content | Oct 2025 | ✅ Current (Template + guidelines) |
+| Archive | Oct 2025 | ✅ Current (UX Phase 1 archived) |
 
 ---
 
