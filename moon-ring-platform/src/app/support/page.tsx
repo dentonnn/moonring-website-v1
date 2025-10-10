@@ -2,13 +2,14 @@ import Navigation from '@/components/Navigation'
 import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 import { LifeBuoy, MessageSquare, Clock, CheckCircle, PhoneCall, Shield, ArrowRight } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Support & Help Center | Moon Ring',
-  description:
-    'Get help with Moon Ring. Access guides, FAQs, and support resources for commitment psychology, wearable integrations, and corporate programs.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Support & Help Center | Moon Ring',
+  'Get help with Moon Ring. Access guides, FAQs, and support resources for commitment psychology, wearable integrations, and corporate programs.',
+  '/support'
+)
 
 const knowledgeBase = [
   {

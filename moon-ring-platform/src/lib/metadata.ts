@@ -1,7 +1,7 @@
 // Shared SEO metadata configuration for Moon Ring platform
 import type { Metadata } from 'next'
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://moonring.com'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://moonring.com'
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -45,7 +45,7 @@ export const defaultMetadata: Metadata = {
     description: 'Transform your wearable data into lasting behavior change through evidence-based commitment psychology and social accountability.',
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: `${siteUrl}/images/og-images/og-default.png`,
         width: 1200,
         height: 630,
         alt: 'Moon Ring - Commitment Psychology Platform',
@@ -56,7 +56,7 @@ export const defaultMetadata: Metadata = {
     card: 'summary_large_image',
     title: 'Moon Ring - Turn Health Intentions into Unbreakable Commitments',
     description: 'Transform your wearable data into lasting behavior change through evidence-based commitment psychology.',
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/images/og-images/og-default.png`],
     creator: '@moonringapp',
     site: '@moonringapp',
   },
@@ -76,7 +76,7 @@ export function generatePageMetadata(
   imageUrl?: string
 ): Metadata {
   const url = `${siteUrl}${path}`
-  const ogImage = imageUrl || `${siteUrl}/og-image.png`
+  const ogImage = imageUrl || `${siteUrl}/images/og-images/og-default.png`
 
   return {
     title,
@@ -113,7 +113,7 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     name: 'Moon Ring',
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
+    logo: `${siteUrl}/images/logos/moonring-logo-social.png`,
     sameAs: [
       'https://twitter.com/moonringapp',
       'https://linkedin.com/company/moonring',
@@ -150,7 +150,7 @@ export function generateBlogPostSchema(post: {
       name: 'Moon Ring',
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/logo.png`,
+        url: `${siteUrl}/images/logos/moonring-logo-social.png`,
       },
     },
     datePublished: post.datePublished,
@@ -159,7 +159,7 @@ export function generateBlogPostSchema(post: {
       '@type': 'WebPage',
       '@id': post.url,
     },
-    image: post.imageUrl || `${siteUrl}/og-image.png`,
+    image: post.imageUrl || `${siteUrl}/images/og-images/og-default.png`,
   }
 }
 

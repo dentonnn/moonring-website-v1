@@ -70,7 +70,7 @@ We've created a custom build script ([build.sh](build.sh)) that loads environmen
 ```
 
 **The validation script checks:**
-- ✅ All required variables (Supabase, Stripe, Resend)
+- ✅ All required variables (Supabase, Stripe, Brevo)
 - ℹ️  Optional variables (Analytics, Sentry)
 - 📋 Provides clear error messages with examples
 

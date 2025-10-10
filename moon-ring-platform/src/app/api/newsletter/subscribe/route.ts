@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServerActionClient } from '@/lib/supabase/server'
+import { newsletterSubscribeLimiter } from '@/lib/rate-limit'
 import { sendEmail, emailTemplates } from '@/lib/email/brevo'
 import type { Database } from '@/types/database'
 
@@ -46,6 +47,18 @@ export async function POST(request: Request) {
     // VALIDATION
     // ========================================================================
 
+    // Rate limit by IP (3/hour)
+    const forwardedFor = request.headers.get('x-forwarded-for')
+    const clientIp = forwardedFor ? forwardedFor.split(',')[0] : 'unknown'
+    const rate = await newsletterSubscribeLimiter(clientIp)
+    if (!rate.success) {
+      const retrySec = Math.max(1, Math.floor((rate.reset - Date.now()) / 1000))
+      return new NextResponse(
+        JSON.stringify({ success: false, error: 'Too many requests', retryAfter: retrySec }),
+        { status: 429, headers: { 'Retry-After': String(retrySec), 'Content-Type': 'application/json' } }
+      )
+    }
+
     // Validate required fields
     if (!email || typeof email !== 'string') {
       return NextResponse.json(
@@ -85,10 +98,6 @@ export async function POST(request: Request) {
     // ========================================================================
 
     const supabase = await createServerActionClient()
-
-    // Get client IP for GDPR compliance (from headers)
-    const forwardedFor = request.headers.get('x-forwarded-for')
-    const clientIp = forwardedFor ? forwardedFor.split(',')[0] : null
 
     // Check if email already subscribed
     const { data: existingSubscription, error: fetchError } = await supabase

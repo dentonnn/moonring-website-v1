@@ -35,6 +35,8 @@ export default function StatWithTooltip({
           className="w-4 h-4 rounded-full border border-white/40 text-white/60 text-[10px] leading-none hover:bg-white/10 hover:border-white/60 transition-all flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-label={`More information about ${label}`}
           type="button"
+          data-analytics-event="stat_info"
+          data-analytics-params={JSON.stringify({ label, value })}
         >
           <span className="font-semibold" aria-hidden="true">i</span>
         </button>
@@ -58,4 +60,3 @@ export default function StatWithTooltip({
     </div>
   )
 }
-

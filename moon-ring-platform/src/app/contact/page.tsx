@@ -4,11 +4,13 @@ import Link from 'next/link'
 import ContactForm from '@/components/ContactForm'
 import { ArrowLeft, Mail, MessageSquare, HelpCircle } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Moon Ring Support',
-  description: 'Get help with Moon Ring. Browse FAQs, email our support team, or connect with our community for assistance.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Contact Us | Moon Ring Support',
+  'Get help with Moon Ring. Browse FAQs, email our support team, or connect with our community for assistance.',
+  '/contact'
+)
 
 const faqItems = [
   {

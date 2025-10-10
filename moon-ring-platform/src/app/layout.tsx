@@ -4,6 +4,8 @@ import { Analytics } from '@vercel/analytics/react';
 import AnalyticsWrapper from '@/components/Analytics';
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import { Suspense } from "react";
+import { defaultMetadata, generateOrganizationSchema } from "@/lib/metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +17,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://moonring.com'
+
 export const metadata: Metadata = {
+  ...defaultMetadata,
+  metadataBase: new URL(siteUrl),
   title: "Moon Ring | Social Accountability for Health Commitments",
   description: "Transform your wearable data into lasting behavior change through evidence-based commitment psychology and social accountability.",
   icons: {
@@ -30,26 +36,14 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://moonring.com',
-    siteName: 'Moon Ring',
+    ...defaultMetadata.openGraph,
     title: 'Moon Ring | Social Accountability for Health Commitments',
     description: 'Transform your wearable data into lasting behavior change through evidence-based commitment psychology and social accountability.',
-    images: [
-      {
-        url: '/images/og-images/og-default.png',
-        width: 1200,
-        height: 630,
-        alt: 'Moon Ring - Social Accountability Platform',
-      },
-    ],
   },
   twitter: {
-    card: 'summary_large_image',
+    ...defaultMetadata.twitter,
     title: 'Moon Ring | Social Accountability for Health Commitments',
     description: 'Transform your wearable data into lasting behavior change through evidence-based commitment psychology and social accountability.',
-    images: ['/images/og-images/og-default.png'],
   },
 };
 
@@ -58,17 +52,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const orgSchema = generateOrganizationSchema()
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
         {children}
         <CookieConsent />
         {/* Vercel Analytics - privacy-friendly, no cookies */}
         <Analytics />
         {/* GA4 - only loads if user accepts cookies */}
-        <AnalyticsWrapper />
+        <Suspense fallback={null}>
+          <AnalyticsWrapper />
+        </Suspense>
       </body>
     </html>
   );

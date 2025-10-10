@@ -3,12 +3,13 @@ import TestimonialsSection from '@/components/TestimonialsSection'
 import Link from 'next/link'
 import { ArrowRight, Quote, Sparkles, Users, HeartPulse, MoonStar, Target } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Success Stories | Moon Ring - Accountability In Action',
-  description:
-    'Discover how Moon Ring members turn abandoned wearables into lasting habits. Read real success stories across sleep, movement, stress, and recovery goals.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Success Stories | Moon Ring - Accountability In Action',
+  'Discover how Moon Ring members turn abandoned wearables into lasting habits. Read real success stories across sleep, movement, stress, and recovery goals.',
+  '/success-stories'
+)
 
 const caseStudies = [
   {

@@ -150,7 +150,7 @@ cat env-vars-checklist.txt
 - `STRIPE_SECRET_KEY`
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `STRIPE_WEBHOOK_SECRET`
-- `RESEND_API_KEY`
+- `BREVO_API_KEY`
 - `NEXT_PUBLIC_APP_URL` (set to production URL, e.g., `https://moonring.vercel.app`)
 
 ### 3.3 Verify All Variables Are Set

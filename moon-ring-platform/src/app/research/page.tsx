@@ -2,11 +2,13 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { ArrowLeft, ExternalLink, BookOpen, Users, Brain, TrendingUp } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Research Library | Moon Ring - Evidence-Based Behavioral Science',
-  description: 'Explore peer-reviewed research on commitment psychology, social accountability, and behavioral change that powers Moon Ring.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Research Library | Moon Ring - Evidence-Based Behavioral Science',
+  'Explore peer-reviewed research on commitment psychology, social accountability, and behavioral change that powers Moon Ring.',
+  '/research'
+)
 
 // Sample research studies - in production, these would come from a database/CMS
 const researchStudies = [

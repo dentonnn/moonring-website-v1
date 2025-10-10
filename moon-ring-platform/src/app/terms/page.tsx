@@ -2,11 +2,13 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Terms of Service | Moon Ring',
-  description: 'Moon Ring terms of service - Legal terms and conditions for using our social accountability platform.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Terms of Service | Moon Ring',
+  'Moon Ring terms of service - Legal terms and conditions for using our social accountability platform.',
+  '/terms'
+)
 
 export default function TermsOfService() {
   return (

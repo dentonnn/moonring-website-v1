@@ -7,15 +7,19 @@ import ChooseYourPathInteractive from '@/components/ChooseYourPathInteractive'
 import Link from 'next/link'
 import Image from 'next/image'
 import { CheckCircle, Heart, Users, Star } from 'lucide-react'
-import StatWithTooltip from '@/components/StatWithTooltip'
 import { generateProductSchema, generateFAQSchema, defaultMetadata } from '@/lib/metadata'
 import { getFAQData } from '@/lib/faqData'
 import type { Metadata } from 'next'
+import { AnimatedSection } from '@/components/animations/AnimatedSection'
+import { FloatingElement } from '@/components/animations/FloatingElement'
+import { StaggerChildren } from '@/components/animations/StaggerChildren'
+import { AnimatedStats } from '@/components/animations/AnimatedStats'
 
 export const metadata: Metadata = {
   ...defaultMetadata,
   title: 'Moon Ring - Turn Health Intentions into Unbreakable Commitments',
   description: 'Transform your wearable data into lasting behavior change through evidence-based commitment psychology and social accountability. Join 28M+ users achieving 67% success rates.',
+  alternates: { canonical: '/' },
 }
 
 export default function Home() {
@@ -59,65 +63,73 @@ export default function Home() {
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                Turn your health{' '}
-                <span className="bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
-                  intentions
-                </span>
-                {' '}into unbreakable{' '}
-                <span className="bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
-                  commitments
-                </span>
-              </h1>
+              <AnimatedSection direction="up" delay={0.1}>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                  Turn your health{' '}
+                  <span className="bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
+                    intentions
+                  </span>
+                  {' '}into unbreakable{' '}
+                  <span className="bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
+                    commitments
+                  </span>
+                </h1>
+              </AnimatedSection>
 
               {/* Subheadline */}
-              <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-2xl">
-                Moon Ring transforms your wearable data into lasting behavior change through
-                evidence-based <Link href="/blog/loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">commitment psychology</Link> and <Link href="/research" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">social accountability</Link>.
-              </p>
+              <AnimatedSection direction="up" delay={0.2}>
+                <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-2xl">
+                  Moon Ring transforms your wearable data into lasting behavior change through
+                  evidence-based <Link href="/blog/loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">commitment psychology</Link> and <Link href="/research" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">social accountability</Link>.
+                </p>
+              </AnimatedSection>
 
               {/* Stats with source tooltips */}
-              <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-4">
-                <StatWithTooltip
-                  value="67%"
-                  label="Success Rate"
-                  comparison="vs. 23% industry average"
-                  source="Based on 28M user commitments tracked across 18 months (Q1 2023 - Q2 2024). Success defined as completing 80%+ of commitment duration with active accountability partner."
-                />
-                <StatWithTooltip
-                  value="28M+"
-                  label="Users Helped"
-                  comparison="Across 140+ countries"
-                  source="Total registered users who created at least one commitment contract (lifetime platform metric as of October 2025). Includes free and paid tiers."
-                />
-                <StatWithTooltip
-                  value="127"
-                  label="Avg Streak Days"
-                  comparison="3.2x longer than solo attempts"
-                  source="Average consecutive days maintaining commitment among users with accountability partners (n=8.4M). Comparison baseline: users without partners averaged 39 days (n=2.1M)."
-                />
-              </div>
+              <AnimatedStats
+                stats={[
+                  {
+                    value: '67%',
+                    label: 'Success Rate',
+                    comparison: 'vs. 23% industry average',
+                    source: 'Based on 28M user commitments tracked across 18 months (Q1 2023 - Q2 2024). Success defined as completing 80%+ of commitment duration with active accountability partner.',
+                  },
+                  {
+                    value: '28M+',
+                    label: 'Users Helped',
+                    comparison: 'Across 140+ countries',
+                    source: 'Total registered users who created at least one commitment contract (lifetime platform metric as of October 2025). Includes free and paid tiers.',
+                  },
+                  {
+                    value: '127',
+                    label: 'Avg Streak Days',
+                    comparison: '3.2x longer than solo attempts',
+                    source: 'Average consecutive days maintaining commitment among users with accountability partners (n=8.4M). Comparison baseline: users without partners averaged 39 days (n=2.1M).',
+                  },
+                ]}
+              />
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <a
-                  href="#waitlist"
-                  data-analytics-event="start_trial"
-                  data-analytics-params={JSON.stringify({ location: 'home_hero', variant: 'B', copy: 'build_commitment' })}
-                  className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
-                >
-                  Build Your First Commitment
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </a>
-                <Link
-                  href="/how-it-works"
-                  className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold text-lg hover:bg-white/20 transition-colors"
-                >
-                  See How It Works
-                </Link>
-              </div>
+              <AnimatedSection direction="up" delay={0.3}>
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                  <a
+                    href="#waitlist"
+                    data-analytics-event="start_trial"
+                    data-analytics-params={JSON.stringify({ location: 'home_hero', variant: 'B', copy: 'build_commitment' })}
+                    className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
+                  >
+                    Build Your First Commitment
+                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </a>
+                  <Link
+                    href="/how-it-works"
+                    className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold text-lg hover:bg-white/20 transition-colors"
+                  >
+                    See How It Works
+                  </Link>
+                </div>
+              </AnimatedSection>
 
               {/* Trust Indicators */}
               <div className="space-y-4 pt-6">
@@ -148,32 +160,34 @@ export default function Home() {
 
             {/* Right Column: Premium Product Photography */}
             <div className="mt-12 lg:mt-0">
-              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/5 to-pink-500/10 border border-white/20 p-12 lg:p-16 shadow-2xl backdrop-blur-sm">
-                <div className="relative aspect-square">
-                  <Image
-                    src="/images/hero/hero-main.webp"
-                    alt="Moon Ring smart ring resting on illuminated charging stand"
-                    fill
-                    className="object-contain drop-shadow-2xl"
-                    priority
-                    sizes="(max-width: 1024px) 75vw, 480px"
-                  />
+              <FloatingElement floatAmount={15} duration={4}>
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/5 to-pink-500/10 border border-white/20 p-12 lg:p-16 shadow-2xl backdrop-blur-sm">
+                  <div className="relative aspect-square">
+                    <Image
+                      src="/images/hero/hero-main.webp"
+                      alt="Moon Ring smart ring resting on illuminated charging stand"
+                      fill
+                      className="object-contain drop-shadow-2xl"
+                      priority
+                      sizes="(max-width: 1024px) 75vw, 480px"
+                    />
 
-                  {/* Subtle Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF33BA]/10 via-transparent to-[#FF9966]/10 rounded-3xl" />
+                    {/* Subtle Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF33BA]/10 via-transparent to-[#FF9966]/10 rounded-3xl" />
 
-                  {/* Product Badge */}
-                  <div className="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-pink-200/50 shadow-lg">
-                    <span className="text-xs font-semibold bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
-                      Premium Edition
-                    </span>
+                    {/* Product Badge */}
+                    <div className="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-pink-200/50 shadow-lg">
+                      <span className="text-xs font-semibold bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
+                        Premium Edition
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Decorative Elements */}
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-[#FF33BA]/20 to-[#FF9966]/20 rounded-full blur-3xl" />
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl" />
-              </div>
+                  {/* Decorative Elements */}
+                  <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-[#FF33BA]/20 to-[#FF9966]/20 rounded-full blur-3xl" />
+                  <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl" />
+                </div>
+              </FloatingElement>
             </div>
           </div>
         </div>
@@ -237,7 +251,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Choose Your Path Section - NEW */}
+      {/* Choose Your Path Section */}
       <section className="relative py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -272,7 +286,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <StaggerChildren staggerDelay={0.15} className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: Users,
@@ -296,19 +310,22 @@ export default function Home() {
                 subtext: 'Both succeed or both try again'
               }
             ].map((step, index) => (
-              <div
+              <AnimatedSection
                 key={index}
-                className="relative rounded-3xl bg-gray-50 p-8 hover:shadow-xl transition-shadow group"
+                direction="up"
+                delay={index * 0.15}
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <step.icon className="w-8 h-8 text-white" />
+                <div className="relative rounded-3xl bg-gray-50 p-8 hover:shadow-xl transition-shadow group">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                    <step.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#1B023A] mb-4">{step.title}</h3>
+                  <p className="text-gray-600 leading-relaxed mb-3">{step.description}</p>
+                  <p className="text-sm text-gray-500 italic">{step.subtext}</p>
                 </div>
-                <h3 className="text-2xl font-bold text-[#1B023A] mb-4">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed mb-3">{step.description}</p>
-                <p className="text-sm text-gray-500 italic">{step.subtext}</p>
-              </div>
+              </AnimatedSection>
             ))}
-          </div>
+          </StaggerChildren>
 
           {/* Clarification Box */}
           <div className="mt-12 max-w-4xl mx-auto">
@@ -360,7 +377,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerChildren staggerDelay={0.2} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 name: 'Sarah Chen',
@@ -384,33 +401,36 @@ export default function Home() {
                 improvement: '+100%'
               }
             ].map((story, index) => (
-              <div
+              <AnimatedSection
                 key={index}
-                className="rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8"
+                direction="up"
+                delay={index * 0.2}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#FF33BA] to-[#FF9966] flex items-center justify-center text-white font-bold text-xl">
-                    {story.name.split(' ').map(n => n[0]).join('')}
+                <div className="rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#FF33BA] to-[#FF9966] flex items-center justify-center text-white font-bold text-xl">
+                      {story.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white">{story.name}</h4>
+                      <p className="text-sm text-white/60">{story.achievement}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-white">{story.name}</h4>
-                    <p className="text-sm text-white/60">{story.achievement}</p>
+                  <p className="text-white/80 mb-6 italic">"{story.quote}"</p>
+                  <div className="flex gap-4 text-center">
+                    <div className="flex-1 rounded-2xl bg-white/5 p-3">
+                      <div className="text-2xl font-bold text-[#FF33BA]">{story.metric}</div>
+                      <div className="text-xs text-white/60">Average</div>
+                    </div>
+                    <div className="flex-1 rounded-2xl bg-white/5 p-3">
+                      <div className="text-2xl font-bold text-[#FF9966]">{story.improvement}</div>
+                      <div className="text-xs text-white/60">Improvement</div>
+                    </div>
                   </div>
                 </div>
-                <p className="text-white/80 mb-6 italic">"{story.quote}"</p>
-                <div className="flex gap-4 text-center">
-                  <div className="flex-1 rounded-2xl bg-white/5 p-3">
-                    <div className="text-2xl font-bold text-[#FF33BA]">{story.metric}</div>
-                    <div className="text-xs text-white/60">Average</div>
-                  </div>
-                  <div className="flex-1 rounded-2xl bg-white/5 p-3">
-                    <div className="text-2xl font-bold text-[#FF9966]">{story.improvement}</div>
-                    <div className="text-xs text-white/60">Improvement</div>
-                  </div>
-                </div>
-              </div>
+              </AnimatedSection>
             ))}
-          </div>
+          </StaggerChildren>
         </div>
       </section>
 
@@ -490,7 +510,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <StaggerChildren staggerDelay={0.15} className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
                 name: 'Free',
@@ -545,14 +565,17 @@ export default function Home() {
                 highlight: true
               }
             ].map((plan, index) => (
-              <div
+              <AnimatedSection
                 key={index}
-                className={`relative rounded-3xl p-8 ${
+                direction="up"
+                delay={index * 0.15}
+              >
+                <div className={`relative rounded-3xl p-8 ${
                   plan.highlight
                     ? 'bg-gradient-to-br from-white/20 to-white/10 border-2 border-[#FF33BA] scale-105'
                     : 'bg-white/10 border border-white/20'
                 } backdrop-blur-sm transition-transform hover:scale-105`}
-              >
+                >
                 {plan.popular && (
                   <>
                     <div
@@ -592,8 +615,9 @@ export default function Home() {
                   {plan.cta}
                 </a>
               </div>
+              </AnimatedSection>
             ))}
-          </div>
+          </StaggerChildren>
         </div>
       </section>
 

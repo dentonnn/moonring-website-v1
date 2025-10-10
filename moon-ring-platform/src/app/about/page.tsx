@@ -3,11 +3,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Heart, Users, Zap, Target, Globe, Award } from 'lucide-react'
 import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'About Us | Moon Ring',
-  description: "Learn about Moon Ring's mission to transform health through social accountability and commitment psychology.",
-}
+import { generatePageMetadata } from '@/lib/metadata'
+export const metadata: Metadata = generatePageMetadata(
+  'About Us | Moon Ring',
+  "Learn about Moon Ring's mission to transform health through social accountability and commitment psychology.",
+  '/about'
+)
 
 export default function AboutPage() {
   return (

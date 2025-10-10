@@ -2,12 +2,14 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 import { blogPosts } from '@/lib/blogData'
 
-export const metadata: Metadata = {
-  title: 'Blog | Moon Ring - Commitment Psychology & Behavioral Science',
-  description: 'Explore articles on commitment psychology, social accountability, and evidence-based behavioral change strategies.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Blog | Moon Ring - Commitment Psychology & Behavioral Science',
+  'Explore articles on commitment psychology, social accountability, and evidence-based behavioral change strategies.',
+  '/blog'
+)
 
 // Enable ISR - revalidate every hour (3600 seconds)
 export const revalidate = 3600

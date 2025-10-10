@@ -79,6 +79,10 @@ export interface EmailResult {
  */
 export async function sendEmail(options: EmailOptions): Promise<EmailResult> {
   try {
+    // Allow disabling real email delivery in tests/CI
+    if ((process.env.MAIL_DELIVERY_ENABLED ?? 'true') === 'false') {
+      return { success: true, messageId: 'disabled-mail-delivery' }
+    }
     const client = getBrevoClient()
 
     // Normalize recipients to array

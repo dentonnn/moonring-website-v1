@@ -2,12 +2,13 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { CheckCircle, Shield, Users, Zap, Sparkles, ArrowRight, Building2, BarChart3 } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Pricing | Moon Ring - Commitment Psychology Plans',
-  description:
-    'Compare Moon Ring pricing plans and choose the commitment psychology platform that matches your health goals. Flexible options for individuals and teams.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Pricing | Moon Ring - Commitment Psychology Plans',
+  'Compare Moon Ring pricing plans and choose the commitment psychology platform that matches your health goals. Flexible options for individuals and teams.',
+  '/pricing'
+)
 
 const pricingPlans = [
   {

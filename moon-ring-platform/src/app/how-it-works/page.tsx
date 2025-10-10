@@ -2,11 +2,13 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { ArrowLeft, Heart, Users, CheckCircle, Brain, Target, TrendingUp, Shield, Award, ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'How It Works | Moon Ring - Commitment Psychology Explained',
-  description: 'Discover how Moon Ring uses behavioral psychology and social accountability to turn health intentions into lasting commitments.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'How It Works | Moon Ring - Commitment Psychology Explained',
+  'Discover how Moon Ring uses behavioral psychology and social accountability to turn health intentions into lasting commitments.',
+  '/how-it-works'
+)
 
 export default function HowItWorksPage() {
   return (

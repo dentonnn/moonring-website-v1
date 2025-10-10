@@ -2,11 +2,13 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy | Moon Ring',
-  description: 'Moon Ring privacy policy - How we collect, use, and protect your personal information and health data.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Privacy Policy | Moon Ring',
+  'Moon Ring privacy policy - How we collect, use, and protect your personal information and health data.',
+  '/privacy'
+)
 
 export default function PrivacyPolicy() {
   return (
