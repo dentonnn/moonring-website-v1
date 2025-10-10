@@ -48,16 +48,23 @@ Navigate to `moon-ring-platform/` directory first, then run:
 ```bash
 cd moon-ring-platform
 npm install              # Install dependencies (if node_modules missing)
-npm run dev              # Start development server with Turbopack
+npm run dev              # Start development server with Turbopack (default: localhost:3000)
 npm run build            # Build for production with Turbopack
 npm run build:validate   # Validate environment variables then build
 npm run start            # Start production server
 npm run lint             # Run ESLint
 ```
 
+**Port Conflicts**: If port 3000 is already in use, Next.js will automatically try port 3001, 3002, etc. You can also specify a custom port:
+```bash
+PORT=3003 npm run dev    # Run on custom port
+```
+
 **Additional Commands**:
 ```bash
 ANALYZE=true npm run build  # Analyze bundle size with @next/bundle-analyzer
+                            # Use when: investigating bundle bloat, optimizing imports,
+                            # or reducing First Load JS size for performance
 ```
 
 **Note**: No test runner is currently configured in this project. When adding tests, prefer:
@@ -175,6 +182,7 @@ docs/
 
 - **Working Directory**: All development commands must be run from `moon-ring-platform/` directory
 - **Source of Truth**: Anchor implementation in `docs/02-requirements/marketing-website-prd.md`, `docs/03-architecture/frontend-spec.md`, and `docs/04-implementation/development-workflow.md`
+- **AI Development**: See [AGENTS.md](AGENTS.md) for coding style, testing guidelines, and commit conventions specific to AI-assisted development
 - **Branching**: Create short-lived feature branches off `dev`, name them `feature/`, `fix/`, or `chore/` prefixes
 - **Commits**: Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`)
 - **Environment**: Configure `.env.local` in `moon-ring-platform/` directory and validate with `npm run build:validate`
@@ -193,6 +201,8 @@ docs/
 - **Payments**: Stripe.js integration for seamless product ordering
 - **Backend**: Supabase for user management, waitlists, and analytics
 - **Email**: Brevo for transactional and marketing emails (9,000 emails/month free tier)
+  - Email templates: `src/lib/email/brevo.ts` (`emailTemplates` object)
+  - Templates include: welcome, contact confirmation, order confirmation
 - **TypeScript**: Strict mode with path aliases (`@/*` → `./src/*`)
 - **Performance**: Turbopack bundling, optimized for conversion metrics
 - **Code Quality**: ESLint (Next.js config) + Prettier with Tailwind plugin

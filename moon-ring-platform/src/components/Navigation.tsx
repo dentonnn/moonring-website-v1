@@ -47,7 +47,7 @@ export default function Navigation() {
               height={40}
               className="w-10 h-10"
             />
-            <span className="text-xl font-bold text-white">Moon Ring</span>
+            <span className="text-xl font-bold text-white font-brand">Moon Ring</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Geist_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
 import AnalyticsWrapper from '@/components/Analytics';
 import "./globals.css";
@@ -7,9 +8,46 @@ import CookieConsent from "@/components/CookieConsent";
 import { Suspense } from "react";
 import { defaultMetadata, generateOrganizationSchema } from "@/lib/metadata";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const inter = localFont({
+  src: [
+    {
+      path: "../../public/fonts/inter/Inter-VariableFont_opsz,wght.ttf",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf",
+      style: "italic",
+    },
+  ],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const nilland = localFont({
+  src: [
+    {
+      path: "../../public/fonts/nilland/Nilland.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/nilland/Nilland-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/nilland/Nilland-ExtraBold.ttf",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/nilland/Nilland-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-brand",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -56,7 +94,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${nilland.variable} ${geistMono.variable} antialiased`}
       >
         <script
           type="application/ld+json"

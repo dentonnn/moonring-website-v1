@@ -653,7 +653,7 @@ export default function Home() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#FF9966] opacity-70"></div>
                   <div className="w-2.5 h-2.5 rounded-full bg-[#FF33BA] opacity-50"></div>
                 </div>
-                <span className="text-lg font-bold text-white">Moon Ring</span>
+                  <span className="text-lg font-bold text-white font-brand">Moon Ring</span>
               </div>
               <p className="text-white/60 text-sm">
                 Transforming wearable data into lasting behavior change through social accountability.
