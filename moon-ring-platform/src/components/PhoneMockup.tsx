@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { Signal, Wifi, Battery100 } from 'lucide-react'
+import { Signal, Wifi, Battery } from 'lucide-react'
 
 interface PhoneMockupProps {
   children: ReactNode
@@ -34,7 +34,7 @@ export default function PhoneMockup({ children, style = 'ios' }: PhoneMockupProp
             <div className="flex items-center gap-1">
               <Signal className="w-3 h-3 text-gray-400" />
               <Wifi className="w-3 h-3 text-gray-400" />
-              <Battery100 className="w-3 h-3 text-gray-400" />
+              <Battery className="w-3 h-3 text-gray-400" />
             </div>
           </div>
 
