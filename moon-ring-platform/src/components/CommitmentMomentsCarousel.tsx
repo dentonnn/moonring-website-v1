@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle, AlertCircle, Trophy, Heart, Target, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
+import PhoneMockup from './PhoneMockup'
 
 interface CommitmentMoment {
   id: string
@@ -212,47 +213,49 @@ export default function CommitmentMomentsCarousel() {
 
   return (
     <section className="relative py-20 px-4 bg-white">
-      <div className="max-w-5xl mx-auto">
-        {/* Header with Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12">
-          <div className="flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 mb-4">
-              <span className="w-2 h-2 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] rounded-full motion-safe:animate-pulse"></span>
-              <span className="text-xs font-semibold text-[#FF33BA]">Interactive Demo</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1B023A] mb-2">
-              Accountability in Action
-            </h2>
-            <p className="text-gray-600 max-w-2xl">
-              Real moments from 28M+ real partnerships. Explore how social accountability transforms good intentions into lasting wins.
-            </p>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 mb-4">
+            <span className="w-2 h-2 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] rounded-full motion-safe:animate-pulse"></span>
+            <span className="text-xs font-semibold text-[#FF33BA]">Interactive Demo</span>
           </div>
-
-          {/* Autoplay Toggle - Top Right */}
-          <motion.button
-            onClick={() => setAutoplay(!autoplay)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 text-[#FF33BA] font-semibold text-sm hover:bg-gradient-to-r hover:from-[#FF33BA]/20 hover:to-[#FF9966]/20 transition-all whitespace-nowrap"
-            aria-label={autoplay ? 'Pause auto-advance' : 'Play auto-advance'}
-          >
-            {autoplay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-            <span>{autoplay ? 'Pause' : 'Play'}</span>
-          </motion.button>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1B023A] mb-2">
+            Accountability in Action
+          </h2>
+          <p className="text-gray-600 max-w-2xl">
+            Real moments from 28M+ real partnerships. Explore how social accountability transforms good intentions into lasting wins.
+          </p>
         </div>
 
-        {/* Main Content Card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className={`rounded-3xl bg-gradient-to-br ${emotion.bg} border-2 ${emotion.border} p-6 sm:p-8 lg:p-10 shadow-xl backdrop-blur-sm cursor-grab active:cursor-grabbing`}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
+        {/* Two-Column Layout: Content on Left, Phone Mockup on Right */}
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* Left Column: Carousel Controls & Content */}
+          <div className="space-y-6">
+            {/* Autoplay Toggle */}
+            <motion.button
+              onClick={() => setAutoplay(!autoplay)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 text-[#FF33BA] font-semibold text-sm hover:bg-gradient-to-r hover:from-[#FF33BA]/20 hover:to-[#FF9966]/20 transition-all"
+              aria-label={autoplay ? 'Pause auto-advance' : 'Play auto-advance'}
+            >
+              {autoplay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+              <span>{autoplay ? 'Pause' : 'Play'}</span>
+            </motion.button>
+
+            {/* Main Content Card */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className={`rounded-3xl bg-gradient-to-br ${emotion.bg} border-2 ${emotion.border} p-6 sm:p-8 lg:p-10 shadow-xl backdrop-blur-sm cursor-grab active:cursor-grabbing`}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
             {/* Top Section: Context & Title */}
             <div className="mb-6 pb-6 border-b-2 border-gray-200/40">
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
@@ -342,73 +345,72 @@ export default function CommitmentMomentsCarousel() {
               </div>
             </div>
 
-            {/* CTA Button */}
-            <motion.a
-              href="/#demo"
-              data-analytics-event="accountability_moment_cta"
-              data-analytics-params={JSON.stringify({ moment: current.id, step: currentIndex + 1 })}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
-            >
-              {current.ctaText}
-              <ChevronRight className="w-4 h-4" />
-            </motion.a>
-          </motion.div>
-        </AnimatePresence>
+              {/* CTA Button */}
+              <motion.a
+                href="/#demo"
+                data-analytics-event="accountability_moment_cta"
+                data-analytics-params={JSON.stringify({ moment: current.id, step: currentIndex + 1 })}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
+              >
+                {current.ctaText}
+                <ChevronRight className="w-4 h-4" />
+              </motion.a>
+              </motion.div>
+            </AnimatePresence>
 
-        {/* Navigation & Progress Controls */}
-        <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-          {/* Previous/Next Navigation */}
-          <div className="flex items-center gap-3">
-            <motion.button
-              onClick={goToPrev}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-[#FF33BA] transition-colors"
-              aria-label="Previous moment"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </motion.button>
-            <span className="text-sm font-semibold text-gray-600 min-w-[60px] text-center">
-              {currentIndex + 1} / {commitmentMoments.length}
-            </span>
-            <motion.button
-              onClick={goToNext}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-[#FF33BA] transition-colors"
-              aria-label="Next moment"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </motion.button>
+            {/* Navigation & Progress Controls */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              {/* Previous/Next Navigation */}
+              <div className="flex items-center gap-3">
+                <motion.button
+                  onClick={goToPrev}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-[#FF33BA] transition-colors"
+                  aria-label="Previous moment"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </motion.button>
+                <span className="text-sm font-semibold text-gray-600 min-w-[60px] text-center">
+                  {currentIndex + 1} / {commitmentMoments.length}
+                </span>
+                <motion.button
+                  onClick={goToNext}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-[#FF33BA] transition-colors"
+                  aria-label="Next moment"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </motion.button>
+              </div>
+
+              {/* Progress Dots */}
+              <ProgressDots
+                currentIndex={currentIndex}
+                total={commitmentMoments.length}
+                onSelect={(index) => {
+                  setCurrentIndex(index)
+                  setAutoplay(false)
+                }}
+              />
+
+              {/* Keyboard Hint */}
+              <p className="text-xs text-gray-500 text-center sm:text-right">
+                Use <kbd className="px-2 py-1 bg-gray-100 rounded text-gray-700 font-mono">← →</kbd> or click dots
+              </p>
+            </div>
           </div>
 
-          {/* Progress Dots */}
-          <ProgressDots
-            currentIndex={currentIndex}
-            total={commitmentMoments.length}
-            onSelect={(index) => {
-              setCurrentIndex(index)
-              setAutoplay(false)
-            }}
-          />
-
-          {/* Keyboard Hint */}
-          <p className="text-xs text-gray-500 text-center sm:text-right">
-            Use <kbd className="px-2 py-1 bg-gray-100 rounded text-gray-700 font-mono">← →</kbd> or click dots
-          </p>
-        </div>
-
-        {/* Educational Note about Product Parity */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 sm:p-6 max-w-3xl mx-auto">
-            <p className="text-xs sm:text-sm font-semibold text-blue-900 mb-2">
-              💡 This is a preview of your in-app experience
-            </p>
-            <p className="text-xs sm:text-sm text-blue-800 leading-relaxed">
-              Once you create a commitment with Moon Ring, you'll see real-time moments just like these in your app dashboard. Watch as your partnership unfolds day by day—celebrate milestones, get support during struggles, and track how accountability strengthens both of you. Every message, stat, and partnership sync score is powered by actual wearable data and real human connection.
-            </p>
+          {/* Right Column: Phone Mockup */}
+          <div className="hidden lg:block sticky top-20">
+            <PhoneMockup>
+              <div className="flex flex-col items-center justify-center h-full p-4">
+                <p className="text-center text-gray-600 text-sm mb-4">This is how your moments appear in the Moon Ring app</p>
+              </div>
+            </PhoneMockup>
           </div>
         </div>
       </div>

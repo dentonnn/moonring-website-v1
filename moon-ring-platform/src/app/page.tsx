@@ -3,7 +3,8 @@ import EmailCaptureForm from '@/components/forms/EmailCaptureForm'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import FAQSection from '@/components/FAQSection'
 import HeroVideo from '@/components/HeroVideo'
-import ChooseYourPathInteractive from '@/components/ChooseYourPathInteractive'
+import HardwareShowcase from '@/components/HardwareShowcase'
+import CommitmentMomentsCarousel from '@/components/CommitmentMomentsCarousel'
 import Link from 'next/link'
 import Image from 'next/image'
 import { CheckCircle, Heart, Users, Star } from 'lucide-react'
@@ -62,23 +63,26 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Main Headline */}
+              {/* Main Headline - Premium Typography */}
               <AnimatedSection direction="up" delay={0.1}>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                  Turn your health{' '}
-                  <span className="bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
-                    intentions
-                  </span>
-                  {' '}into unbreakable{' '}
-                  <span className="bg-gradient-to-r from-[#FF33BA] to-[#FF9966] bg-clip-text text-transparent">
-                    commitments
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight headline-premium">
+                  Turn your health intentions into{' '}
+                  <span className="emphasis-italic emphasis-gradient">
+                    unbreakable commitments
                   </span>
                 </h1>
               </AnimatedSection>
 
-              {/* Subheadline */}
+              {/* Emotional Subheadline */}
+              <AnimatedSection direction="up" delay={0.15}>
+                <p className="text-base sm:text-lg text-white/70 max-w-2xl italic mb-4">
+                  Not through willpower. Through <span className="text-white not-italic">real human</span> accountability.
+                </p>
+              </AnimatedSection>
+
+              {/* Main Value Proposition */}
               <AnimatedSection direction="up" delay={0.2}>
-                <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-2xl">
+                <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-2xl content-breathing">
                   Moon Ring transforms your wearable data into lasting behavior change through
                   evidence-based <Link href="/blog/loss-aversion-why-breaking-promises-to-others-hurts-more-than-breaking-them-to-yourself" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">commitment psychology</Link> and <Link href="/research" className="text-white hover:text-[#FF33BA] underline decoration-white/30 hover:decoration-[#FF33BA] transition-colors">social accountability</Link>.
                 </p>
@@ -128,6 +132,13 @@ export default function Home() {
                   >
                     See How It Works
                   </Link>
+                </div>
+              </AnimatedSection>
+
+              {/* Wearable Support Badge */}
+              <AnimatedSection direction="up" delay={0.35}>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-sm">
+                  <span>✓ Works with your Apple Watch, Fitbit, Garmin, Oura & more</span>
                 </div>
               </AnimatedSection>
 
@@ -251,28 +262,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Choose Your Path Section */}
-      <section className="relative py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-[#1B023A] mb-4">
-              Choose Your Starting Point
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Moon Ring works with any wearable - or none at all. Pick the path that fits your life.
-            </p>
-          </div>
+      {/* Commitment Moments Carousel */}
+      <CommitmentMomentsCarousel />
 
-          <ChooseYourPathInteractive />
-
-          {/* Clarification Note */}
-          <div className="mt-12 text-center max-w-3xl mx-auto">
-            <p className="text-gray-600 text-sm">
-              <strong className="text-[#1B023A]">All paths include commitment psychology:</strong> The science of social accountability works regardless of which option you choose. Your wearable (or lack thereof) just determines what data we track.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Hardware Showcase Section */}
+      <HardwareShowcase />
 
       {/* How It Works Section */}
       <section id="demo" className="relative py-20 px-4 bg-gray-50">
@@ -361,6 +355,133 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Wearable Compatibility Section */}
+      <section className="relative py-20 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#FF33BA]/10 to-[#FF9966]/10 border border-[#FF33BA]/20 mb-4">
+              <span className="w-2 h-2 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] rounded-full"></span>
+              <span className="text-xs font-semibold text-[#FF33BA]">Works With Your Device</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-bold text-[#1B023A] mb-4">
+              Use Your Wearable Today
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Start experiencing accountability <span className="font-semibold text-[#1B023A]">immediately</span> with any wearable device you already own. Moon Ring hardware is optional—the software works perfectly with what you have.
+            </p>
+          </div>
+
+          {/* Supported Devices Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              { name: 'Apple Watch', icon: '⌚', color: 'from-gray-500 to-black' },
+              { name: 'Fitbit', icon: '📱', color: 'from-purple-500 to-pink-500' },
+              { name: 'Garmin', icon: '🎯', color: 'from-blue-500 to-cyan-500' },
+              { name: 'Oura Ring', icon: '⭕', color: 'from-amber-500 to-orange-500' },
+              { name: 'Withings', icon: '📊', color: 'from-blue-600 to-indigo-600' },
+              { name: 'Samsung Galaxy Watch', icon: '⌚', color: 'from-gray-900 to-gray-700' }
+            ].map((device, index) => (
+              <AnimatedSection key={index} direction="up" delay={index * 0.1}>
+                <div className="rounded-2xl bg-white border border-gray-200 p-6 hover:shadow-lg transition-all text-center">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${device.color} flex items-center justify-center text-white text-3xl mx-auto mb-4`}>
+                    {device.icon}
+                  </div>
+                  <h3 className="font-bold text-[#1B023A] text-lg">{device.name}</h3>
+                  <p className="text-sm text-gray-600 mt-2">Full compatibility</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          {/* Two-Path Value Proposition */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Path A: Software with Existing Wearable */}
+            <div className="rounded-3xl bg-white border-2 border-gray-200 p-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200 mb-6">
+                <span className="text-xs font-semibold text-blue-700">Path A: Start Today</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#1B023A] mb-4">Use Your Current Wearable</h3>
+              <p className="text-gray-600 mb-6">
+                Connect Apple Watch, Fitbit, Garmin, or any other wearable device. Start accountability immediately without waiting for hardware.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700"><strong>$9-19/month</strong> software access</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Full accountability partnerships</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Real-time health data sync</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Partnership metrics & insights</span>
+                </li>
+              </ul>
+              <a
+                href="#waitlist"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold hover:opacity-90 transition-opacity"
+              >
+                Start with Your Device
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </div>
+
+            {/* Path B: Premium Moon Ring Hardware */}
+            <div className="rounded-3xl bg-gradient-to-br from-[#FF33BA]/10 to-[#FF9966]/10 border-2 border-[#FF33BA]/30 p-8 relative">
+              <div className="absolute top-6 right-6 px-3 py-1 bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white text-xs font-bold rounded-full">Premium Option</div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 border border-pink-200 mb-6">
+                <span className="text-xs font-semibold text-pink-700">Path B: Level Up</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#1B023A] mb-4">Upgrade to Moon Ring</h3>
+              <p className="text-gray-700 mb-6">
+                Experience the full power of Moon Ring with our premium smart ring. Same software, enhanced data precision, sleeker design, longer battery life.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#FF33BA] flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700"><strong>All software features</strong> included</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#FF33BA] flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Precision health tracking</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#FF33BA] flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">7-day battery life</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#FF33BA] flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Premium design & materials</span>
+                </li>
+              </ul>
+              <a
+                href="#waitlist"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#FF33BA] to-[#FF9966] text-white font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
+              >
+                Learn About Moon Ring
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          {/* Value Reinforcement */}
+          <div className="mt-12 rounded-2xl bg-gray-100 p-6 sm:p-8 text-center">
+            <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+              <strong className="text-[#1B023A]">The accountability experience is identical regardless of device.</strong> Whether you're using your Apple Watch or Moon Ring, you get the same partnership features, real-time moments, and commitment insights powered by your health data.
+            </p>
           </div>
         </div>
       </section>
@@ -499,14 +620,17 @@ export default function Home() {
       <section id="pricing" className="relative py-20 px-4 bg-gradient-to-b from-[#1B023A] to-[#2D1B69]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 mb-4">
+              <span className="text-xs font-semibold text-white">Software Plans • Works With Any Wearable</span>
+            </div>
             <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Software Pricing
+              Simple, Transparent Pricing
             </h2>
             <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              Unlock the full power of commitment psychology with a software plan
+              Choose your plan and start experiencing accountability with your existing wearable. Moon Ring hardware is separate and optional.
             </p>
             <p className="text-sm text-white/60 mt-3">
-              Works with any wearable device • 30-day money-back guarantee
+              All plans include 30-day free trial • 30-day money-back guarantee
             </p>
           </div>
 
@@ -664,6 +788,7 @@ export default function Home() {
               <h4 className="text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-white/60 text-sm">
                 <li><a href="#demo" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><Link href="/hardware" className="hover:text-white transition-colors">Hardware</Link></li>
                 <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
                 <li><a href="#stories" className="hover:text-white transition-colors">Success Stories</a></li>
               </ul>
