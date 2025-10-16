@@ -1,0 +1,33 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Samsung Galaxy Watch Logo -->
+  <defs>
+    <linearGradient id="galaxyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A1A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333333;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Watch Bezel (Circular) -->
+  <circle cx="100" cy="100" r="70" fill="url(#galaxyGrad)" />
+
+  <!-- Watch Face -->
+  <circle cx="100" cy="100" r="60" fill="#000000" />
+
+  <!-- Screen display area -->
+  <circle cx="100" cy="100" r="50" fill="#0A0A0A" />
+
+  <!-- Samsung "S" logo representation -->
+  <path d="M 90 85 Q 90 80 100 80 Q 110 80 110 85 Q 110 90 100 90 Q 95 90 95 95 Q 95 100 100 100 Q 110 100 110 105 Q 110 115 100 115 Q 90 115 90 110"
+        fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Galaxy accent dots -->
+  <g fill="#00CCFF" opacity="0.8">
+    <circle cx="75" cy="75" r="3" />
+    <circle cx="125" cy="75" r="3" />
+    <circle cx="75" cy="125" r="3" />
+    <circle cx="125" cy="125" r="3" />
+  </g>
+
+  <!-- Rotating bezel indicator -->
+  <circle cx="100" cy="100" r="65" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.3" stroke-dasharray="5,5" />
+</svg>

@@ -378,17 +378,23 @@ export default function Home() {
           {/* Supported Devices Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {[
-              { name: 'Apple Watch', icon: '⌚', color: 'from-gray-500 to-black' },
-              { name: 'Fitbit', icon: '📱', color: 'from-purple-500 to-pink-500' },
-              { name: 'Garmin', icon: '🎯', color: 'from-blue-500 to-cyan-500' },
-              { name: 'Oura Ring', icon: '⭕', color: 'from-amber-500 to-orange-500' },
-              { name: 'Withings', icon: '📊', color: 'from-blue-600 to-indigo-600' },
-              { name: 'Samsung Galaxy Watch', icon: '⌚', color: 'from-gray-900 to-gray-700' }
+              { name: 'Apple Watch', logo: '/images/devices/apple-watch-logo.svg' },
+              { name: 'Fitbit', logo: '/images/devices/fitbit-logo.svg' },
+              { name: 'Garmin', logo: '/images/devices/garmin-logo.svg' },
+              { name: 'Oura Ring', logo: '/images/devices/oura-logo.svg' },
+              { name: 'Withings', logo: '/images/devices/withings-logo.svg' },
+              { name: 'Samsung Galaxy Watch', logo: '/images/devices/samsung-galaxy-watch-logo.svg' }
             ].map((device, index) => (
               <AnimatedSection key={index} direction="up" delay={index * 0.1}>
-                <div className="rounded-2xl bg-white border border-gray-200 p-6 hover:shadow-lg transition-all text-center">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${device.color} flex items-center justify-center text-white text-3xl mx-auto mb-4`}>
-                    {device.icon}
+                <div className="rounded-2xl bg-white border border-gray-200 p-6 hover:shadow-lg transition-all text-center group">
+                  <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-200 transition-colors">
+                    <Image
+                      src={device.logo}
+                      alt={`${device.name} logo`}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16"
+                    />
                   </div>
                   <h3 className="font-bold text-[#1B023A] text-lg">{device.name}</h3>
                   <p className="text-sm text-gray-600 mt-2">Full compatibility</p>
