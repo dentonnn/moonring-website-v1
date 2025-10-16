@@ -1,25 +1,46 @@
-<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Garmin Logo -->
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <!-- Official Garmin Logo -->
+  <!-- Garmin brand blue (#0052CC) -->
+  <rect width="240" height="240" fill="white"/>
+
+  <!-- Garmin Watch Face - Circular -->
   <defs>
-    <linearGradient id="garminGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0066FF;stop-opacity:1" />
+    <linearGradient id="garminGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0073E6;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0052CC;stop-opacity:1" />
     </linearGradient>
   </defs>
 
-  <!-- Watch Face Circle -->
-  <circle cx="100" cy="100" r="65" fill="url(#garminGrad)" />
+  <!-- Outer watch bezel -->
+  <circle cx="120" cy="120" r="90" fill="url(#garminGradient)"/>
 
-  <!-- Inner dial -->
-  <circle cx="100" cy="100" r="55" fill="#000033" />
+  <!-- Watch face -->
+  <circle cx="120" cy="120" r="80" fill="#003366"/>
 
-  <!-- Garmin "G" Logo -->
-  <path d="M 85 95 Q 85 85 100 85 Q 115 85 115 100 Q 115 110 105 115 L 105 110 Q 112 107 112 100 Q 112 90 100 90 Q 90 90 90 100 Q 90 105 95 108 L 95 113 Q 86 110 85 100" fill="#FFFFFF" />
+  <!-- Inner display area -->
+  <circle cx="120" cy="120" r="70" fill="#001a4d"/>
 
-  <!-- GPS satellites indicator -->
-  <g fill="#00FF99" opacity="0.7">
-    <circle cx="135" cy="70" r="3" />
-    <circle cx="145" cy="80" r="3" />
-    <circle cx="140" cy="65" r="2" />
+  <!-- Garmin logo/letter G -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round">
+    <!-- G shape -->
+    <path d="M 110 100 Q 100 100 100 110 Q 100 130 120 130 Q 135 130 135 120"/>
   </g>
+
+  <!-- GPS status indicator dots -->
+  <g fill="#00FF99">
+    <circle cx="160" cy="80" r="3"/>
+    <circle cx="170" cy="95" r="2.5"/>
+    <circle cx="165" cy="110" r="2"/>
+  </g>
+
+  <!-- Watch markers (12, 3, 6, 9 o'clock) -->
+  <g stroke="#FFFFFF" stroke-width="2" stroke-linecap="round">
+    <line x1="120" y1="55" x2="120" y2="45"/>
+    <line x1="185" y1="120" x2="195" y2="120"/>
+    <line x1="120" y1="185" x2="120" y2="195"/>
+    <line x1="55" y1="120" x2="45" y2="120"/>
+  </g>
+
+  <!-- Center point -->
+  <circle cx="120" cy="120" r="3" fill="#FFFFFF"/>
 </svg>

@@ -1,29 +1,40 @@
-<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Oura Ring Logo -->
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <!-- Official Oura Ring Logo -->
+  <!-- Oura brand gold/orange (#F7931E) -->
+  <rect width="240" height="240" fill="white"/>
+
   <defs>
-    <linearGradient id="ouraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FF9900;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#CC6600;stop-opacity:1" />
+    <linearGradient id="ouraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B00;stop-opacity:1" />
     </linearGradient>
   </defs>
 
-  <!-- Outer Ring -->
-  <circle cx="100" cy="100" r="65" fill="none" stroke="url(#ouraGrad)" stroke-width="8" />
+  <!-- Signature Oura Ring - Three concentric circles -->
 
-  <!-- Middle Ring -->
-  <circle cx="100" cy="100" r="45" fill="none" stroke="url(#ouraGrad)" stroke-width="6" opacity="0.7" />
+  <!-- Outer ring -->
+  <circle cx="120" cy="120" r="85" fill="none" stroke="url(#ouraGradient)" stroke-width="12"/>
 
-  <!-- Inner Core -->
-  <circle cx="100" cy="100" r="25" fill="url(#ouraGrad)" />
+  <!-- Middle ring -->
+  <circle cx="120" cy="120" r="55" fill="none" stroke="url(#ouraGradient)" stroke-width="8" opacity="0.9"/>
 
-  <!-- Inner glow effect -->
-  <circle cx="100" cy="100" r="20" fill="#FFFFFF" opacity="0.3" />
+  <!-- Inner core circle -->
+  <circle cx="120" cy="120" r="30" fill="url(#ouraGradient)"/>
 
-  <!-- Center dot -->
-  <circle cx="100" cy="100" r="8" fill="#FFFFFF" opacity="0.8" />
+  <!-- Center gem/indicator -->
+  <circle cx="120" cy="120" r="18" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="120" cy="120" r="12" fill="#FFFFFF" opacity="0.8"/>
 
-  <!-- Accent dots around -->
-  <circle cx="100" cy="50" r="4" fill="#FFFFFF" opacity="0.6" />
-  <circle cx="135" cy="135" r="4" fill="#FFFFFF" opacity="0.6" />
-  <circle cx="65" cy="135" r="4" fill="#FFFFFF" opacity="0.6" />
+  <!-- Oura branding dot indicators -->
+  <g fill="#FFFFFF" opacity="0.7">
+    <circle cx="120" cy="50" r="3"/>
+    <circle cx="180" cy="80" r="3"/>
+    <circle cx="190" cy="150" r="3"/>
+    <circle cx="150" cy="190" r="3"/>
+    <circle cx="60" cy="160" r="3"/>
+    <circle cx="50" cy="90" r="3"/>
+  </g>
+
+  <!-- Tech highlight accents -->
+  <circle cx="120" cy="120" r="85" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.2" stroke-dasharray="3,4"/>
 </svg>
