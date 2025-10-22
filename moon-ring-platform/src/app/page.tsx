@@ -5,6 +5,7 @@ import FAQSection from '@/components/FAQSection'
 import HeroVideo from '@/components/HeroVideo'
 import HardwareShowcase from '@/components/HardwareShowcase'
 import CommitmentMomentsCarousel from '@/components/CommitmentMomentsCarousel'
+import WearableCarousel from '@/components/WearableCarousel'
 import Link from 'next/link'
 import Image from 'next/image'
 import { CheckCircle, Heart, Users, Star } from 'lucide-react'
@@ -375,32 +376,17 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Supported Devices Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {[
-              { name: 'Apple Watch', logo: '/images/devices/apple-watch-logo.svg' },
-              { name: 'Fitbit', logo: '/images/devices/fitbit-logo.svg' },
-              { name: 'Garmin', logo: '/images/devices/garmin-logo.svg' },
-              { name: 'Oura Ring', logo: '/images/devices/oura-logo.svg' },
-              { name: 'Withings', logo: '/images/devices/withings-logo.svg' },
-              { name: 'Samsung Galaxy Watch', logo: '/images/devices/samsung-galaxy-watch-logo.svg' }
-            ].map((device, index) => (
-              <AnimatedSection key={index} direction="up" delay={index * 0.1}>
-                <div className="rounded-2xl bg-white border border-gray-200 p-6 hover:shadow-lg transition-all text-center group">
-                  <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-200 transition-colors">
-                    <Image
-                      src={device.logo}
-                      alt={`${device.name} logo`}
-                      width={64}
-                      height={64}
-                      className="w-16 h-16"
-                    />
-                  </div>
-                  <h3 className="font-bold text-[#1B023A] text-lg">{device.name}</h3>
-                  <p className="text-sm text-gray-600 mt-2">Full compatibility</p>
-                </div>
-              </AnimatedSection>
-            ))}
+          <div className="mb-12">
+            <WearableCarousel
+              devices={[
+                { name: 'Apple Watch', logo: '/images/devices/apple-watch-logo.svg' },
+                { name: 'Fitbit', logo: '/images/devices/fitbit-logo.svg' },
+                { name: 'Garmin', logo: '/images/devices/garmin-logo.svg' },
+                { name: 'Oura Ring', logo: '/images/devices/oura-logo.svg' },
+                { name: 'Withings', logo: '/images/devices/withings-logo.svg' },
+                { name: 'Samsung Galaxy Watch', logo: '/images/devices/samsung-galaxy-watch-logo.svg' },
+              ]}
+            />
           </div>
 
           {/* Two-Path Value Proposition */}
@@ -489,75 +475,6 @@ export default function Home() {
               <strong className="text-[#1B023A]">The accountability experience is identical regardless of device.</strong> Whether you're using your Apple Watch or Moon Ring, you get the same partnership features, real-time moments, and commitment insights powered by your health data.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* Success Stories Section */}
-      <section id="stories" className="relative py-20 px-4 bg-gradient-to-b from-[#1B023A] to-[#2D1B69]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Real People, Real Results
-            </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              See how commitment psychology has transformed lives
-            </p>
-          </div>
-
-          <StaggerChildren staggerDelay={0.2} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Sarah Chen',
-                achievement: '127-day sleep commitment',
-                quote: 'Having an accountability partner made all the difference. We kept each other on track every single night.',
-                metric: '8 hours avg',
-                improvement: '+43%'
-              },
-              {
-                name: 'Marcus Johnson',
-                achievement: '90-day movement goal',
-                quote: 'The social pressure (in a good way) kept me honest. Knowing someone was counting on me was game-changing.',
-                metric: '12K steps',
-                improvement: '+67%'
-              },
-              {
-                name: 'Emily Rodriguez',
-                achievement: '60-day stress management',
-                quote: 'Meditation felt impossible alone. With my partner checking in daily, I never missed a session.',
-                metric: '15 min daily',
-                improvement: '+100%'
-              }
-            ].map((story, index) => (
-              <AnimatedSection
-                key={index}
-                direction="up"
-                delay={index * 0.2}
-              >
-                <div className="rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#FF33BA] to-[#FF9966] flex items-center justify-center text-white font-bold text-xl">
-                      {story.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white">{story.name}</h4>
-                      <p className="text-sm text-white/60">{story.achievement}</p>
-                    </div>
-                  </div>
-                  <p className="text-white/80 mb-6 italic">"{story.quote}"</p>
-                  <div className="flex gap-4 text-center">
-                    <div className="flex-1 rounded-2xl bg-white/5 p-3">
-                      <div className="text-2xl font-bold text-[#FF33BA]">{story.metric}</div>
-                      <div className="text-xs text-white/60">Average</div>
-                    </div>
-                    <div className="flex-1 rounded-2xl bg-white/5 p-3">
-                      <div className="text-2xl font-bold text-[#FF9966]">{story.improvement}</div>
-                      <div className="text-xs text-white/60">Improvement</div>
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </StaggerChildren>
         </div>
       </section>
 
