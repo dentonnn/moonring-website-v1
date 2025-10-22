@@ -10,6 +10,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@eslint/eslintrc": "^3",
     "@getbrevo/brevo": "^3.0.1",
     "@next/third-parties": "^15.5.4",
     "@stripe/stripe-js": "^7.9.0",
@@ -29,7 +30,6 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@next/bundle-analyzer": "^15.5.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

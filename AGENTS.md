@@ -1,19 +1,37 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-The Next.js app lives in `moon-ring-platform/` using the App Router (`src/app/`). Shared UI sits in `moon-ring-platform/src/components/`, while utilities and configuration are under `moon-ring-platform/src/lib/` and `moon-ring-platform/src/config/`. Static assets belong in `moon-ring-platform/public/`. Project documentation, including deployment and architecture notes, is stored in `docs/`. Treat the repo root as the place for CI, deployment configs, and auxiliary scripts.
+- App lives in `moon-ring-platform/` using the App Router in `moon-ring-platform/src/app/`.
+- Shared UI: `moon-ring-platform/src/components/` (PascalCase files, e.g., `TestimonialsSection.tsx`).
+- Utilities & config: `moon-ring-platform/src/lib/`, `moon-ring-platform/src/config/`.
+- Static assets: `moon-ring-platform/public/`. Docs: `docs/` (architecture, deployment, SOPs).
+- Tests: unit tests colocated near code (e.g., `src/lib/foo.test.ts`). E2E: `moon-ring-platform/src/app/(e2e)/` with Playwright.
 
 ## Build, Test, and Development Commands
-Run all commands from `moon-ring-platform/`. Use `npm run dev` for Turbopack-powered local development, `npm run build` for a production bundle, and `npm run build:validate` to confirm required env vars via `scripts/validate-env.js` before building. Start the production server with `npm run start`. Lint the codebase using `npm run lint`; address warnings before opening a PR.
+Run all commands from `moon-ring-platform/`.
+- `npm run dev` — Local dev with Turbopack.
+- `npm run build:validate` — Verify required env via `scripts/validate-env.js`.
+- `npm run build` — Create production bundle.
+- `npm run start` — Start production server.
+- `npm run lint` — Lint; fix issues before PRs.
+- `npx vitest` — Run unit tests. `npx playwright test` — Run E2E suite.
 
 ## Coding Style & Naming Conventions
-Author components with TypeScript and React 19, keeping indentation at two spaces. Components in `src/components/` use PascalCase filenames (e.g., `TestimonialsSection.tsx`), while routes follow the App Router convention with `page.tsx`/`layout.tsx`. Format code via Prettier with `prettier-plugin-tailwindcss` and ensure ESLint rules (`next/core-web-vitals`, `next/typescript`) pass locally. Store environment variables in `.env.local` cloned from `.env.example`; never commit secrets.
+- TypeScript + React 19; 2‑space indentation.
+- Components in `src/components/` use PascalCase filenames; routes follow App Router (`page.tsx`, `layout.tsx`).
+- Format with Prettier (+ `prettier-plugin-tailwindcss`). ESLint configs: `next/core-web-vitals`, `next/typescript` must pass locally.
+- Environment: copy `.env.example` to `.env.local`; never commit secrets.
 
 ## Testing Guidelines
-Add unit coverage with Vitest or Jest near the code under test (e.g., `src/lib/foo.test.ts`). E2E coverage should land in `src/app/(e2e)/`, using Playwright to exercise critical flows like checkout and forms. Run suites manually with `npx vitest` or `npx playwright test` until CI automation is added; prioritize smoke coverage of payments and auth paths.
+- Unit: Vitest or Jest; colocate tests with `*.test.ts`/`*.test.tsx`. Aim for smoke coverage on key utilities.
+- E2E: Playwright specs under `src/app/(e2e)/`; cover critical flows (auth, checkout, forms).
+- Commands: `npx vitest` and `npx playwright test`. Keep tests deterministic; stub external services.
 
 ## Commit & Pull Request Guidelines
-Write Conventional Commit messages (`feat:`, `fix:`, `docs:`, `chore:`) and branch from `feature/...`, `fix/...`, or `chore/...`. Pull requests must note scope, link related issues, and include UI artifacts (screenshots, videos) for visual work plus Lighthouse diffs for performance changes. Document env or deployment updates in `docs/05-deployment/deployment-sop.md`. Ensure `npm run lint` and `npm run build:validate` succeed before requesting review.
+- Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`). Branch from `feature/...`, `fix/...`, or `chore/...`.
+- PRs: describe scope, link issues, include UI artifacts (screenshots/videos) and Lighthouse diffs for perf changes.
+- Ensure `npm run lint` and `npm run build:validate` succeed before requesting review. Document env/deploy updates in `docs/05-deployment/deployment-sop.md`.
 
 ## Security & Configuration Tips
-Validate environment setup with `node scripts/validate-env.js` and keep Stripe, Supabase, and Brevo credentials out of version control. Follow README guidance for webhook signatures and review `docs/03-architecture/` for service integration patterns before touching backend communication paths.
+- Validate env with `node scripts/validate-env.js`. Keep Stripe, Supabase, and Brevo credentials out of VCS; configure webhook signatures per README.
+- Review `docs/03-architecture/` for integration patterns before changing backend/service communication.
