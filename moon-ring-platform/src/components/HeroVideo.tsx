@@ -1,8 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import clsx from 'clsx'
 
-export default function HeroVideo() {
+type HeroVideoVariant = 'default' | 'spotlight'
+
+type HeroVideoProps = {
+  variant?: HeroVideoVariant
+  className?: string
+}
+
+export default function HeroVideo({ variant = 'default', className }: HeroVideoProps) {
   const [isMuted, setIsMuted] = useState(true)
   const [isPlaying, setIsPlaying] = useState(true)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
@@ -80,12 +88,22 @@ export default function HeroVideo() {
     }
   }
 
+  const frameClass =
+    variant === 'spotlight'
+      ? 'relative aspect-video w-full min-h-[320px]'
+      : 'relative h-[400px] sm:h-[500px] lg:h-[600px]'
+
+  const containerClass =
+    variant === 'spotlight'
+      ? 'rounded-[32px] shadow-none'
+      : 'rounded-3xl shadow-2xl'
+
   return (
-    <div className="relative group">
+    <div className={clsx('relative group', className)}>
       {/* Video container - fills most of hero section height */}
-      <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+      <div className={clsx('relative overflow-hidden', containerClass)}>
         {/* 16:9 aspect ratio with responsive heights */}
-        <div className="relative h-[400px] sm:h-[500px] lg:h-[600px]">
+        <div className={frameClass}>
           {/* Brand video - autoplay, loop, muted by default */}
           <video
             poster="/images/video-poster.webp"

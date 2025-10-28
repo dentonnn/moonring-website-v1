@@ -1428,8 +1428,9 @@ Pick ONE habit you want to build. Write three implementation intentions:
   return posts[slug] || null
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = getBlogPost(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = getBlogPost(slug)
 
   return {
     title: post ? `${post.title} | Moon Ring Blog` : 'Blog Post | Moon Ring',
@@ -1437,8 +1438,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = getBlogPost(params.slug)
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = getBlogPost(slug)
 
   if (!post) {
     return (

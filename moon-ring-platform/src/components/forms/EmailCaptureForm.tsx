@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { trackConversion } from '@/lib/analytics/events'
 
 interface EmailCaptureFormProps {
-  source?: 'hero' | 'footer' | 'popup'
+  source?: 'hero' | 'footer' | 'popup' | 'waitlist' | 'download'
   showGDPR?: boolean
   onSuccess?: () => void
   className?: string

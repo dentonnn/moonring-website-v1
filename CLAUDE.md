@@ -67,6 +67,19 @@ ANALYZE=true npm run build  # Analyze bundle size with @next/bundle-analyzer
                             # or reducing First Load JS size for performance
 ```
 
+**Pre-Commit Validation** (always run before git commit):
+```bash
+npm run lint             # Fix lint violations - never commit with violations
+npm run build:validate   # Verify env vars are configured correctly
+```
+
+**How `build:validate` works**:
+The `build:validate` script (defined in `package.json`) runs `./build.sh`, which performs two critical checks:
+1. **Environment Validation**: Runs `node scripts/validate-env.js` to check all required env vars from `.env.example` are present
+2. **Production Build**: Runs `next build --turbopack` to verify the code compiles without errors
+
+Both checks must pass before committing. If env validation fails, the build is aborted (prevents broken deployments).
+
 **Note**: No test runner is currently configured in this project. When adding tests, prefer:
 - Unit tests (Vitest/Jest) for lib/utils
 - E2E tests (Playwright) for critical flows (home, checkout, contact form)
@@ -89,16 +102,22 @@ Before running the development server:
 
 1. Navigate to `moon-ring-platform/` directory
 2. Copy `.env.example` to `.env.local`: `cp .env.example .env.local`
-3. Configure required environment variables in `.env.local`:
-   - **Supabase**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-   - **Stripe**: `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`
+3. Configure required environment variables in `.env.local` (in priority order for setup):
+   - **Stripe** (payment tests): `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (get from https://dashboard.stripe.com/keys - use test keys)
+   - **Supabase** (database): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (get from Supabase Dashboard → Settings → API)
    - **Email**: `BREVO_API_KEY` (for Brevo email service - get from https://app.brevo.com/settings/keys/api)
-   - **App URL**: `NEXT_PUBLIC_APP_URL` (defaults to `http://localhost:3000`)
+   - **App URL**: `NEXT_PUBLIC_APP_URL` (defaults to `http://localhost:3000` - only change if running on different port)
+   - **Webhooks** (production only): `STRIPE_WEBHOOK_SECRET` (get from Stripe Dashboard → Webhooks after setting up endpoint)
    - **Analytics** (optional): `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_HOTJAR_ID`
 4. Run `npm install` if `node_modules/` is missing
-5. Apply database migrations if needed: `./apply-migration.sh` (see Database Management section)
+5. Validate setup: `npm run build:validate` (checks all required env vars are present)
+6. Apply database migrations if needed: `./apply-migration.sh` (see Database Management section)
 
-**Important**: Never commit `.env.local` or any files containing API keys. The `.env.example` file is the source of truth for required variables.
+**Important Notes**:
+- Never commit `.env.local` or any files containing API keys
+- The `.env.example` file is the source of truth for required variables
+- For development: Use Stripe **test mode** keys (start with `pk_test_` and `sk_test_`)
+- If Stripe webhook secret is missing, local webhook testing will be skipped (safe for dev)
 
 ## Deployment
 
@@ -173,7 +192,10 @@ docs/
 ├── 06-content/            # Content creation and guidelines
 │   ├── blog-article-template.md
 │   └── asset-guidelines.md
-└── 07-archive/            # Completed work and historical reference
+├── 07-archive/            # Completed work and historical reference
+└── 08-marketing/          # Marketing campaigns and copy
+    ├── campaigns/        # Campaign-specific materials
+    └── copy/             # Messaging and copy templates
 ```
 
 **Current Work**: Refer to `docs/00-INDEX.md` to find the most relevant documentation for your task.
@@ -228,16 +250,39 @@ src/
 │   ├── api/               # API routes
 │   │   ├── checkout/     # Stripe checkout session creation
 │   │   ├── contact/      # Contact form submission handler
+│   │   ├── cron/         # Scheduled jobs and background tasks
+│   │   │   └── waitlist-emails/  # Automated waitlist nurture emails
 │   │   ├── health/       # Health check endpoint
 │   │   ├── newsletter/   # Newsletter subscription with Brevo
+│   │   │   ├── subscribe/    # Subscribe to newsletter
+│   │   │   └── unsubscribe/  # Unsubscribe from newsletter
+│   │   ├── waitlist/     # Waitlist conversion endpoints
+│   │   │   ├── set-goal/        # Capture user fitness goals
+│   │   │   └── track-download/  # Track app download events
 │   │   └── webhooks/     # Webhook handlers (Stripe events)
 │   ├── blog/              # Blog listing and individual post pages
 │   ├── contact/           # Contact page with form
+│   ├── demo/              # Interactive demo with commitment builder
+│   ├── download/          # App download page (waitlist entry point)
+│   ├── enterprise/        # Enterprise offering and B2B sales page
+│   ├── hardware/          # Hardware showcase with wearable compatibility
+│   ├── hero-mockup-v2/    # Experimental hero section variant (brand color testing)
+│   ├── how-it-works/      # Detailed how-it-works flow
+│   ├── pricing/           # Standalone pricing page
 │   ├── privacy/           # Privacy policy (legal)
 │   ├── research/          # Research library page
+│   ├── success-stories/   # Testimonials and case studies page
+│   ├── support/           # Customer support page
 │   ├── terms/             # Terms of service (legal)
+│   ├── unsubscribe/       # Newsletter unsubscribe confirmation page
+│   ├── waitlist/          # Multi-step waitlist flow
+│   │   └── goal-selection/  # Goal selection step in waitlist
 │   ├── layout.tsx         # Root layout with fonts and metadata
-│   └── page.tsx           # Homepage with hero, features, pricing
+│   ├── page.tsx           # Homepage with hero, features, pricing
+│   ├── error.tsx          # Global error boundary
+│   ├── not-found.tsx      # 404 page
+│   ├── robots.ts          # Robots.txt configuration
+│   └── sitemap.ts         # Sitemap generation
 ├── components/             # React components
 │   ├── animations/        # Animation components (Framer Motion patterns)
 │   │   ├── AnimatedSection.tsx      # Fade-in on scroll animations
@@ -246,22 +291,36 @@ src/
 │   │   └── StaggerChildren.tsx      # Staggered child animations
 │   ├── forms/             # Form components
 │   │   └── EmailCaptureForm.tsx  # Email waitlist capture
+│   ├── Analytics.tsx      # Analytics wrapper component
 │   ├── ChooseYourPathInteractive.tsx  # Interactive path selection with state
+│   ├── CommitmentMomentsCarousel.tsx  # Showcase commitment moments
 │   ├── ContactForm.tsx    # Contact page form with Brevo integration
 │   ├── CookieConsent.tsx  # GDPR cookie banner
 │   ├── FAQAccordion.tsx   # Accordion component for FAQ section
 │   ├── FAQSection.tsx     # FAQ section wrapper component
+│   ├── HardwareShowcase.tsx  # Display wearable device compatibility
 │   ├── HeroVideo.tsx      # Hero video component with controls
 │   ├── Navigation.tsx     # Main nav with mobile menu (4 items)
 │   ├── OptimizedImage.tsx # Image optimization wrapper
+│   ├── PhoneMockup.tsx    # Phone screenshot wrapper
 │   ├── StatWithTooltip.tsx  # Stat display with source attribution tooltips
-│   └── TestimonialsSection.tsx  # Testimonials grid component
+│   ├── TestimonialsSection.tsx  # Testimonials grid component
+│   └── WearableCarousel.tsx  # Interactive wearable device carousel
+├── hooks/                 # Custom React hooks
+│   ├── useInView.ts       # Intersection Observer hook for animations
+│   └── useReducedMotion.ts # Accessibility hook for reduced motion preference
 ├── lib/                   # Shared utilities and configurations
+│   ├── analytics/         # Analytics utilities and tracking helpers
+│   ├── bot-protection/    # Bot detection and protection
 │   ├── email/             # Email service utilities
 │   │   └── brevo.ts       # Brevo API client and email templates
-│   └── supabase/          # Supabase client and server utilities
-│       ├── client.ts      # Browser client
-│       └── server.ts      # Server-side client
+│   ├── supabase/          # Supabase client and server utilities
+│   │   ├── client.ts      # Browser client
+│   │   └── server.ts      # Server-side client
+│   ├── blogData.ts        # Centralized blog content data
+│   ├── faqData.ts         # FAQ content data
+│   ├── metadata.ts        # SEO metadata utilities
+│   └── rate-limit.ts      # API rate limiting
 ├── middleware.ts          # Session tracking and route protection
 └── types/                 # TypeScript type definitions
     └── database.ts        # Supabase database types
@@ -282,34 +341,232 @@ src/
 - Images, fonts, and static files: `moon-ring-platform/public/`
 - See `docs/06-content/asset-guidelines.md` for image optimization guidelines
 
-**Current State**: ~98% complete production-ready marketing website with full feature parity. **UX Improvements Phase 1 completed** (all 12 tasks: simplified 4-item navigation, responsive video heights, accessible video controls, enhanced demo previews, stat tooltips with sources, improved pricing badges, proper touch targets, path selection hierarchy, deduplicated footer, optimized CTA copy, video poster images). Includes homepage with hero video, legal pages (privacy/terms), about page, blog structure with ISR caching, research library, contact form (Brevo integration with welcome emails), interactive demo page, cookie consent, and testimonials. Full Supabase + Stripe + Vercel Analytics + Sentry monitoring stack integrated. Newsletter signup sends personalized welcome emails via Brevo (9,000 emails/month capacity). Animation system built with Framer Motion patterns for polished interactions. StatWithTooltip component adds data credibility with source attribution. ChooseYourPathInteractive provides guided user segmentation. TypeScript strict mode with zero lint errors. Build passing with optimized bundle sizes (First Load JS ~170KB homepage). WCAG 2.1 AA compliant. Ready for production deployment. The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
+**Current State**: ~99% complete production-ready marketing website. **Recent Development** (feature/wearable-carousel branch): Active development on wearable device compatibility showcase with interactive carousel component, hardware page expansion, and download conversion optimization.
+
+**Completed Features**:
+- **Core Pages**: Homepage with hero video, About, Contact, Pricing, How It Works, Success Stories, Support, Enterprise
+- **Legal & Compliance**: Privacy Policy, Terms of Service, Cookie Consent (GDPR-compliant)
+- **Content Hub**: Blog with ISR caching and internal linking, Research library
+- **Conversion Funnels**: Multi-step waitlist flow with goal selection, Download page, Interactive demo with commitment builder
+- **Hardware Showcase**: Wearable device compatibility pages with brand logos (Apple, Samsung, Garmin, Fitbit, Oura, Whoop)
+- **UX Improvements Phase 1**: All 12 tasks completed (simplified 4-item nav, responsive video, accessible controls, stat tooltips, touch targets, optimized CTAs, video posters)
+
+**Technical Stack**:
+- **Infrastructure**: Full Supabase + Stripe + Vercel Analytics + Sentry monitoring integration
+- **Email System**: Brevo with transactional emails (contact confirmation, newsletter welcome, waitlist nurture sequences) - 9,000 emails/month capacity
+- **Animation System**: Framer Motion patterns with custom hooks (useInView, useReducedMotion) for accessibility-first animations
+- **API Layer**: Rate limiting, bot protection, webhook handlers, cron jobs for automated emails
+- **Components**: 19 reusable components including WearableCarousel, HardwareShowcase, CommitmentMomentsCarousel, StatWithTooltip, PhoneMockup
+- **Data Management**: Centralized content data (blogData.ts, faqData.ts), metadata utilities, analytics tracking helpers
+
+**Code Quality**:
+- TypeScript strict mode with zero lint errors
+- Build passing with optimized bundle sizes (First Load JS ~170KB homepage)
+- WCAG 2.1 AA compliant
+- Prettier + ESLint with Tailwind plugin for consistent formatting
+
+**Ready for**: Production deployment, A/B testing, performance optimization, SEO enhancement. The goal is creating a high-converting website that communicates Moon Ring's value as a social accountability platform for wearable users without building the actual platform itself.
 
 ## Key Architectural Patterns
 
-**Client vs Server Components**:
-- Use Server Components by default (Next.js 15 App Router)
-- Mark Client Components with `'use client'` directive (e.g., forms, interactive UI)
-- Supabase has separate clients: `lib/supabase/client.ts` (browser) and `lib/supabase/server.ts` (server-side)
+**Client vs Server Components** (CRITICAL for performance):
+- Use **Server Components by default** (Next.js 15 App Router) - renders on server, reduces JS bundle
+- Mark Client Components with `'use client'` directive ONLY for:
+  - Forms with state/interactivity (ContactForm, EmailCaptureForm, ChooseYourPathInteractive)
+  - Components using browser APIs (localStorage, window object, event handlers)
+  - Animation components (Framer Motion)
+- **Supabase clients**: Use `lib/supabase/client.ts` in Client Components, `lib/supabase/server.ts` in Server Components
+- **Rule of thumb**: If it doesn't need interactivity, keep it a Server Component (better for SEO, faster FCP)
 
-**API Routes**:
-- Checkout flow: `/api/checkout` creates Stripe sessions
-- Webhooks: `/api/webhooks/stripe` handles payment events (requires webhook secret)
-- Contact: `/api/contact` processes form submissions via Brevo
+**API Routes** (secure backend operations):
+- Checkout flow: `/api/checkout` creates Stripe sessions (validates purchase params server-side)
+- Webhooks: `/api/webhooks/stripe` handles payment events (validates webhook signature before processing)
+- Contact: `/api/contact` processes form submissions via Brevo (server-side email service)
 - Newsletter: `/api/newsletter/subscribe` handles newsletter signups with welcome emails
 - Health: `/api/health` checks service connectivity
+- **Security pattern**: All API routes validate inputs and authenticate (middleware.ts) before processing
 
 **Data Flow**:
-1. User submits form (email capture, contact, checkout)
-2. Client-side validation, then API route call
-3. API route interacts with Supabase (data) or Stripe/Brevo (services)
-4. Webhook handlers update database based on external events
+1. Client submits form with validation (Zod schema)
+2. Sends POST to API route with structured data
+3. API route validates input again server-side (defense in depth)
+4. API route calls Stripe/Supabase/Brevo services
+5. Response returned to client with status code
+6. Webhook handlers (async) update database based on external events
 
 **Styling Approach**:
-- Tailwind utility classes for all styling
+- Tailwind utility classes for all styling (no component CSS files)
 - Glass-morphism design with brand gradient (#FF33BA → #FF9966)
 - Mobile-first responsive (320px → 1024px+)
 - Custom CSS in `globals.css` only for animations and complex effects
-- Prettier with `prettier-plugin-tailwindcss` maintains class order consistency
+- Prettier with `prettier-plugin-tailwindcss` maintains class order (Tailwind → other utilities)
+- **Theme consistency**: Use Tailwind opacity modifiers and gradient stops for brand colors
+
+## Advanced Patterns & Features
+
+### Waitlist Conversion Flow
+
+The waitlist is a critical conversion funnel with multi-step engagement:
+
+**Flow Architecture**:
+1. **Entry Point**: User lands on `/download` page or clicks homepage waitlist CTA
+2. **Email Capture**: User enters email → captured in Supabase `waitlist_signups` table
+3. **Goal Selection**: Redirected to `/waitlist/goal-selection` for fitness goal capture
+4. **Goal Submission**: POST to `/api/waitlist/set-goal` → saves goal and preferences to database
+5. **Download Tracking**: `/api/waitlist/track-download` records app download events (when available)
+6. **Automated Nurture**: `/api/cron/waitlist-emails` sends timed email sequences via Brevo
+7. **Unsubscribe**: Users can opt-out via `/api/newsletter/unsubscribe` endpoint
+
+**Key Tables**:
+- `waitlist_signups` - Email captures with timestamps
+- `waitlist_goals` - User fitness goals and preferences
+- `waitlist_downloads` - App download tracking
+
+**Implementation Pattern**:
+```typescript
+// In API route: Validate → Save to Supabase → Trigger email → Return success
+// Example: /api/waitlist/set-goal/route.ts
+```
+
+### Custom Hooks
+
+Two custom hooks provide enhanced UX and accessibility:
+
+**`useInView` Hook** (Intersection Observer):
+- Triggers animations when elements enter the viewport
+- Usage: Import from `@/hooks/useInView` in Client Components
+- Powers fade-in, slide-in, and scroll-triggered animations
+- Pattern: Returns `ref` and `isInView` boolean
+
+**`useReducedMotion` Hook** (Accessibility):
+- Respects user's motion preferences (WCAG 2.1 AA compliance)
+- Detects `prefers-reduced-motion` media query
+- Usage: Conditionally disable animations for accessibility
+- Pattern: Returns boolean indicating if reduced motion is preferred
+
+**Example Usage**:
+```typescript
+'use client'
+import { useInView } from '@/hooks/useInView'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+
+export function AnimatedComponent() {
+  const { ref, isInView } = useInView()
+  const prefersReducedMotion = useReducedMotion()
+
+  return (
+    <div ref={ref} className={isInView && !prefersReducedMotion ? 'animate-fade-in' : ''}>
+      Content
+    </div>
+  )
+}
+```
+
+### Rate Limiting & Bot Protection
+
+API routes implement rate limiting and bot detection to prevent abuse:
+
+**Rate Limiting** (`lib/rate-limit.ts`):
+- Throttles requests per IP address using Vercel KV or in-memory cache
+- Default: 5 requests per minute for form submissions
+- Usage: Import and apply at the start of API route handlers
+
+**Bot Protection** (`lib/bot-protection/`):
+- Validates request patterns and user agents
+- Blocks common bot signatures and suspicious behavior
+- Usage: Apply to contact form, newsletter signup, waitlist endpoints
+
+**Implementation Pattern**:
+```typescript
+// In API route (e.g., /api/contact/route.ts):
+import { rateLimit } from '@/lib/rate-limit'
+import { detectBot } from '@/lib/bot-protection'
+
+export async function POST(request: Request) {
+  // 1. Rate limit check
+  const rateLimitResult = await rateLimit(request)
+  if (!rateLimitResult.success) {
+    return new Response('Too many requests', { status: 429 })
+  }
+
+  // 2. Bot detection
+  if (detectBot(request)) {
+    return new Response('Forbidden', { status: 403 })
+  }
+
+  // 3. Process request...
+}
+```
+
+### Experimental Pages Pattern
+
+**Testing Ground for Hero Variants**:
+- `/hero-mockup-v2/` is an experimental page for brand color testing
+- **NOT linked in navigation** - accessed via direct URL only
+- Purpose: Testing different brand color palettes and visual treatments
+- Usage: Compare color variants, gather feedback on visual direction
+- **Cleanup**: Move to `/docs/07-archive/` or integrate into main design once color decisions are finalized
+
+**When to use**:
+- Testing brand color variations and visual treatments
+- Rapid iteration without affecting production homepage
+- Collecting stakeholder feedback on design directions
+
+**Important**: This page should not be indexed by search engines (add `noindex` meta tag if not already present).
+
+## Common Issues & Debugging
+
+**"Module not found" or build errors after changing files**:
+- Run `npm install` (dependencies may have changed)
+- Delete `.next` folder and rebuild: `rm -rf .next && npm run build`
+- Check TypeScript errors: `npx tsc --noEmit`
+
+**Stripe webhook not working in development**:
+- Webhook secret missing? That's OK - webhooks are skipped locally (safe for dev)
+- Use Stripe CLI for local webhook testing (see `docs/05-deployment/troubleshooting.md`)
+- In production, webhook secret MUST be configured before deploying
+
+**Supabase database query failures**:
+- Check RLS policies are not blocking access: `SELECT * FROM pg_policies WHERE tablename = 'your_table';`
+- Verify service role key is configured if using `lib/supabase/server.ts`
+- Connection pool exhausted? Restart dev server: `npm run dev`
+- For migrations: copy SQL → paste into Supabase SQL Editor → run manually
+
+**Email not sending (Brevo)**:
+- Verify `BREVO_API_KEY` is configured in `.env.local`
+- Check Brevo dashboard for sender verification (domain/email must be verified)
+- Templates: All email templates defined in `src/lib/email/brevo.ts` - verify template names match
+- Rate limiting? Brevo free tier allows 9,000 emails/month - check quota
+
+**Performance issues**:
+1. **Large bundle size**: Run `ANALYZE=true npm run build` to visualize bundle
+2. **Slow page loads**: Check `npm run lint` for unused imports, verify Client Components aren't overused
+3. **High CLS (layout shift)**: Add height attributes to images/videos, use Framer Motion animations cautiously
+4. **LCP too high**: Move above-fold images to preload in `layout.tsx`, mark hero images as priority
+
+**TypeScript errors**:
+- Strict mode is enabled - all types must be explicit
+- Check error with `npx tsc --noEmit --pretty` for full error context
+- Review `tsconfig.json` for path aliases: `@/*` → `./src/*`
+
+**Lint failures before commit**:
+- Run `npm run lint` to see all violations
+- Most can be auto-fixed: `npx eslint --fix` (but not all)
+- Common issues: unused variables, missing key props in lists, missing alt text on images
+- Don't suppress warnings - fix the underlying issue instead
+
+## Code Review Guidelines (for AI development)
+
+When implementing features or fixes, prioritize:
+
+1. **Architecture First**: Does the feature follow established patterns (Server/Client components, API route flow)?
+2. **TypeScript Strict**: Are all types explicit? No implicit `any` types?
+3. **Component Isolation**: Is state managed at the right level? Can components be reused?
+4. **Performance Impact**: Is this adding Client Components where Server Components would work? Check with bundle analyzer.
+5. **Security**: Are API routes validating inputs? Are sensitive keys kept in env vars?
+6. **Accessibility**: Do forms have labels? Are colors accessible? Do interactive elements have proper ARIA attributes?
+7. **Error Handling**: Does the feature handle network failures gracefully? Are error messages user-friendly?
+8. **Testing**: Are critical paths covered (checkout, contact form, newsletter signup)?
 
 ## Related Configuration Files
 

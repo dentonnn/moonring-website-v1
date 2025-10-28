@@ -24,7 +24,7 @@ type ConversionEventInsert = Database['public']['Tables']['conversion_events']['
  *   email: string (required)
  *   name?: string
  *   gdprConsent: boolean (required)
- *   source: 'hero' | 'footer' | 'popup' (required)
+ *   source: 'hero' | 'footer' | 'popup' | 'waitlist' | 'download' (required)
  *   utmParams?: { utm_source, utm_medium, utm_campaign, utm_term, utm_content }
  *   referrer?: string
  *   landingPage: string (required)
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       )
     }
 
-    if (!source || !['hero', 'footer', 'popup'].includes(source)) {
+    if (!source || !['hero', 'footer', 'popup', 'waitlist', 'download'].includes(source)) {
       return NextResponse.json(
         { success: false, error: 'Invalid signup source' },
         { status: 400 }
