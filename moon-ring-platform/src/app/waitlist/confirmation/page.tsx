@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle, Calendar, Gift } from 'lucide-react'
@@ -9,9 +9,41 @@ function ConfirmationContent() {
   const searchParams = useSearchParams()
   const email = searchParams.get('email')
   const [copied, setCopied] = useState(false)
+  const [referralCode, setReferralCode] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  // Generate referral link (in production, this would come from API)
-  const referralLink = `https://moonring.com/waitlist?ref=${Math.random().toString(36).substr(2, 9)}`
+  // Fetch the user's actual referral code from the database
+  useEffect(() => {
+    async function fetchReferralCode() {
+      if (!email) {
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const response = await fetch(`/api/waitlist/get-referral-code?email=${encodeURIComponent(email)}`)
+        const data = await response.json()
+
+        if (data.success && data.referralCode) {
+          setReferralCode(data.referralCode)
+        }
+      } catch (error) {
+        console.error('Failed to fetch referral code:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchReferralCode()
+  }, [email])
+
+  const baseUrl = typeof window !== 'undefined'
+    ? `${window.location.protocol}//${window.location.host}`
+    : 'https://moonring.com'
+
+  const referralLink = referralCode
+    ? `${baseUrl}/waitlist?ref=${referralCode}`
+    : `${baseUrl}/waitlist`
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(referralLink)

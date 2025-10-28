@@ -6,7 +6,7 @@ import { trackConversion } from '@/lib/analytics/events'
 interface EmailCaptureFormProps {
   source?: 'hero' | 'footer' | 'popup' | 'waitlist' | 'download'
   showGDPR?: boolean
-  onSuccess?: () => void
+  onSuccess?: (email: string) => void
   className?: string
 }
 
@@ -41,7 +41,7 @@ export default function EmailCaptureForm({
     setIsLoading(true)
 
     try {
-      // Get UTM parameters from URL
+      // Get UTM parameters and referral code from URL
       const urlParams = new URLSearchParams(window.location.search)
       const utmParams = {
         utm_source: urlParams.get('utm_source') || undefined,
@@ -50,6 +50,9 @@ export default function EmailCaptureForm({
         utm_term: urlParams.get('utm_term') || undefined,
         utm_content: urlParams.get('utm_content') || undefined,
       }
+
+      // Get referral code from URL (e.g., ?ref=MOONRING-XXXXXXXX)
+      const referralCode = urlParams.get('ref') || undefined
 
       // Call newsletter subscription API
       const response = await fetch('/api/newsletter/subscribe', {
@@ -64,6 +67,7 @@ export default function EmailCaptureForm({
           gdprConsent,
           source,
           utmParams,
+          referralCode,
           referrer: document.referrer || undefined,
           landingPage: window.location.href,
         }),
@@ -76,6 +80,10 @@ export default function EmailCaptureForm({
       }
 
       setSuccess(true)
+
+      // Store email before clearing form
+      const submittedEmail = email
+
       setEmail('')
       setName('')
       setGdprConsent(false)
@@ -86,7 +94,7 @@ export default function EmailCaptureForm({
       })
 
       if (onSuccess) {
-        onSuccess()
+        onSuccess(submittedEmail)
       }
 
       // Reset success message after 5 seconds

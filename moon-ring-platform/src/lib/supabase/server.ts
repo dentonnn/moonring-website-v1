@@ -55,3 +55,29 @@ export async function createServerActionClient() {
     }
   )
 }
+
+/**
+ * Create a Supabase client with service role key (bypasses RLS)
+ * Use this for server-side operations that need full database access
+ * SECURITY: Only use in API routes, never expose to client
+ */
+export function createServiceRoleClient() {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is not set')
+  }
+
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return []
+        },
+        setAll() {
+          // No-op for service role client
+        },
+      },
+    }
+  )
+}

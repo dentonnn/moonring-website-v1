@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createServerActionClient } from '@/lib/supabase/server'
+import { createServerActionClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { newsletterSubscribeLimiter } from '@/lib/rate-limit'
 import { sendEmail, emailTemplates } from '@/lib/email/brevo'
 import type { Database } from '@/types/database'
@@ -26,6 +26,7 @@ type ConversionEventInsert = Database['public']['Tables']['conversion_events']['
  *   gdprConsent: boolean (required)
  *   source: 'hero' | 'footer' | 'popup' | 'waitlist' | 'download' (required)
  *   utmParams?: { utm_source, utm_medium, utm_campaign, utm_term, utm_content }
+ *   referralCode?: string (e.g., MOONRING-XXXXXXXX)
  *   referrer?: string
  *   landingPage: string (required)
  * }
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
       gdprConsent,
       source,
       utmParams = {},
+      referralCode,
       referrer,
       landingPage,
     } = body
@@ -97,7 +99,8 @@ export async function POST(request: Request) {
     // DATABASE: SAVE SUBSCRIPTION
     // ========================================================================
 
-    const supabase = await createServerActionClient()
+    // Use service role client to bypass RLS policies for inserts/updates
+    const supabase = createServiceRoleClient()
 
     // Check if email already subscribed
     const { data: existingSubscription, error: fetchError } = await supabase
@@ -169,16 +172,24 @@ export async function POST(request: Request) {
         referrer_url: referrer || null,
         landing_page: landingPage,
         signup_source: source,
+        referred_by_code: referralCode || null,
       }
 
       // Type assertion needed due to Supabase generic inference limitations
-      const { error: insertError } = await supabase
+      const { data: newSubscription, error: insertError } = await supabase
         .from('email_subscriptions')
         .insert(insertData as never)
+        .select('id')
+        .single()
 
       if (insertError) {
         console.error('Failed to save subscription to database:', insertError)
         throw new Error('Failed to save subscription')
+      }
+
+      // Process referral if referral code was provided
+      if (referralCode && newSubscription) {
+        await processReferral(referralCode, newSubscription.id, email)
       }
     }
 
@@ -265,5 +276,79 @@ export async function POST(request: Request) {
       },
       { status: 500 }
     )
+  }
+}
+
+/**
+ * Process referral relationship
+ * - Find the referrer by their referral code
+ * - Create entry in waitlist_referrals table
+ * - Increment referrer's referral_count
+ * - Update waitlist positions (referrer moves up 500 positions)
+ */
+async function processReferral(
+  referralCode: string,
+  referredId: string,
+  referredEmail: string
+) {
+  try {
+    console.log(`[processReferral] Processing referral for code: ${referralCode}, referred email: ${referredEmail}`)
+
+    // Use service role client to bypass RLS
+    const supabase = createServiceRoleClient()
+
+    // 1. Find the referrer by their referral code
+    const { data: referrer, error: referrerError } = await supabase
+      .from('email_subscriptions')
+      .select('id, email, referral_count')
+      .eq('referral_code', referralCode)
+      .single()
+
+    if (referrerError || !referrer) {
+      console.error('[processReferral] Referrer not found:', referrerError)
+      return // Don't throw - just log and continue
+    }
+
+    console.log(`[processReferral] Found referrer: ${referrer.email} (id: ${referrer.id})`)
+
+    // 2. Create entry in waitlist_referrals table
+    const { error: relationshipError } = await supabase
+      .from('waitlist_referrals')
+      .insert({
+        referrer_id: referrer.id,
+        referred_id: referredId,
+        referral_code: referralCode,
+        position_bonus_applied: true,
+      })
+
+    if (relationshipError) {
+      console.error('[processReferral] Failed to create referral relationship:', relationshipError)
+      return
+    }
+
+    console.log(`[processReferral] Created referral relationship`)
+
+    // 3. Increment referrer's referral_count
+    const newReferralCount = (referrer.referral_count || 0) + 1
+    const { error: updateError } = await supabase
+      .from('email_subscriptions')
+      .update({ referral_count: newReferralCount })
+      .eq('id', referrer.id)
+
+    if (updateError) {
+      console.error('[processReferral] Failed to update referral count:', updateError)
+      return
+    }
+
+    console.log(`[processReferral] Updated referral count to ${newReferralCount}`)
+
+    // 4. Recalculate waitlist positions (trigger will handle this)
+    // The database trigger `trigger_update_positions` will automatically
+    // update all waitlist positions when referral_count changes
+
+    console.log(`[processReferral] Referral processed successfully!`)
+  } catch (error) {
+    console.error('[processReferral] Unexpected error:', error)
+    // Don't throw - we don't want to fail the subscription if referral processing fails
   }
 }

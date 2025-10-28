@@ -101,11 +101,10 @@ export default function WaitlistPage() {
                 <EmailCaptureForm
                   source="waitlist"
                   showGDPR={true}
-                  onSuccess={() => {
-                    // Redirect to confirmation page
+                  onSuccess={(email) => {
+                    // Redirect to confirmation page with email parameter
                     if (typeof window !== 'undefined') {
-                      const email = new URLSearchParams(window.location.search).get('email')
-                      window.location.href = `/waitlist/confirmation${email ? `?email=${email}` : ''}`
+                      window.location.href = `/waitlist/confirmation?email=${encodeURIComponent(email)}`
                     }
                   }}
                 />
