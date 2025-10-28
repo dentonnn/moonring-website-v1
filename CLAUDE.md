@@ -266,8 +266,7 @@ src/
 │   ├── download/          # App download page (waitlist entry point)
 │   ├── enterprise/        # Enterprise offering and B2B sales page
 │   ├── hardware/          # Hardware showcase with wearable compatibility
-│   ├── hero-concise-demo/ # Experimental hero section variant (testing only)
-│   ├── hero-mockup-v2/    # Experimental hero section variant (testing only)
+│   ├── hero-mockup-v2/    # Experimental hero section variant (brand color testing)
 │   ├── how-it-works/      # Detailed how-it-works flow
 │   ├── pricing/           # Standalone pricing page
 │   ├── privacy/           # Privacy policy (legal)
@@ -502,18 +501,18 @@ export async function POST(request: Request) {
 ### Experimental Pages Pattern
 
 **Testing Ground for Hero Variants**:
-- `/hero-mockup-v2/` and `/hero-concise-demo/` are experimental pages
+- `/hero-mockup-v2/` is an experimental page for brand color testing
 - **NOT linked in navigation** - accessed via direct URL only
-- Purpose: A/B testing hero section concepts before production
-- Usage: Build and compare variants, gather feedback, then decide
-- **Cleanup**: Delete or move to `/docs/07-archive/` once decision is made
+- Purpose: Testing different brand color palettes and visual treatments
+- Usage: Compare color variants, gather feedback on visual direction
+- **Cleanup**: Move to `/docs/07-archive/` or integrate into main design once color decisions are finalized
 
 **When to use**:
-- Testing significant UI changes that need side-by-side comparison
+- Testing brand color variations and visual treatments
 - Rapid iteration without affecting production homepage
 - Collecting stakeholder feedback on design directions
 
-**Important**: These pages should not be indexed by search engines (add `noindex` meta tag).
+**Important**: This page should not be indexed by search engines (add `noindex` meta tag if not already present).
 
 ## Common Issues & Debugging
 
