@@ -273,7 +273,7 @@ BEGIN
   WITH ranked_subscribers AS (
     SELECT
       id,
-      ROW_NUMBER() OVER (ORDER BY subscribed_at ASC) - (referral_count * 500) AS new_position
+      ROW_NUMBER() OVER (ORDER BY created_at ASC) - (referral_count * 500) AS new_position
     FROM email_subscriptions
     WHERE campaign_status = 'active'
   )
@@ -361,13 +361,13 @@ CREATE OR REPLACE VIEW waitlist_leaderboard AS
 SELECT
   id,
   email,
-  first_name,
+  name AS first_name,
   referral_code,
   referral_count,
   waitlist_position,
   engagement_score,
   waitlist_tier,
-  subscribed_at,
+  created_at AS subscribed_at,
   CASE
     WHEN referral_count >= 10 THEN 'Gold'
     WHEN referral_count >= 5 THEN 'Silver'
